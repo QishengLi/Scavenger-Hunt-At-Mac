@@ -52,6 +52,24 @@ public class testMap extends ApplicationAdapter implements InputProcessor {
         camera.update(); // update the position of camera
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
+
+        // Let pikachu move smoothly without implementing InputProcessor
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            player.translateX(-1f);
+            camera.translate(-1f, 0);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            player.translateX(1f);
+            camera.translate(1f, 0);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+            player.translateY(1f);
+            camera.translate(0, 1f);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+            player.translateY(-1f);
+            camera.translate(0, -1f);
+        }
         sb.setProjectionMatrix(camera.combined); // Combine the character with the camera?
         sb.begin();
         player.draw(sb); // draw the character
@@ -60,7 +78,7 @@ public class testMap extends ApplicationAdapter implements InputProcessor {
 
     // Called when a key was pressed
     @Override public boolean keyDown(int keycode) {
-        if(keycode == Input.Keys.LEFT) {
+        /* if(keycode == Input.Keys.LEFT) {
             player.translateX(-32);
             camera.translate(-32, 0);
         }
@@ -75,7 +93,7 @@ public class testMap extends ApplicationAdapter implements InputProcessor {
         if(keycode == Input.Keys.DOWN) {
             player.translateY(-32);
             camera.translate(0, -32);
-        }
+        } */
         return false;
     }
 
