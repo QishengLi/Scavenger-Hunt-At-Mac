@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="32" tileheight="32" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="32" tileheight="32" nextobjectid="3">
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="256" columns="16">
   <image source="tileset.png" width="512" height="512"/>
  </tileset>
@@ -8,7 +8,10 @@
    eJytlm1uwyAQRLkhvQEcs71Beqs6UlcavcwAbvNjhWObfdmvwb219nFZx6o2L/u87Ov3+buM3C48ZSt/iPG/6v0u98jUvY4/hFvXj8u+F/lRH/Sv97jf8btwa9X8a17KdN8Jv/al+Mln/MxVxz6NU/maW8bv6lLm+k/5rs76m3wXxzDvlWn8q/wO+NTnmp+qgZuLYd7X+BOf/e/4ymTcyTR+lz/nm/lIvVFxna6u71hXx9W8a/9XXKfrLu/pGdlJf5JOuvhTvVUPp7E0B04/a2X81EjyJ/bP9loXrRc1j1qZzp80z+Sn+U5awlxq/6/mZMef5n3qhTvb7s5H4qd5cTlSP3+Zj5P8rzRKz4+785HOANYr1ZH9nczNx05f1T/rnIzzwO8Hdz6k2XLrzjiTdd/FT+119XVzm/TUaR111MXPHlMddv2p78z2yp+4Ll+r+BMv8d03q9ML+l/xmecTvptV6oj6T98nqc6J7+Iln/d3fPJGew9fn6X5S72842vdHJ96ctL/3D/bPb7uow6Rzz454TuNZBycvbomn++v+DwP3fy5/6N+TvjJ53/t6YffJ/PA//P5D5rkhNs=
   </data>
  </layer>
- <objectgroup name="Object Layer 1"/>
+ <objectgroup name="CollisionBoxes">
+  <object id="1" name="Stone" type="Rectangle" x="357" y="710" width="182" height="244"/>
+  <object id="2" name="Tree" type="Rectangle" x="707" y="803" width="90" height="125"/>
+ </objectgroup>
  <layer name="Tile Layer 2" width="32" height="32">
   <data encoding="base64" compression="zlib">
    eJzt1s1OwkAUhmHEnz0q7lFwr6h7FN2rwN7fO8A7wGvpjagJrMFE1kCiayWRDe+myUnTdjozHauRL3kC6dCeTiecaS6nH8/gHNOkUauLXob38Iah5TVkdO/nHR8p1tfNN2YW55s8f9s1V0V1TzZr7kV8T1LXj86au/g/2665qzzhGS8Z1e9jgNeM6o8wxkQcW0Iey1jBKtYc1f/EF6biWAHr2MAmitgS4673mxK2sYMyKth1XFNmD/uo4gCHOBLjrudfwzFOUMcpzlK6dpI+fI4LXKKBJlpi3Gb+SfrwFa5xg1vc4T7m917gMy5/fe/9b2njIWLsJ/pkB48RY6o+aZPgvMOeg8s+GZx32HNQ9UmZuH3e9N1Qp0/G7fOm74aqPikTts/7Me1JOn0ybJ/3s+hJvydzqE5RwQ==

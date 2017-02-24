@@ -14,11 +14,19 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
+
+import static java.lang.System.in;
 
 public class testMap extends ApplicationAdapter implements InputProcessor {
     Texture img;
@@ -53,20 +61,39 @@ public class testMap extends ApplicationAdapter implements InputProcessor {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
 
+
+        MapLayer layer = tiledMap.getLayers().get("CollisionBoxes");
+        MapObjects boxes = layer.getObjects();
+        Array<Rectangle> collisionRects = new Array<Rectangle>();
+        for (MapObject box : boxes) {
+            if (box instanceof RectangleMapObject) {
+                Rectangle rect = ((RectangleMapObject) box).getRectangle();
+                collisionRects.add(rect);
+            }
+        }
+        // TODO: write an overlap method checking that the player's coordinate overlaps with one of the rectangles in collisionRects
+        /* Can use getX, getY to get the coordinates of the player and the rectangles like follows:
+        System.out.print(player.getX());
+        System.out.print('\n');
+        System.out.print(collisionRects.get(1).getX());
+        System.out.print('\n');
+        */
+
         // Let pikachu move smoothly without implementing InputProcessor
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
             player.translateX(-1f);
             camera.translate(-1f, 0);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+        // add "else" to fix the bug of moving diagonally
+        else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             player.translateX(1f);
             camera.translate(1f, 0);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+        else if(Gdx.input.isKeyPressed(Input.Keys.UP)){
             player.translateY(1f);
             camera.translate(0, 1f);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+        else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
             player.translateY(-1f);
             camera.translate(0, -1f);
         }
