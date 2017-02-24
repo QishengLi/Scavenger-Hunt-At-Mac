@@ -50,6 +50,7 @@ public class testMap extends ApplicationAdapter implements InputProcessor {
         sb = new SpriteBatch();
         texture = new Texture(Gdx.files.internal("pik.png"));
         player = new Sprite(texture);
+        player.setCenter(w/2,h/2);
     }
 
     @Override public void render () {
