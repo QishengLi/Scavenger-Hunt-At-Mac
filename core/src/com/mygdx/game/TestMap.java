@@ -26,9 +26,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-import static java.lang.System.in;
-
-public class testMap extends ApplicationAdapter implements InputProcessor {
+public class TestMap extends ApplicationAdapter implements InputProcessor {
     Texture img;
     TiledMap tiledMap;
     OrthographicCamera camera;
@@ -48,6 +46,7 @@ public class testMap extends ApplicationAdapter implements InputProcessor {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         Gdx.input.setInputProcessor(this);
         sb = new SpriteBatch();
+
         texture = new Texture(Gdx.files.internal("pik.png"));
         player = new Sprite(texture);
         player.setCenter(w/2,h/2);
@@ -72,13 +71,6 @@ public class testMap extends ApplicationAdapter implements InputProcessor {
                 collisionRects.add(rect);
             }
         }
-        // TODO: write an overlap method checking that the player's coordinate overlaps with one of the rectangles in collisionRects
-        /* Can use getX, getY to get the coordinates of the player and the rectangles like follows:
-        System.out.print(player.getX());
-        System.out.print('\n');
-        System.out.print(collisionRects.get(1).getX());
-        System.out.print('\n');
-        */
 
         // Let pikachu move smoothly without implementing InputProcessor
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
@@ -98,11 +90,31 @@ public class testMap extends ApplicationAdapter implements InputProcessor {
             player.translateY(-1f);
             camera.translate(0, -1f);
         }
+
         sb.setProjectionMatrix(camera.combined); // Combine the character with the camera?
         sb.begin();
         player.draw(sb); // draw the character
         sb.end();
     }
+
+
+
+    // TODO: write an overlap method checking that the player's coordinate overlaps with one of the rectangles in collisionRects
+        /* Can use getX, getY to get the coordinates of the player and the rectangles like follows:
+        System.out.print(player.getX());
+        System.out.print('\n');
+        System.out.print(collisionRects.get(1).getX());
+        System.out.print('\n');
+        */
+
+    /*
+    public boolean checkOverlap(Rectangle rec1, Rectangle rec2) {
+
+        if rec1.getX()
+
+        return false;
+    }
+    */
 
     // Called when a key was pressed
     @Override public boolean keyDown(int keycode) {
