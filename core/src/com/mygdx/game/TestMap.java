@@ -23,7 +23,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 public class TestMap extends ApplicationAdapter implements InputProcessor {
@@ -34,6 +33,10 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
     SpriteBatch sb;
     Texture texture;
     Sprite player;
+    boolean movingRight = false;
+    boolean movingLeft = false;
+    boolean movingUp = false;
+    boolean movingDown = false;
 
     @Override public void create () {
         float w = Gdx.graphics.getWidth();
@@ -72,22 +75,20 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
             }
         }
 
-        // Let pikachu move smoothly without implementing InputProcessor
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            player.translateX(-1f);
-            camera.translate(-1f, 0);
-        }
-        // add "else" to fix the bug of moving diagonally
-        else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+        if(movingRight) {
             player.translateX(1f);
             camera.translate(1f, 0);
         }
-        else if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+        if(movingLeft) {
+            player.translateX(-1f);
+            camera.translate(-1f, 0);
+        }
+        if(movingUp) {
             player.translateY(1f);
             camera.translate(0, 1f);
         }
-        else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            player.translateY(-1f);
+        if(movingDown) {
+            player.translateX(-1f);
             camera.translate(0, -1f);
         }
 
@@ -110,39 +111,41 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
     /*
     public boolean checkOverlap(Rectangle rec1, Rectangle rec2) {
 
-        if rec1.getX()
-
         return false;
     }
     */
 
     // Called when a key was pressed
     @Override public boolean keyDown(int keycode) {
-        /* if(keycode == Input.Keys.LEFT) {
-            player.translateX(-32);
-            camera.translate(-32, 0);
-        }
         if(keycode == Input.Keys.RIGHT) {
-            player.translateX(32);
-            camera.translate(32, 0);
+            movingRight = true;
+        }
+        if(keycode == Input.Keys.LEFT) {
+            movingLeft = true;
         }
         if(keycode == Input.Keys.UP) {
-            player.translateY(32);
-            camera.translate(0, 32);
+            movingUp = true;
         }
         if(keycode == Input.Keys.DOWN) {
-            player.translateY(-32);
-            camera.translate(0, -32);
-        } */
+            movingDown = true;
+        }
         return false;
     }
 
     // Called when a key was released
     @Override public boolean keyUp(int keycode) {
-        if(keycode == Input.Keys.NUM_1)
-            tiledMap.getLayers().get(0).setVisible(!tiledMap.getLayers().get(0).isVisible());
-        if(keycode == Input.Keys.NUM_2)
-            tiledMap.getLayers().get(1).setVisible(!tiledMap.getLayers().get(1).isVisible());
+        if(keycode == Input.Keys.RIGHT) {
+            movingRight = false;
+        }
+        if(keycode == Input.Keys.LEFT) {
+            movingLeft = false;
+        }
+        if(keycode == Input.Keys.UP) {
+            movingUp = false;
+        }
+        if(keycode == Input.Keys.DOWN) {
+            movingDown = false;
+        }
         return false;
     }
 
@@ -150,13 +153,7 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
         return false;
     }
 
-    // called when mouse was clicked
-    @Override public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector3 clickCoordinates = new Vector3(screenX,screenY,0);
-        Vector3 position = camera.unproject(clickCoordinates);
-        player.setPosition(position.x, position.y);
-        return true;
-    }
+    @Override public boolean touchDown(int screenX, int screenY, int pointer, int button) {return true;}
 
     @Override public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         return false;
