@@ -12,7 +12,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -20,19 +19,20 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 public class TestMap extends ApplicationAdapter implements InputProcessor {
-    Texture img;
+
     TiledMap tiledMap;
     OrthographicCamera camera;
     TiledMapRenderer tiledMapRenderer;
     SpriteBatch sb;
     Texture texture;
-    Sprite player;
+    Player player;
     boolean movingRight = false;
     boolean movingLeft = false;
     boolean movingUp = false;
@@ -50,9 +50,11 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
         Gdx.input.setInputProcessor(this);
         sb = new SpriteBatch();
 
+
         texture = new Texture(Gdx.files.internal("pik.png"));
-        player = new Sprite(texture);
+        player = new Player(texture, (TiledMapTileLayer) tiledMap.getLayers().get(0));
         player.setCenter(w/2,h/2);
+
     }
 
     @Override public void render () {
