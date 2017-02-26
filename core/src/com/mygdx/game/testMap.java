@@ -26,8 +26,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-import static java.lang.System.in;
-
 public class testMap extends ApplicationAdapter implements InputProcessor {
     Texture img;
     TiledMap tiledMap;
