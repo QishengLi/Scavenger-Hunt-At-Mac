@@ -90,7 +90,7 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
             camera.translate(0, 1f);
         }
         if(movingDown) {
-            player.translateX(-1f);
+            player.translateY(-1f);
             camera.translate(0, -1f);
         }
 

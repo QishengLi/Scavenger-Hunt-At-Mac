@@ -15,11 +15,4 @@ public class Player extends Sprite {
         super(texture);
         this.collisionLayer = collisionLayer;
     }
-
-
-    
-
-
-
-
 }
