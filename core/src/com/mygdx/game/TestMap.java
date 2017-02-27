@@ -4,7 +4,6 @@ package com.mygdx.game;
  * Created by qisheng on 2/9/2017.
  */
 
-//package com.gamefromscratch;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -82,15 +81,15 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
             player.translateX(1f);
             camera.translate(1f, 0);
         }
-        if(movingLeft) {
+        else if(movingLeft) {
             player.translateX(-1f);
             camera.translate(-1f, 0);
         }
-        if(movingUp) {
+        else if(movingUp) {
             player.translateY(1f);
             camera.translate(0, 1f);
         }
-        if(movingDown) {
+        else if(movingDown) {
             player.translateY(-1f);
             camera.translate(0, -1f);
         }
@@ -102,21 +101,19 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
     }
 
 
-
-    // TODO: write an overlap method checking that the player's coordinate overlaps with one of the rectangles in collisionRects
-        /* Can use getX, getY to get the coordinates of the player and the rectangles like follows:
-        System.out.print(player.getX());
-        System.out.print('\n');
-        System.out.print(collisionRects.get(1).getX());
-        System.out.print('\n');
-        */
-
-    /*
     public boolean checkOverlap(Rectangle rec1, Rectangle rec2) {
+        float p1x = rec1.getX();
+        float p1y = rec1.getY() + rec1.getHeight();
+        float p2x = rec1.getX() + rec2.getWidth();
+        float p2y = rec1.getY();
 
-        return false;
+        float p3x = rec2.getX();
+        float p3y = rec2.getY() + rec1.getHeight();
+        float p4x = rec2.getX() + rec2.getWidth();
+        float p4y = rec2.getY();
+        return (! ( (p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
     }
-    */
+
 
     // Called when a key was pressed
     @Override public boolean keyDown(int keycode) {
