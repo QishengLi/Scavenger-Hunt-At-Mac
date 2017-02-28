@@ -80,19 +80,36 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
         if(movingRight) {
             player.translateX(1f);
             camera.translate(1f, 0);
+            if(checkArrayOverlap(player,collisionRects)) {
+                player.translateX(-1f);
+                camera.translate(-1f, 0);
+            }
         }
         else if(movingLeft) {
             player.translateX(-1f);
             camera.translate(-1f, 0);
+            if(checkArrayOverlap(player,collisionRects)) {
+                player.translateX(1f);
+                camera.translate(1f, 0);
+            }
         }
         else if(movingUp) {
             player.translateY(1f);
             camera.translate(0, 1f);
+            if(checkArrayOverlap(player,collisionRects)) {
+                player.translateY(-1f);
+                camera.translate(0, -1f);
+            }
         }
         else if(movingDown) {
             player.translateY(-1f);
             camera.translate(0, -1f);
+            if(checkArrayOverlap(player,collisionRects)) {
+                player.translateY(1f);
+                camera.translate(0, 1f);
+            }
         }
+
 
         sb.setProjectionMatrix(camera.combined); // Combine the character with the camera?
         sb.begin();
@@ -100,15 +117,23 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
         sb.end();
     }
 
+    public boolean checkArrayOverlap(Player player, Array<Rectangle> rects) {
+        for (Rectangle rect : rects) {
+            if (checkOverlap(player, rect)){
+                return true;
+            }
+        }
+        return false;
+    }
 
-    public boolean checkOverlap(Rectangle rec1, Rectangle rec2) {
-        float p1x = rec1.getX();
-        float p1y = rec1.getY() + rec1.getHeight();
-        float p2x = rec1.getX() + rec2.getWidth();
-        float p2y = rec1.getY();
+    public boolean checkOverlap(Player player, Rectangle rec2) {
+        float p1x = player.getX();
+        float p1y = player.getY() + player.getHeight();
+        float p2x = player.getX() + player.getWidth();
+        float p2y = player.getY();
 
         float p3x = rec2.getX();
-        float p3y = rec2.getY() + rec1.getHeight();
+        float p3y = rec2.getY() + rec2.getHeight();
         float p4x = rec2.getX() + rec2.getWidth();
         float p4y = rec2.getY();
         return (! ( (p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
