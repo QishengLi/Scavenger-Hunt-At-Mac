@@ -33,10 +33,6 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
     SpriteBatch sb;
     Texture texture;
     Player player;
-    boolean movingRight = false;
-    boolean movingLeft = false;
-    boolean movingUp = false;
-    boolean movingDown = false;
 
     @Override public void create () {
         float w = Gdx.graphics.getWidth();
@@ -54,7 +50,6 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
         texture = new Texture(Gdx.files.internal("pik.png"));
         player = new Player(texture, (TiledMapTileLayer) tiledMap.getLayers().get(0));
         player.setCenter(w/2,h/2);
-
     }
 
     @Override public void render () {
@@ -66,93 +61,26 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
 
-
-        MapLayer layer = tiledMap.getLayers().get("CollisionBoxes");
-        MapObjects boxes = layer.getObjects();
-        Array<Rectangle> collisionRects = new Array<Rectangle>();
-        for (MapObject box : boxes) {
-            if (box instanceof RectangleMapObject) {
-                Rectangle rect = ((RectangleMapObject) box).getRectangle();
-                collisionRects.add(rect);
-            }
-        }
-
-        if(movingRight) {
-            player.translateX(1f);
-            camera.translate(1f, 0);
-            if(checkArrayOverlap(player,collisionRects)) {
-                player.translateX(-1f);
-                camera.translate(-1f, 0);
-            }
-        }
-        else if(movingLeft) {
-            player.translateX(-1f);
-            camera.translate(-1f, 0);
-            if(checkArrayOverlap(player,collisionRects)) {
-                player.translateX(1f);
-                camera.translate(1f, 0);
-            }
-        }
-        else if(movingUp) {
-            player.translateY(1f);
-            camera.translate(0, 1f);
-            if(checkArrayOverlap(player,collisionRects)) {
-                player.translateY(-1f);
-                camera.translate(0, -1f);
-            }
-        }
-        else if(movingDown) {
-            player.translateY(-1f);
-            camera.translate(0, -1f);
-            if(checkArrayOverlap(player,collisionRects)) {
-                player.translateY(1f);
-                camera.translate(0, 1f);
-            }
-        }
-
-
+        player.makeMove(player, camera, tiledMap);
         sb.setProjectionMatrix(camera.combined); // Combine the character with the camera?
         sb.begin();
         player.draw(sb); // draw the character
         sb.end();
     }
 
-    public boolean checkArrayOverlap(Player player, Array<Rectangle> rects) {
-        for (Rectangle rect : rects) {
-            if (checkOverlap(player, rect)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean checkOverlap(Player player, Rectangle rec2) {
-        float p1x = player.getX();
-        float p1y = player.getY() + player.getHeight();
-        float p2x = player.getX() + player.getWidth();
-        float p2y = player.getY();
-
-        float p3x = rec2.getX();
-        float p3y = rec2.getY() + rec2.getHeight();
-        float p4x = rec2.getX() + rec2.getWidth();
-        float p4y = rec2.getY();
-        return (! ( (p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
-    }
-
-
     // Called when a key was pressed
     @Override public boolean keyDown(int keycode) {
         if(keycode == Input.Keys.RIGHT) {
-            movingRight = true;
+            player.setMovingRight(true);
         }
         if(keycode == Input.Keys.LEFT) {
-            movingLeft = true;
+            player.setMovingLeft(true);
         }
         if(keycode == Input.Keys.UP) {
-            movingUp = true;
+            player.setMovingUp(true);
         }
         if(keycode == Input.Keys.DOWN) {
-            movingDown = true;
+            player.setMovingDown(true);
         }
         return false;
     }
@@ -160,16 +88,16 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
     // Called when a key was released
     @Override public boolean keyUp(int keycode) {
         if(keycode == Input.Keys.RIGHT) {
-            movingRight = false;
+            player.setMovingRight(false);
         }
         if(keycode == Input.Keys.LEFT) {
-            movingLeft = false;
+            player.setMovingLeft(false);
         }
         if(keycode == Input.Keys.UP) {
-            movingUp = false;
+            player.setMovingUp(false);
         }
         if(keycode == Input.Keys.DOWN) {
-            movingDown = false;
+            player.setMovingDown(false);
         }
         return false;
     }
