@@ -28,10 +28,10 @@ public class Player extends Sprite {
         this.collisionLayer = collisionLayer;
     }
 
-    public void makeMove(Player player, OrthographicCamera camera, TiledMap tiledMap) {
+    public void makeMove(Player player, OrthographicCamera camera, TiledMap tiledMap, float speed) {
         MapLayer layer = tiledMap.getLayers().get("CollisionBoxes");
         MapObjects boxes = layer.getObjects();
-        Array<Rectangle> collisionRects = new Array<>();
+        Array<Rectangle> collisionRects = new Array<Rectangle>();
         for (MapObject box : boxes) {
             if (box instanceof RectangleMapObject) {
                 Rectangle rect = ((RectangleMapObject) box).getRectangle();
@@ -39,35 +39,35 @@ public class Player extends Sprite {
             }
         }
         if(movingRight) {
-            player.translateX(1f);
-            camera.translate(1f, 0);
+            player.translateX(speed);
+            camera.translate(speed, 0);
             if(checkArrayOverlap(player,collisionRects)) {
-                player.translateX(-1f);
-                camera.translate(-1f, 0);
+                player.translateX(-speed);
+                camera.translate(-speed, 0);
             }
         }
         else if(movingLeft) {
-            player.translateX(-1f);
-            camera.translate(-1f, 0);
+            player.translateX(-speed);
+            camera.translate(-speed, 0);
             if(checkArrayOverlap(player,collisionRects)) {
-                player.translateX(1f);
-                camera.translate(1f, 0);
+                player.translateX(speed);
+                camera.translate(speed, 0);
             }
         }
         else if(movingUp) {
-            player.translateY(1f);
-            camera.translate(0, 1f);
+            player.translateY(speed);
+            camera.translate(0, speed);
             if(checkArrayOverlap(player,collisionRects)) {
-                player.translateY(-1f);
-                camera.translate(0, -1f);
+                player.translateY(-speed);
+                camera.translate(0, -speed);
             }
         }
         else if(movingDown) {
-            player.translateY(-1f);
-            camera.translate(0, -1f);
+            player.translateY(-speed);
+            camera.translate(0, -speed);
             if(checkArrayOverlap(player,collisionRects)) {
-                player.translateY(1f);
-                camera.translate(0, 1f);
+                player.translateY(speed);
+                camera.translate(0, speed);
             }
         }
     }

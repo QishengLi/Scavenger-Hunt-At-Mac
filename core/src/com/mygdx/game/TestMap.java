@@ -12,17 +12,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 
 
 public class TestMap extends ApplicationAdapter implements InputProcessor {
@@ -41,7 +35,7 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
         camera = new OrthographicCamera();
         camera.setToOrtho(false,w,h);
         camera.update();
-        tiledMap = new TmxMapLoader().load("myMap.tmx");
+        tiledMap = new TmxMapLoader().load("campus_map.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         Gdx.input.setInputProcessor(this);
         sb = new SpriteBatch();
@@ -49,7 +43,7 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
 
         texture = new Texture(Gdx.files.internal("pik.png"));
         player = new Player(texture, (TiledMapTileLayer) tiledMap.getLayers().get(0));
-        player.setCenter(w/2,h/2);
+        player.setCenter(w/2,h/2-50); //TODO: change position
     }
 
     @Override public void render () {
@@ -61,7 +55,7 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
 
-        player.makeMove(player, camera, tiledMap);
+        player.makeMove(player, camera, tiledMap, 2f);
         sb.setProjectionMatrix(camera.combined); // Combine the character with the camera?
         sb.begin();
         player.draw(sb); // draw the character

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="32" tileheight="32" nextobjectid="18">
+ <tileset firstgid="1" name="old_main" tilewidth="32" tileheight="32" tilecount="360" columns="20">
+  <image source="old_main_map.png" width="669" height="598"/>
+ </tileset>
+ <tileset firstgid="361" name="general" tilewidth="32" tileheight="32" tilecount="256" columns="16">
+  <image source="tileset.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="617" name="road" tilewidth="32" tileheight="32" tilecount="9" columns="3">
+  <image source="road.png" width="100" height="100"/>
+ </tileset>
+ <layer name="background" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJy1llFuhDAMRFkO2SNU2hWcD26Aj9UiYXX0NDbZqv0YwS5JxuNM7GyPadou7PI+iuc8Ta9vrPP7a+TYQ/47bsC5y8V94vwehqNaZy84R+JOnPoX0d/NZ270d8Zexcu448Ii/N1czYVqyLmvP8BzADmO/B0+Bsas808uOqwXf+UNjTPX/bzhHIlNofy6Fxv4nVf4VB1RfEuvaP65Vgh/auJ56zjcN+Xe3uDPcfHwOiqN1XvI3tJ/Om43/O7c6b4cJq6Q51Hw61lXDzj+qq64+MPwb7K28lOfyz9rs9ZL1exiYe6Yf6eP/q/qWQivy39gXfKzHrrzX+kkb6dd+bv60+XfadVvTrurF5V+9QHzT80E83MgBuWv9OuZYv7jBnd15x3+av+7nl7pd3vT8bv8M8/VeeA5Yg1QfvZi+ov+c7lm39Lfd/zsxdzjjr/yvsbv+PPp+NlLnP+Zd/Ur46j4dW3HUdU/1lvuNz3Y8Xf6HT89RR7XC8iv39T/9BH5/wvsv6zDef8ZRa45Or7TH7/UP3r3VlTntrrbuL6W8WpOWX9dL3D3F9ZB53n6v+O/u6MxHqffgfc65ynmiTWW91Jq7RB4p6dGkfO/AFTFnMc=
+  </data>
+ </layer>
+ <objectgroup name="CollisionBoxes">
+  <object id="4" name="x" x="288" y="159" width="32" height="65"/>
+  <object id="9" name="old_main" x="228" y="227" width="637" height="557"/>
+  <object id="10" name="grass1" x="0" y="2" width="510" height="124"/>
+  <object id="11" name="grass2" x="2" y="196" width="118" height="709"/>
+  <object id="13" name="grass3" x="3" y="906" width="497" height="118"/>
+  <object id="14" name="grass4" x="623" y="912" width="399" height="112"/>
+  <object id="15" name="grass5" x="974" y="772" width="50" height="122"/>
+  <object id="16" name="grass6" x="975" y="131" width="51" height="473"/>
+  <object id="17" name="grass7" x="611" y="4" width="408" height="120"/>
+ </objectgroup>
+ <layer name="Tile Layer 1" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJzt1VXTFmQUhlE+uru7u7u7u7tbQhAQEJBQUDDoVBqTVFBCCQMUTEI6JKRVUJQWWfwEnhlmOHjvmXW45zrc0aJFFllkT+OiiE4MYhKL2MQhLvGITwISkojEJCEpyUhOClIG9FORmjSkJR3pyUBGMpGZLGQlG9nJQU5ykZs85A3o5yM/BShIIQpThKIUozglKEkpSlOGspSjPBWoGNCvRGWqUJVqVKcGNalFbepQl3rUpwENaURjmtA0oN+M5rSgJa1oTRva0o72dKAjnehMF7rSje70oGdAvxe96UNfnqEf/RnAQJ5lEIN5jiEMZRjPM5wRjAzov8AoRjOGFxnLOMYzgZd4mYlM4hVeZTJTeI3XeSOg/yZTmcZ0ZjCTWcxmDnOZx3wW8BZvs5BFLGYJSwP6y1jOCt7hXd7jfT7gQ1ayitWsYS3r+IiPWc8GPgnof8pGNrGZLXzG52xlG9vZwRd8yVd8zU528Q3fsjugv4fv+J4f+JGf+Jm97GM/B/iFgxziMEc4yjGOcyKgf5JT/MppznCWc/zGeS5wkUtc5gpX+Z0/+JNrXA/o/8Xf3OAf/uUmt7jNHe5yj/v8xwP+f3TseUQRnRjEjHr8fiw3sYlDXOIRnwQkJBGJSUJSkpGcFKQkFalJQ9qAfjo36clARjKRmSxkJRvZyUFOcpGbPOQlH/kpQMGAfiE3hSlCUYpRnBKUpBSlKUNZylGeClSkEpWpQtWAfjU31alBTWpRmzrUpR71aUBDGtGYJjSlGc1pQcuAfis3rWlDW9rRng50pBOd6UJXutGdHvSkF73pQ9+AfmSRRfZk9xDY5ZU+
+  </data>
+ </layer>
+</map>
