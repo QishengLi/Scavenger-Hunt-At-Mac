@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="32" tileheight="32" nextobjectid="18">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="32" tileheight="32" nextobjectid="23">
  <tileset firstgid="1" name="old_main" tilewidth="32" tileheight="32" tilecount="360" columns="20">
   <image source="old_main_map.png" width="669" height="598"/>
  </tileset>
@@ -24,6 +24,10 @@
   <object id="15" name="grass5" x="974" y="772" width="50" height="122"/>
   <object id="16" name="grass6" x="975" y="131" width="51" height="473"/>
   <object id="17" name="grass7" x="611" y="4" width="408" height="120"/>
+  <object id="18" x="-2" y="0" width="3" height="1024"/>
+  <object id="19" x="0" y="1024" width="1024" height="2"/>
+  <object id="21" x="1023" y="0" width="2" height="1024"/>
+  <object id="22" x="0" y="-1" width="1024" height="2"/>
  </objectgroup>
  <layer name="Tile Layer 1" width="32" height="32">
   <data encoding="base64" compression="zlib">

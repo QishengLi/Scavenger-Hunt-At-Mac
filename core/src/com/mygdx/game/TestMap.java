@@ -29,8 +29,11 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
     Player player;
 
     @Override public void create () {
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
+        //TODO: change size
+        float w = 1024;
+        float h = 1024;
+        //float w = Gdx.graphics.getWidth();
+        //float h = Gdx.graphics.getHeight();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false,w,h);
@@ -43,7 +46,7 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
 
         texture = new Texture(Gdx.files.internal("pik.png"));
         player = new Player(texture, (TiledMapTileLayer) tiledMap.getLayers().get(0));
-        player.setCenter(w/2,h/2-50); //TODO: change position
+        player.setCenter(w/2 + 50,h/2-400); //TODO: change position
     }
 
     @Override public void render () {
@@ -55,7 +58,7 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
 
-        player.makeMove(player, camera, tiledMap, 2f);
+        player.makeMove(player, camera, tiledMap, 3f);
         sb.setProjectionMatrix(camera.combined); // Combine the character with the camera?
         sb.begin();
         player.draw(sb); // draw the character
