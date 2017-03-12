@@ -21,9 +21,10 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 
-public class TestMap extends ApplicationAdapter implements InputProcessor {
+public class MainGame extends ApplicationAdapter implements InputProcessor {
 
     TiledMap tiledMap;
+    CampusMap mac;
     OrthographicCamera camera;
     TiledMapRenderer tiledMapRenderer;
     SpriteBatch sb;
@@ -42,9 +43,10 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
         tiledMap = new TmxMapLoader().load("campus_map.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         Gdx.input.setInputProcessor(this);
+        mac = new CampusMap(tiledMap);
         // Add background music
         bgm = Gdx.audio.newMusic(Gdx.files.internal("Fireflies.mp3"));
-        bgm.setLooping(true);
+        bgm.setLooping(true); // looping music after it's finished
         bgm.play();
 
         sb = new SpriteBatch();
@@ -64,44 +66,11 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
 
         player.makeMove(player, tiledMap);
         camera.position.set(player.getX(),player.getY(),0); // let the camera follow the player
-        adjustBoundary(tiledMap, camera);
+        mac.adjustBoundary(camera, player);
         sb.setProjectionMatrix(camera.combined); // Combine the character with the camera?
         sb.begin();
         player.draw(sb); // draw the character
         sb.end();
-    }
-
-    public void adjustBoundary(TiledMap tiledMap, OrthographicCamera cam) {
-
-        MapProperties prop = tiledMap.getProperties();
-        int mapWidth = prop.get("width", Integer.class) * prop.get("tilewidth", Integer.class);
-        int mapHeight = prop.get("height", Integer.class) * prop.get("tileheight", Integer.class);
-
-        float mapLeft = 0;
-        float mapBottom = 0;
-
-        // The camera dimensions, halved
-        float cameraHalfWidth = cam.viewportWidth * .5f;
-        float cameraHalfHeight = cam.viewportHeight * .5f;
-
-        float cameraLeft = cam.position.x - cameraHalfWidth;
-        float cameraRight = cam.position.x + cameraHalfWidth;
-        float cameraBottom = cam.position.y - cameraHalfHeight;
-        float cameraTop = cam.position.y + cameraHalfHeight;
-
-        if(cameraLeft + player.getSpeed() <= mapLeft) {
-            cam.position.x = mapLeft + cameraHalfWidth;
-        }
-        else if(cameraRight - player.getSpeed() >= mapWidth) {
-            cam.position.x = mapWidth - cameraHalfWidth;
-        }
-
-        if(cameraBottom + player.getSpeed() <= mapBottom) {
-            cam.position.y = mapBottom + cameraHalfHeight;
-        }
-        else if(cameraTop - player.getSpeed() >= mapHeight) {
-            cam.position.y = mapHeight - cameraHalfHeight;
-        }
     }
 
     // Called when a key was pressed
