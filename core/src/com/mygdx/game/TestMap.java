@@ -8,6 +8,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -28,6 +29,7 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
     SpriteBatch sb;
     Texture texture;
     Player player;
+    Music bgm;
 
     @Override public void create () {
 
@@ -40,6 +42,11 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
         tiledMap = new TmxMapLoader().load("campus_map.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         Gdx.input.setInputProcessor(this);
+        // Add background music
+        bgm = Gdx.audio.newMusic(Gdx.files.internal("Fireflies.mp3"));
+        bgm.setLooping(true);
+        bgm.play();
+
         sb = new SpriteBatch();
         texture = new Texture(Gdx.files.internal("pik.png"));
         player = new Player(texture, (TiledMapTileLayer) tiledMap.getLayers().get(0));
@@ -65,8 +72,7 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
     }
 
     public void adjustBoundary(TiledMap tiledMap, OrthographicCamera cam) {
-        // These values likely need to be scaled according to your world coordinates.
-        // The left boundary of the map (x)
+
         MapProperties prop = tiledMap.getProperties();
         int mapWidth = prop.get("width", Integer.class) * prop.get("tilewidth", Integer.class);
         int mapHeight = prop.get("height", Integer.class) * prop.get("tileheight", Integer.class);
@@ -78,29 +84,22 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
         float cameraHalfWidth = cam.viewportWidth * .5f;
         float cameraHalfHeight = cam.viewportHeight * .5f;
 
-        // Move camera after player as normal
-
         float cameraLeft = cam.position.x - cameraHalfWidth;
         float cameraRight = cam.position.x + cameraHalfWidth;
         float cameraBottom = cam.position.y - cameraHalfHeight;
         float cameraTop = cam.position.y + cameraHalfHeight;
 
-        // Horizontal axis
-        if(cameraLeft + player.getSpeed() <= mapLeft)
-        {
+        if(cameraLeft + player.getSpeed() <= mapLeft) {
             cam.position.x = mapLeft + cameraHalfWidth;
         }
-        else if(cameraRight - player.getSpeed() >= mapWidth)
-        {
+        else if(cameraRight - player.getSpeed() >= mapWidth) {
             cam.position.x = mapWidth - cameraHalfWidth;
         }
 
-        if(cameraBottom + player.getSpeed() <= mapBottom)
-        {
+        if(cameraBottom + player.getSpeed() <= mapBottom) {
             cam.position.y = mapBottom + cameraHalfHeight;
         }
-        else if(cameraTop - player.getSpeed() >= mapHeight)
-        {
+        else if(cameraTop - player.getSpeed() >= mapHeight) {
             cam.position.y = mapHeight - cameraHalfHeight;
         }
     }
