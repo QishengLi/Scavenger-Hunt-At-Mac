@@ -22,13 +22,14 @@ public class Player extends Sprite {
     private boolean movingLeft;
     private boolean movingUp;
     private boolean movingDown;
+    private float speed = 3f;
 
     public Player(Texture texture, TiledMapTileLayer collisionLayer) {
         super(texture);
         this.collisionLayer = collisionLayer;
     }
 
-    public void makeMove(Player player, OrthographicCamera camera, TiledMap tiledMap, float speed) {
+    public void makeMove(Player player, OrthographicCamera camera, TiledMap tiledMap) {
         MapLayer layer = tiledMap.getLayers().get("CollisionBoxes");
         MapObjects boxes = layer.getObjects();
         Array<Rectangle> collisionRects = new Array<Rectangle>();
@@ -91,6 +92,10 @@ public class Player extends Sprite {
         float p4x = rec2.getX() + rec2.getWidth();
         float p4y = rec2.getY();
         return (! ( (p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
+    }
+
+    public float getSpeed() {
+        return speed;
     }
 
     public void setMovingDown(boolean movingDown) {

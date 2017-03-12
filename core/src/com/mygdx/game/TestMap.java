@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -29,11 +30,9 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
     Player player;
 
     @Override public void create () {
-        //TODO: change size
-        float w = 1024;
-        float h = 1024;
-        //float w = Gdx.graphics.getWidth();
-        //float h = Gdx.graphics.getHeight();
+
+        float w = Gdx.graphics.getWidth();
+        float h = Gdx.graphics.getHeight();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false,w,h);
@@ -42,11 +41,9 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         Gdx.input.setInputProcessor(this);
         sb = new SpriteBatch();
-
-
         texture = new Texture(Gdx.files.internal("pik.png"));
         player = new Player(texture, (TiledMapTileLayer) tiledMap.getLayers().get(0));
-        player.setCenter(w/2 + 50,h/2-400); //TODO: change position
+        player.setCenter(w/2 + 50,h/2-50); //TODO: change position
     }
 
     @Override public void render () {
@@ -58,11 +55,53 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
 
-        player.makeMove(player, camera, tiledMap, 3f);
+        player.makeMove(player, camera, tiledMap);
+        adjustBoundary(tiledMap, camera);
         sb.setProjectionMatrix(camera.combined); // Combine the character with the camera?
         sb.begin();
         player.draw(sb); // draw the character
         sb.end();
+    }
+
+    public void adjustBoundary(TiledMap tiledMap, OrthographicCamera cam) {
+        // These values likely need to be scaled according to your world coordinates.
+        // The left boundary of the map (x)
+        MapProperties prop = tiledMap.getProperties();
+        int mapWidth = prop.get("width", Integer.class) * prop.get("tilewidth", Integer.class);
+        int mapHeight = prop.get("height", Integer.class) * prop.get("tileheight", Integer.class);
+
+        float mapLeft = 0;
+        float mapBottom = 0;
+
+        // The camera dimensions, halved
+        float cameraHalfWidth = cam.viewportWidth * .5f;
+        float cameraHalfHeight = cam.viewportHeight * .5f;
+
+        // Move camera after player as normal
+
+        float cameraLeft = cam.position.x - cameraHalfWidth;
+        float cameraRight = cam.position.x + cameraHalfWidth;
+        float cameraBottom = cam.position.y - cameraHalfHeight;
+        float cameraTop = cam.position.y + cameraHalfHeight;
+
+        // Horizontal axis
+        if(cameraLeft + player.getSpeed() <= mapLeft)
+        {
+            cam.position.x = mapLeft + cameraHalfWidth;
+        }
+        else if(cameraRight - player.getSpeed() >= mapWidth)
+        {
+            cam.position.x = mapWidth - cameraHalfWidth;
+        }
+
+        if(cameraBottom + player.getSpeed() <= mapBottom)
+        {
+            cam.position.y = mapBottom + cameraHalfHeight;
+        }
+        else if(cameraTop - player.getSpeed() >= mapHeight)
+        {
+            cam.position.y = mapHeight - cameraHalfHeight;
+        }
     }
 
     // Called when a key was pressed
