@@ -55,7 +55,8 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
 
-        player.makeMove(player, camera, tiledMap);
+        player.makeMove(player, tiledMap);
+        camera.position.set(player.getX(),player.getY(),0); // let the camera follow the player
         adjustBoundary(tiledMap, camera);
         sb.setProjectionMatrix(camera.combined); // Combine the character with the camera?
         sb.begin();

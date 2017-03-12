@@ -29,7 +29,7 @@ public class Player extends Sprite {
         this.collisionLayer = collisionLayer;
     }
 
-    public void makeMove(Player player, OrthographicCamera camera, TiledMap tiledMap) {
+    public void makeMove(Player player, TiledMap tiledMap) {
         MapLayer layer = tiledMap.getLayers().get("CollisionBoxes");
         MapObjects boxes = layer.getObjects();
         Array<Rectangle> collisionRects = new Array<Rectangle>();
@@ -41,34 +41,26 @@ public class Player extends Sprite {
         }
         if(movingRight) {
             player.translateX(speed);
-            camera.translate(speed, 0);
             if(checkArrayOverlap(player,collisionRects)) {
                 player.translateX(-speed);
-                camera.translate(-speed, 0);
             }
         }
         else if(movingLeft) {
             player.translateX(-speed);
-            camera.translate(-speed, 0);
             if(checkArrayOverlap(player,collisionRects)) {
                 player.translateX(speed);
-                camera.translate(speed, 0);
             }
         }
         else if(movingUp) {
             player.translateY(speed);
-            camera.translate(0, speed);
             if(checkArrayOverlap(player,collisionRects)) {
                 player.translateY(-speed);
-                camera.translate(0, -speed);
             }
         }
         else if(movingDown) {
             player.translateY(-speed);
-            camera.translate(0, -speed);
             if(checkArrayOverlap(player,collisionRects)) {
                 player.translateY(speed);
-                camera.translate(0, speed);
             }
         }
     }
