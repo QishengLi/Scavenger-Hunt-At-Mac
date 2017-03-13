@@ -17,6 +17,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 
 public class MainGame extends ApplicationAdapter implements InputProcessor {
@@ -25,6 +26,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
     CampusMap mac;
     OrthographicCamera camera;
     TiledMapRenderer tiledMapRenderer;
+    Stage stage;
     SpriteBatch sb;
     Texture texture;
     Player player;
@@ -38,10 +40,14 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         camera = new OrthographicCamera();
         camera.setToOrtho(false,w,h);
         camera.update();
+
         tiledMap = new TmxMapLoader().load("campus_map.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         Gdx.input.setInputProcessor(this);
         mac = new CampusMap(tiledMap);
+
+        stage = new Stage();
+
         // Add background music
         bgm = Gdx.audio.newMusic(Gdx.files.internal("Fireflies.mp3"));
         bgm.setLooping(true); // looping music after it's finished
@@ -49,7 +55,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 
         sb = new SpriteBatch();
         texture = new Texture(Gdx.files.internal("pik.png"));
-        player = new Player(texture);
+        player = new Player(texture, stage);
         player.setCenter(w/2 + 50,h/2-50); //TODO: change position
     }
 
@@ -61,6 +67,8 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         camera.update(); // update the position of camera
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
+
+        stage.draw();
 
         player.makeMove(tiledMap);
         camera.position.set(player.getX(),player.getY(),0); // let the camera follow the player
@@ -101,10 +109,12 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         return false;
     }
 
-    @Override public boolean touchDown(int screenX, int screenY, int pointer, int button) {return true;}
+    @Override public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return stage.touchDown(screenX, screenY, pointer, button);
+    }
 
     @Override public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
+        return stage.touchUp(screenX, screenY, pointer, button);
     }
 
     @Override public boolean touchDragged(int screenX, int screenY, int pointer) {

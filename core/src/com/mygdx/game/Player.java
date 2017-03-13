@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapLayer;
@@ -8,7 +9,11 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
+
+import java.util.ArrayList;
 
 /**
  * Created by Shuni on 2/25/17.
@@ -18,18 +23,12 @@ public class Player extends Sprite {
     public static final float SPEED = 3f;
 
     private Direction movingDir;
+    private Stage stage;
 
-//    Skin skin;
-//
-//    Dialog dialog = new Dialog("Warning", skin) {
-//        public void result(Object obj) {
-//            System.out.println("result "+obj);
-//        }
-//    };
-
-    public Player(Texture texture) {
+    public Player(Texture texture, Stage stage) {
         super(texture);
         this.movingDir = Direction.IDLE;
+        this.stage = stage;
     }
 
     public void setDirection(Direction dir) {
@@ -109,10 +108,21 @@ public class Player extends Sprite {
             }
         }
         if(checkOverlap(doorRects)) {
-//            dialog.text("Are you sure you want to quit?");
-//            dialog.button("Yes", true); //sends "true" as the result
-//            dialog.button("No", false);  //sends "false" as the result
-//            dialog.show();
+            Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
+//            TextDialog txtBox = new TextDialog("CLUE", skin, "Is shuni the smartest person in this world?");
+//            txtBox.show(this.stage);
+
+            //先这里写了，以后再改，太累
+            ArrayList<ChoiceResponseTuple> sample = new ArrayList<>();
+            sample.add(new ChoiceResponseTuple("Shuni", "You are correct!"));
+            sample.add(new ChoiceResponseTuple("Zhaoqi", "You are correct!"));
+            sample.add(new ChoiceResponseTuple("Qisheng", "You are correct!"));
+
+
+            QuestionDialog dialogBox = new QuestionDialog("CLUE", skin, "Who is the smartest?",
+                    sample, this.stage);
+            dialogBox.show(this.stage);
+
             System.out.println("Overlap!");
         }
     }
