@@ -4,7 +4,6 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 public class CampusMap extends TiledMap {
     private final TiledMap map;
@@ -33,17 +32,17 @@ public class CampusMap extends TiledMap {
         float cameraBottom = cam.position.y - cameraHalfHeight;
         float cameraTop = cam.position.y + cameraHalfHeight;
 
-        if(cameraLeft + player.getSpeed() <= mapLeft) {
+        if(cameraLeft + Player.SPEED <= mapLeft) {
             cam.position.x = mapLeft + cameraHalfWidth;
         }
-        else if(cameraRight - player.getSpeed() >= mapWidth) {
+        else if(cameraRight - Player.SPEED >= mapWidth) {
             cam.position.x = mapWidth - cameraHalfWidth;
         }
 
-        if(cameraBottom + player.getSpeed() <= mapBottom) {
+        if(cameraBottom + Player.SPEED <= mapBottom) {
             cam.position.y = mapBottom + cameraHalfHeight;
         }
-        else if(cameraTop - player.getSpeed() >= mapHeight) {
+        else if(cameraTop - Player.SPEED >= mapHeight) {
             cam.position.y = mapHeight - cameraHalfHeight;
         }
     }

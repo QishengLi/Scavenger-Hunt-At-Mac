@@ -15,7 +15,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
@@ -50,7 +49,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 
         sb = new SpriteBatch();
         texture = new Texture(Gdx.files.internal("pik.png"));
-        player = new Player(texture, (TiledMapTileLayer) tiledMap.getLayers().get(0));
+        player = new Player(texture);
         player.setCenter(w/2 + 50,h/2-50); //TODO: change position
     }
 
@@ -63,7 +62,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
 
-        player.makeMove(player, tiledMap);
+        player.makeMove(tiledMap);
         camera.position.set(player.getX(),player.getY(),0); // let the camera follow the player
         mac.adjustBoundary(camera, player);
         sb.setProjectionMatrix(camera.combined); // Combine the character with the camera?
@@ -74,35 +73,27 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 
     // Called when a key was pressed
     @Override public boolean keyDown(int keycode) {
-        if(keycode == Input.Keys.RIGHT) {
-            player.setMovingRight(true);
-        }
-        if(keycode == Input.Keys.LEFT) {
-            player.setMovingLeft(true);
-        }
-        if(keycode == Input.Keys.UP) {
-            player.setMovingUp(true);
-        }
-        if(keycode == Input.Keys.DOWN) {
-            player.setMovingDown(true);
+        if (keycode == Input.Keys.UP) {
+            player.setDirection(Direction.UP);
+        } else if (keycode == Input.Keys.DOWN) {
+            player.setDirection(Direction.DOWN);
+        } else if (keycode == Input.Keys.LEFT) {
+            player.setDirection(Direction.LEFT);
+        } else if (keycode == Input.Keys.RIGHT) {
+            player.setDirection(Direction.RIGHT);
         }
         return false;
     }
 
     // Called when a key was released
     @Override public boolean keyUp(int keycode) {
-        if(keycode == Input.Keys.RIGHT) {
-            player.setMovingRight(false);
+        if ((keycode == Input.Keys.UP && player.getDirection() == Direction.UP) ||
+            (keycode == Input.Keys.DOWN && player.getDirection() == Direction.DOWN) ||
+            (keycode == Input.Keys.LEFT && player.getDirection() == Direction.LEFT) ||
+            (keycode == Input.Keys.RIGHT && player.getDirection() == Direction.RIGHT)) {
+            player.setDirection(Direction.IDLE);
         }
-        if(keycode == Input.Keys.LEFT) {
-            player.setMovingLeft(false);
-        }
-        if(keycode == Input.Keys.UP) {
-            player.setMovingUp(false);
-        }
-        if(keycode == Input.Keys.DOWN) {
-            player.setMovingDown(false);
-        }
+
         return false;
     }
 
