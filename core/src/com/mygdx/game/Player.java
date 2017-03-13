@@ -10,6 +10,8 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 
 /**
@@ -23,6 +25,13 @@ public class Player extends Sprite {
     private boolean movingUp;
     private boolean movingDown;
     private float speed = 3f;
+//    Skin skin;
+//
+//    Dialog dialog = new Dialog("Warning", skin) {
+//        public void result(Object obj) {
+//            System.out.println("result "+obj);
+//        }
+//    };
 
     public Player(Texture texture, TiledMapTileLayer collisionLayer) {
         super(texture);
@@ -42,24 +51,28 @@ public class Player extends Sprite {
         if(movingRight) {
             player.translateX(speed);
             if(checkArrayOverlap(player,collisionRects)) {
+                popUpMessage(player,tiledMap);
                 player.translateX(-speed);
             }
         }
         else if(movingLeft) {
             player.translateX(-speed);
             if(checkArrayOverlap(player,collisionRects)) {
+                popUpMessage(player,tiledMap);
                 player.translateX(speed);
             }
         }
         else if(movingUp) {
             player.translateY(speed);
             if(checkArrayOverlap(player,collisionRects)) {
+                popUpMessage(player,tiledMap);
                 player.translateY(-speed);
             }
         }
         else if(movingDown) {
             player.translateY(-speed);
             if(checkArrayOverlap(player,collisionRects)) {
+                popUpMessage(player,tiledMap);
                 player.translateY(speed);
             }
         }
@@ -84,6 +97,25 @@ public class Player extends Sprite {
         float p4x = rec2.getX() + rec2.getWidth();
         float p4y = rec2.getY();
         return (! ( (p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
+    }
+
+    public void popUpMessage(Player player, TiledMap tiledMap) {
+        MapLayer layer = tiledMap.getLayers().get("Doors");
+        MapObjects boxes = layer.getObjects();
+        Array<Rectangle> doorRects = new Array<Rectangle>();
+        for (MapObject box : boxes) {
+            if (box instanceof RectangleMapObject) {
+                Rectangle rect = ((RectangleMapObject) box).getRectangle();
+                doorRects.add(rect);
+            }
+        }
+        if(checkArrayOverlap(player,doorRects)) {
+//            dialog.text("Are you sure you want to quit?");
+//            dialog.button("Yes", true); //sends "true" as the result
+//            dialog.button("No", false);  //sends "false" as the result
+//            dialog.show();
+            System.out.println("Overlap!");
+        }
     }
 
     public float getSpeed() {
