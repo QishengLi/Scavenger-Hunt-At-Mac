@@ -20,6 +20,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.Random;
+
 
 public class MainGame extends ApplicationAdapter implements InputProcessor {
 
@@ -28,9 +30,12 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
     OrthographicCamera camera;
     TiledMapRenderer tiledMapRenderer;
     SpriteBatch sb;
-    Texture texture;
+    Texture playerImg;
+    Texture enemyImg;
+    Random rd;
     Player player;
     Enemy enemy;
+    Enemy enemy2;
     Music bgm;
     Array<Rectangle> collisionRects;
 
@@ -45,6 +50,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         tiledMap = new TmxMapLoader().load("campus_map.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         Gdx.input.setInputProcessor(this);
+        rd = new Random();
         mac = new CampusMap(tiledMap);
         collisionRects = mac.getCollisionBoxes();
         // Add background music
@@ -53,11 +59,14 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         bgm.play();
 
         sb = new SpriteBatch();
-        texture = new Texture(Gdx.files.internal("pik.png"));
-        player = new Player(texture);
-        enemy = new Enemy(texture);
+        playerImg = new Texture(Gdx.files.internal("pik.png"));
+        enemyImg = new Texture(Gdx.files.internal("goblinsword.png"));
+        player = new Player(playerImg);
         player.setCenter(w/2 + 50,h/2-50); //TODO: change position
-        enemy.setCenter(w/2 + 200, h/2 - 50);
+        enemy = new Enemy(enemyImg);
+        enemy.setCenter(rd.nextInt(mac.mapWidth), rd.nextInt(mac.mapHeight));
+        enemy2 = new Enemy(enemyImg);
+        enemy2.setCenter(rd.nextInt(mac.mapWidth), rd.nextInt(mac.mapHeight));
     }
 
     @Override public void render () {
@@ -69,13 +78,15 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
         player.makeMove(tiledMap, collisionRects);
-        enemy.makeMove(tiledMap, collisionRects);
+        enemy.makeEnemyMove(player, collisionRects);
+        enemy2.makeEnemyMove(player, collisionRects);
         camera.position.set(player.getX(),player.getY(),0); // let the camera follow the player
         mac.adjustBoundary(camera);
         sb.setProjectionMatrix(camera.combined); // Combine the character with the camera?
         sb.begin();
         player.draw(sb); // draw the character
         enemy.draw(sb);
+        enemy2.draw(sb);
         sb.end();
     }
 
