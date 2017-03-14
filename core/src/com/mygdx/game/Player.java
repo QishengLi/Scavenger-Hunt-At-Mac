@@ -40,16 +40,7 @@ public class Player extends Sprite {
         return this.movingDir;
     }
 
-    public void makeMove(TiledMap tiledMap){
-        MapLayer layer = tiledMap.getLayers().get("CollisionBoxes");
-        MapObjects boxes = layer.getObjects();
-        Array<Rectangle> collisionRects = new Array<>();
-        for (MapObject box : boxes) {
-            if (box instanceof RectangleMapObject) {
-                Rectangle rect = ((RectangleMapObject) box).getRectangle();
-                collisionRects.add(rect);
-            }
-        }
+    public void makeMove(TiledMap tiledMap, Array<Rectangle> collisionRects){
 
         float oldXPos = getX();
         float oldYPos = getY();
@@ -76,7 +67,7 @@ public class Player extends Sprite {
     }
 
 
-    private boolean checkOverlap(Array<Rectangle> rects) {
+    public boolean checkOverlap(Array<Rectangle> rects) {
         for (Rectangle rect : rects) {
             if (checkTileOverlap(rect)){
                 return true;

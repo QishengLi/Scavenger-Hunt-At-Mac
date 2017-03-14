@@ -17,6 +17,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 
 
 public class MainGame extends ApplicationAdapter implements InputProcessor {
@@ -28,7 +30,9 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
     SpriteBatch sb;
     Texture texture;
     Player player;
+    Enemy enemy;
     Music bgm;
+    Array<Rectangle> collisionRects;
 
     @Override public void create () {
 
@@ -42,6 +46,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         Gdx.input.setInputProcessor(this);
         mac = new CampusMap(tiledMap);
+        collisionRects = mac.getCollisionBoxes();
         // Add background music
         bgm = Gdx.audio.newMusic(Gdx.files.internal("Fireflies.mp3"));
         bgm.setLooping(true); // looping music after it's finished
@@ -50,7 +55,9 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         sb = new SpriteBatch();
         texture = new Texture(Gdx.files.internal("pik.png"));
         player = new Player(texture);
+        enemy = new Enemy(texture);
         player.setCenter(w/2 + 50,h/2-50); //TODO: change position
+        enemy.setCenter(w/2 + 200, h/2 - 50);
     }
 
     @Override public void render () {
@@ -61,13 +68,14 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         camera.update(); // update the position of camera
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
-
-        player.makeMove(tiledMap);
+        player.makeMove(tiledMap, collisionRects);
+        enemy.makeMove(tiledMap, collisionRects);
         camera.position.set(player.getX(),player.getY(),0); // let the camera follow the player
-        mac.adjustBoundary(camera, player);
+        mac.adjustBoundary(camera);
         sb.setProjectionMatrix(camera.combined); // Combine the character with the camera?
         sb.begin();
         player.draw(sb); // draw the character
+        enemy.draw(sb);
         sb.end();
     }
 
