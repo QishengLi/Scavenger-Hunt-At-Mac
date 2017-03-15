@@ -90,14 +90,7 @@ public class Player extends Sprite {
 
     private void popUpMessage(TiledMap tiledMap) {
         MapLayer layer = tiledMap.getLayers().get("Doors");
-        MapObjects boxes = layer.getObjects();
-        Array<Rectangle> doorRects = new Array<Rectangle>();
-        for (MapObject box : boxes) {
-            if (box instanceof RectangleMapObject) {
-                Rectangle rect = ((RectangleMapObject) box).getRectangle();
-                doorRects.add(rect);
-            }
-        }
+        Array<Rectangle> doorRects = CampusMap.getRects(layer);
         if(checkOverlap(doorRects)) {
             Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 //            TextDialog txtBox = new TextDialog("CLUE", skin, "Is shuni the smartest person in this world?");

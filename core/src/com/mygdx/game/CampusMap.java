@@ -55,6 +55,10 @@ public class CampusMap extends TiledMap {
 
     public Array<Rectangle> getCollisionBoxes() {
         MapLayer layer = map.getLayers().get("CollisionBoxes");
+        return getRects(layer);
+    }
+
+    public static Array<Rectangle> getRects(MapLayer layer) {
         MapObjects boxes = layer.getObjects();
         Array<Rectangle> collisionRects = new Array<>();
         for (MapObject box : boxes) {
