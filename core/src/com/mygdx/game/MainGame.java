@@ -18,6 +18,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.Random;
@@ -29,6 +30,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
     CampusMap mac;
     OrthographicCamera camera;
     TiledMapRenderer tiledMapRenderer;
+    Stage stage;
     SpriteBatch sb;
     Texture playerImg;
     Texture enemyImg;
@@ -47,12 +49,16 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         camera = new OrthographicCamera();
         camera.setToOrtho(false,w,h);
         camera.update();
+
         tiledMap = new TmxMapLoader().load("campus_map.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         Gdx.input.setInputProcessor(this);
         rd = new Random();
         mac = new CampusMap(tiledMap);
         collisionRects = mac.getCollisionBoxes();
+
+        stage = new Stage();
+
         // Add background music
         bgm = Gdx.audio.newMusic(Gdx.files.internal("Fireflies.mp3"));
         bgm.setLooping(true); // looping music after it's finished
@@ -61,11 +67,11 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         sb = new SpriteBatch();
         playerImg = new Texture(Gdx.files.internal("pik.png"));
         enemyImg = new Texture(Gdx.files.internal("goblinsword.png"));
-        player = new Player(playerImg);
+        player = new Player(playerImg, stage);
         player.setCenter(w/2 + 50,h/2-50); //TODO: change position
-        enemy = new Enemy(enemyImg);
+        enemy = new Enemy(enemyImg, stage);
         enemy.setCenter(rd.nextInt(mac.mapWidth), rd.nextInt(mac.mapHeight));
-        enemy2 = new Enemy(enemyImg);
+        enemy2 = new Enemy(enemyImg, stage);
         enemy2.setCenter(rd.nextInt(mac.mapWidth), rd.nextInt(mac.mapHeight));
     }
 
@@ -80,6 +86,9 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         player.makeMove(tiledMap, collisionRects);
         enemy.makeEnemyMove(player, collisionRects);
         enemy2.makeEnemyMove(player, collisionRects);
+
+        stage.draw();
+
         camera.position.set(player.getX(),player.getY(),0); // let the camera follow the player
         mac.adjustBoundary(camera);
         sb.setProjectionMatrix(camera.combined); // Combine the character with the camera?
@@ -120,10 +129,12 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         return false;
     }
 
-    @Override public boolean touchDown(int screenX, int screenY, int pointer, int button) {return true;}
+    @Override public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return stage.touchDown(screenX, screenY, pointer, button);
+    }
 
     @Override public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
+        return stage.touchUp(screenX, screenY, pointer, button);
     }
 
     @Override public boolean touchDragged(int screenX, int screenY, int pointer) {

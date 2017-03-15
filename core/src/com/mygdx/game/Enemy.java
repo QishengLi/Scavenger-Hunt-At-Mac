@@ -1,13 +1,8 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.Random;
@@ -19,8 +14,8 @@ public class Enemy extends Player {
 
     Random rd = new Random();
 
-    public Enemy (Texture texture) {
-        super(texture);
+    public Enemy (Texture texture, Stage stage) {
+        super(texture, stage);
     }
 
     public void makeEnemyMove(Player player, Array<Rectangle> collisionRects){
