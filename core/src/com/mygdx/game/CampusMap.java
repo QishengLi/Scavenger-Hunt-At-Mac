@@ -11,6 +11,9 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * Created by Zhaoqi on 2017/3/12.
+ */
 public class CampusMap extends TiledMap {
     private final TiledMap map;
     MapProperties prop;

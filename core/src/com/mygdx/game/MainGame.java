@@ -85,7 +85,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         camera.update(); // update the position of camera
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
-        player.makeMove(tiledMap, collisionRects, doors);
+        player.makeMove(collisionRects, doors);
         enemy.makeEnemyMove(player, collisionRects);
         enemy2.makeEnemyMove(player, collisionRects);
 

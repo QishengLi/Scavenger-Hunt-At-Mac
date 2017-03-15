@@ -3,11 +3,6 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -39,7 +34,7 @@ public class Player extends Sprite {
         return this.movingDir;
     }
 
-    public void makeMove(TiledMap tiledMap, Array<Rectangle> collisionRects, Array<Rectangle> doorRects){
+    public void makeMove(Array<Rectangle> collisionRects, Array<Rectangle> doorRects){
 
         float oldXPos = getX();
         float oldYPos = getY();
@@ -60,7 +55,7 @@ public class Player extends Sprite {
         }
 
         if (checkOverlap(collisionRects)) {
-            popUpMessage(doorRects, tiledMap);
+            popUpMessage(doorRects);
             setPosition(oldXPos, oldYPos);
         }
     }
@@ -88,9 +83,10 @@ public class Player extends Sprite {
         return (! ( (p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
     }
 
-    private void popUpMessage(Array<Rectangle> doorRects, TiledMap tiledMap) {
-        for (Rectangle rect : doorRects) {
-            if (checkTileOverlap(rect)){
+    private void popUpMessage(Array<Rectangle> doorRects) {
+        if (doorRects.random() != null) { // check if the array is empty
+            Rectangle rect = doorRects.first();
+            if (checkTileOverlap(rect)) {
                 Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 //            TextDialog txtBox = new TextDialog("CLUE", skin, "Is shuni the smartest person in this world?");
 //            txtBox.show(this.stage);
