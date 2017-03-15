@@ -58,15 +58,20 @@ public class CampusMap extends TiledMap {
         return getRects(layer);
     }
 
-    public static Array<Rectangle> getRects(MapLayer layer) {
+    public Array<Rectangle> getDoors() {
+        MapLayer layer = map.getLayers().get("Doors");
+        return getRects(layer);
+    }
+
+    public Array<Rectangle> getRects(MapLayer layer) {
         MapObjects boxes = layer.getObjects();
-        Array<Rectangle> collisionRects = new Array<>();
+        Array<Rectangle> rects = new Array<>();
         for (MapObject box : boxes) {
             if (box instanceof RectangleMapObject) {
                 Rectangle rect = ((RectangleMapObject) box).getRectangle();
-                collisionRects.add(rect);
+                rects.add(rect);
             }
         }
-        return collisionRects;
+        return rects;
     }
 }

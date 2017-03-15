@@ -31,6 +31,7 @@ public class QuestionDialog extends Dialog {
     @Override
     protected void result(final Object object) {
         TextDialog responseDialog = new TextDialog(this.title, this.skin, object.toString());
+        remove(); // bug, why???
         responseDialog.show(this.stage);
     }
 }

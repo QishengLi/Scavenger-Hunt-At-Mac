@@ -39,7 +39,7 @@ public class Player extends Sprite {
         return this.movingDir;
     }
 
-    public void makeMove(TiledMap tiledMap, Array<Rectangle> collisionRects){
+    public void makeMove(TiledMap tiledMap, Array<Rectangle> collisionRects, Array<Rectangle> doorRects){
 
         float oldXPos = getX();
         float oldYPos = getY();
@@ -60,7 +60,7 @@ public class Player extends Sprite {
         }
 
         if (checkOverlap(collisionRects)) {
-            popUpMessage(tiledMap);
+            popUpMessage(doorRects, tiledMap);
             setPosition(oldXPos, oldYPos);
         }
     }
@@ -88,26 +88,25 @@ public class Player extends Sprite {
         return (! ( (p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
     }
 
-    private void popUpMessage(TiledMap tiledMap) {
-        MapLayer layer = tiledMap.getLayers().get("Doors");
-        Array<Rectangle> doorRects = CampusMap.getRects(layer);
-        if(checkOverlap(doorRects)) {
-            Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
+    private void popUpMessage(Array<Rectangle> doorRects, TiledMap tiledMap) {
+        for (Rectangle rect : doorRects) {
+            if (checkTileOverlap(rect)){
+                Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 //            TextDialog txtBox = new TextDialog("CLUE", skin, "Is shuni the smartest person in this world?");
 //            txtBox.show(this.stage);
 
-            //先这里写了，以后再改，太累
-            ArrayList<ChoiceResponseTuple> sample = new ArrayList<>();
-            sample.add(new ChoiceResponseTuple("Shuni", "You are correct!"));
-            sample.add(new ChoiceResponseTuple("Zhaoqi", "You are correct!"));
-            sample.add(new ChoiceResponseTuple("Qisheng", "You are correct!"));
+                //先这里写了，以后再改，太累
+                ArrayList<ChoiceResponseTuple> sample = new ArrayList<>();
+                sample.add(new ChoiceResponseTuple("Shuni", "You are correct!"));
+                sample.add(new ChoiceResponseTuple("Zhaoqi", "You are correct!"));
+                sample.add(new ChoiceResponseTuple("Qisheng", "You are correct!"));
 
 
-            QuestionDialog dialogBox = new QuestionDialog("CLUE", skin, "Who is the smartest?",
-                    sample, this.stage);
-            dialogBox.show(this.stage);
-
-            System.out.println("Overlap!");
+                QuestionDialog dialogBox = new QuestionDialog("CLUE", skin, "Who is the smartest?",
+                        sample, this.stage);
+                dialogBox.show(this.stage);
+                doorRects.removeValue(rect, true);
+            }
         }
     }
 }

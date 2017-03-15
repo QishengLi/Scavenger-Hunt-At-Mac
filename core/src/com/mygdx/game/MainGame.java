@@ -40,6 +40,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
     Enemy enemy2;
     Music bgm;
     Array<Rectangle> collisionRects;
+    Array<Rectangle> doors;
 
     @Override public void create () {
 
@@ -56,6 +57,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         rd = new Random();
         mac = new CampusMap(tiledMap);
         collisionRects = mac.getCollisionBoxes();
+        doors = mac.getDoors();
 
         stage = new Stage();
 
@@ -83,7 +85,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         camera.update(); // update the position of camera
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
-        player.makeMove(tiledMap, collisionRects);
+        player.makeMove(tiledMap, collisionRects, doors);
         enemy.makeEnemyMove(player, collisionRects);
         enemy2.makeEnemyMove(player, collisionRects);
 
