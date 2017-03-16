@@ -37,6 +37,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
     Texture enemyImg;
     Random rd;
     Player player;
+    Array<Enemy> enemies;
     Enemy enemy;
     Enemy enemy2;
     Music bgm;
@@ -76,10 +77,8 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         player = new Player(playerImg, stage);
         player.setCenter(w/2 + 50,h/2-50); //TODO: change position
         questions = player.generateQuestions(skin);
-        enemy = new Enemy(enemyImg, stage);
-        enemy.setCenter(rd.nextInt(mac.mapWidth), rd.nextInt(mac.mapHeight));
-        enemy2 = new Enemy(enemyImg, stage);
-        enemy2.setCenter(rd.nextInt(mac.mapWidth), rd.nextInt(mac.mapHeight));
+        enemies = new Array<>();
+        initializeEnemies(enemies, 3);
     }
 
     @Override public void render () {
@@ -91,8 +90,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
         player.makeMove(questions, collisionRects, doors, skin);
-        enemy.makeEnemyMove(player, collisionRects);
-        enemy2.makeEnemyMove(player, collisionRects);
+        ememyMoves(enemies);
 
         stage.draw();
 
@@ -101,11 +99,29 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         sb.setProjectionMatrix(camera.combined); // Combine the character with the camera?
         sb.begin();
         player.draw(sb); // draw the character
-        enemy.draw(sb);
-        enemy2.draw(sb);
+        drawEnemies(enemies);
         sb.end();
     }
 
+    public void initializeEnemies(Array<Enemy> enemies, int ct) {
+        for (int i = 1; i <= ct; i++) {
+            Enemy enemy = new Enemy(enemyImg, stage);
+            enemy.setCenter(rd.nextInt(mac.mapWidth), rd.nextInt(mac.mapHeight));
+            enemies.add(enemy);
+        }
+    }
+
+    public void ememyMoves(Array<Enemy> enemies) {
+        for (Enemy enemy : enemies) {
+            enemy.makeEnemyMove(player, collisionRects);
+        }
+    }
+
+    public void drawEnemies(Array<Enemy> enemies) {
+        for (Enemy enemy : enemies) {
+            enemy.draw(sb);
+        }
+    }
     // Called when a key was pressed
     @Override public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.UP) {
