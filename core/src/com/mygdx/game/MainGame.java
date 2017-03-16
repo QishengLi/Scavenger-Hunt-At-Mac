@@ -19,6 +19,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.Random;
@@ -39,6 +40,8 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
     Enemy enemy;
     Enemy enemy2;
     Music bgm;
+    Skin skin;
+    Array<QuestionDialog> questions;
     Array<Rectangle> collisionRects;
     Array<Rectangle> doors;
 
@@ -60,6 +63,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         doors = mac.getDoors();
 
         stage = new Stage();
+        skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
         // Add background music
         bgm = Gdx.audio.newMusic(Gdx.files.internal("Fireflies.mp3"));
@@ -71,6 +75,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         enemyImg = new Texture(Gdx.files.internal("goblinsword.png"));
         player = new Player(playerImg, stage);
         player.setCenter(w/2 + 50,h/2-50); //TODO: change position
+        questions = player.generateQuestions(skin);
         enemy = new Enemy(enemyImg, stage);
         enemy.setCenter(rd.nextInt(mac.mapWidth), rd.nextInt(mac.mapHeight));
         enemy2 = new Enemy(enemyImg, stage);
@@ -85,7 +90,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         camera.update(); // update the position of camera
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
-        player.makeMove(collisionRects, doors);
+        player.makeMove(questions, collisionRects, doors, skin);
         enemy.makeEnemyMove(player, collisionRects);
         enemy2.makeEnemyMove(player, collisionRects);
 

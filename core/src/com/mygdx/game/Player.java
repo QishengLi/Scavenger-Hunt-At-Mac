@@ -34,7 +34,7 @@ public class Player extends Sprite {
         return this.movingDir;
     }
 
-    public void makeMove(Array<Rectangle> collisionRects, Array<Rectangle> doorRects){
+    public void makeMove(Array<QuestionDialog> questions, Array<Rectangle> collisionRects, Array<Rectangle> doorRects, Skin skin){
 
         float oldXPos = getX();
         float oldYPos = getY();
@@ -55,7 +55,7 @@ public class Player extends Sprite {
         }
 
         if (checkOverlap(collisionRects)) {
-            popUpMessage(doorRects);
+            popUpMessage(questions, doorRects, skin);
             setPosition(oldXPos, oldYPos);
         }
     }
@@ -83,26 +83,40 @@ public class Player extends Sprite {
         return (! ( (p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
     }
 
-    private void popUpMessage(Array<Rectangle> doorRects) {
-        if (doorRects.random() != null) { // check if the array is empty
-            Rectangle rect = doorRects.first();
-            if (checkTileOverlap(rect)) {
-                Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
+    private void popUpMessage(Array<QuestionDialog> questions, Array<Rectangle> doorRects, Skin skin) {
+        if (doorRects.random() == null) { // check if the array is empty
+            return;
+        }
+        Rectangle rect = doorRects.first();
+        if (checkTileOverlap(rect)) {
 //            TextDialog txtBox = new TextDialog("CLUE", skin, "Is shuni the smartest person in this world?");
 //            txtBox.show(this.stage);
 
-                //先这里写了，以后再改，太累
-                ArrayList<ChoiceResponseTuple> sample = new ArrayList<>();
-                sample.add(new ChoiceResponseTuple("Shuni", "You are correct!"));
-                sample.add(new ChoiceResponseTuple("Zhaoqi", "You are correct!"));
-                sample.add(new ChoiceResponseTuple("Qisheng", "You are correct!"));
-
-
-                QuestionDialog dialogBox = new QuestionDialog("CLUE", skin, "Who is the smartest?",
-                        sample, this.stage);
-                dialogBox.show(this.stage);
-                doorRects.removeValue(rect, true);
+            if(questions.random() == null) {
+                return;
             }
+            QuestionDialog dialogBox = questions.removeIndex(0);
+            dialogBox.show(this.stage);
+            doorRects.removeValue(rect, true);
         }
+    }
+
+    public Array<QuestionDialog> generateQuestions(Skin skin) {
+        Array<QuestionDialog> questions = new Array<>();
+
+        ArrayList<ChoiceResponseTuple> sample = new ArrayList<>();
+        sample.add(new ChoiceResponseTuple("1874", "You are correct!"));
+        sample.add(new ChoiceResponseTuple("1974", "You are wrong!"));
+        sample.add(new ChoiceResponseTuple("2074", "You are wrong!"));
+        questions.add(new QuestionDialog("CLUE", skin, "When was Macalester founded?",
+                sample, this.stage));
+
+        ArrayList<ChoiceResponseTuple> sample2 = new ArrayList<>();
+        sample2.add(new ChoiceResponseTuple("Shuni", "You are correct!"));
+        sample2.add(new ChoiceResponseTuple("Zhaoqi", "You are correct!"));
+        sample2.add(new ChoiceResponseTuple("Qisheng", "You are correct!"));
+        questions.add(new QuestionDialog("CLUE", skin, "Who is the smartest?",
+                sample2, this.stage));
+        return questions;
     }
 }
