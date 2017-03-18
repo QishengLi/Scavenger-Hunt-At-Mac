@@ -38,8 +38,6 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
     Random rd;
     Player player;
     Array<Enemy> enemies;
-    Enemy enemy;
-    Enemy enemy2;
     Music bgm;
     Skin skin;
     Array<QuestionDialog> questions;
@@ -91,6 +89,10 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
         player.makeMove(questions, collisionRects, doors, skin);
         ememyMoves(enemies);
+        player.hitEnemy(enemies);
+        if(!player.isAlive(player.HEALTH)) {
+            Gdx.app.exit();
+        }
 
         stage.draw();
 

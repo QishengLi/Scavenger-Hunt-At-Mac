@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class Player extends Sprite {
 
     public static final float SPEED = 3f;
+    public int HEALTH = 3;
 
     private Direction movingDir;
     private Stage stage;
@@ -83,6 +84,20 @@ public class Player extends Sprite {
         return (! ( (p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
     }
 
+    //TODO: Merge this method with the previous one.
+    private boolean checkEnemyOverlap(Enemy rec2) {
+        float p1x = getX();
+        float p1y = getY() + getHeight();
+        float p2x = getX() + getWidth();
+        float p2y = getY();
+
+        float p3x = rec2.getX();
+        float p3y = rec2.getY() + rec2.getHeight();
+        float p4x = rec2.getX() + rec2.getWidth();
+        float p4y = rec2.getY();
+        return (! ( (p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
+    }
+
     private void popUpMessage(Array<QuestionDialog> questions, Array<Rectangle> doorRects, Skin skin) {
         if (doorRects.random() == null) { // check if the array is empty
             return;
@@ -118,5 +133,18 @@ public class Player extends Sprite {
         questions.add(new QuestionDialog("CLUE", skin, "Who is the smartest?",
                 sample2, this.stage));
         return questions;
+    }
+
+    public void hitEnemy(Array<Enemy> enemies) {
+        for (Enemy enemy : enemies) {
+            if(checkEnemyOverlap(enemy)) {
+                HEALTH--;
+                enemies.removeValue(enemy, true);
+            }
+        }
+    }
+
+    public boolean isAlive(int health) {
+        return (health > 0);
     }
 }
