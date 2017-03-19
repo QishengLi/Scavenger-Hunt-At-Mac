@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.data;
 
 /**
  * Created by Shuni on 3/13/17.

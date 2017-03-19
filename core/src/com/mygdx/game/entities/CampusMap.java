@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.entities;
 
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,9 +16,9 @@ import com.badlogic.gdx.utils.Array;
  */
 public class CampusMap extends TiledMap {
     private final TiledMap map;
-    MapProperties prop;
-    int mapWidth;
-    int mapHeight;
+    public MapProperties prop;
+    public int mapWidth;
+    public int mapHeight;
 
 	public CampusMap(TiledMap map) {
 	    this.map = map;

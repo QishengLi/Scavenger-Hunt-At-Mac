@@ -1,12 +1,14 @@
-package com.mygdx.game;
+package com.mygdx.game.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.data.ChoiceResponseTuple;
+import com.mygdx.game.data.Direction;
+import com.mygdx.game.utils.QuestionDialog;
 
 import java.util.ArrayList;
 
