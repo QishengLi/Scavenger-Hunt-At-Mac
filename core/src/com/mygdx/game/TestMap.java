@@ -30,8 +30,8 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
 
     @Override public void create () {
         //TODO: change size
-        float w = 1024;
-        float h = 1024;
+        float w = 640;
+        float h = 480;
         //float w = Gdx.graphics.getWidth();
         //float h = Gdx.graphics.getHeight();
 
@@ -46,7 +46,7 @@ public class TestMap extends ApplicationAdapter implements InputProcessor {
 
         texture = new Texture(Gdx.files.internal("pik.png"));
         player = new Player(texture, (TiledMapTileLayer) tiledMap.getLayers().get(0));
-        player.setCenter(w/2 + 50,h/2-400); //TODO: change position
+        player.setCenter(w/2,h/2+40); //TODO: change position
     }
 
     @Override public void render () {
