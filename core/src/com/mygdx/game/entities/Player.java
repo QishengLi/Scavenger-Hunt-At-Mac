@@ -14,14 +14,16 @@ import java.util.ArrayList;
 
 /**
  * Created by Shuni on 2/25/17.
+ *
+ * TODO: game stops when message pops up
  */
 public class Player extends Sprite {
 
     public static final float SPEED = 3f;
-    public int HEALTH = 3;
+    public int HEALTH = 4;
 
     private Direction movingDir;
-    private Stage stage;
+    private Stage stage;//?
 
     public Player(Texture texture, Stage stage) {
         super(texture);
@@ -37,7 +39,9 @@ public class Player extends Sprite {
         return this.movingDir;
     }
 
-    public void makeMove(Array<QuestionDialog> questions, Array<Rectangle> collisionRects, Array<Rectangle> doorRects, Skin skin){
+    //TODO: refactor
+    public void makeMove(Array<QuestionDialog> questions, Array<Rectangle> collisionRects,
+                         Array<Rectangle> doorRects, Skin skin){
 
         float oldXPos = getX();
         float oldYPos = getY();
@@ -106,8 +110,6 @@ public class Player extends Sprite {
         }
         Rectangle rect = doorRects.first();
         if (checkTileOverlap(rect)) {
-//            TextDialog txtBox = new TextDialog("CLUE", skin, "Is shuni the smartest person in this world?");
-//            txtBox.show(this.stage);
 
             if(questions.random() == null) {
                 return;
