@@ -6,11 +6,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.data.ChoiceResponseTuple;
 import com.mygdx.game.data.Direction;
+import com.mygdx.game.data.QuestionText;
 import com.mygdx.game.utils.QuestionDialog;
-
-import java.util.ArrayList;
 
 /**
  * Created by Shuni on 2/25/17.
@@ -108,21 +106,15 @@ public class Player extends Sprite {
     }
 
     public Array<QuestionDialog> generateQuestions(Skin skin) {
+
         Array<QuestionDialog> questions = new Array<>();
 
-        ArrayList<ChoiceResponseTuple> sample = new ArrayList<>();
-        sample.add(new ChoiceResponseTuple("1874", "You are correct!"));
-        sample.add(new ChoiceResponseTuple("1974", "You are wrong!"));
-        sample.add(new ChoiceResponseTuple("2074", "You are wrong!"));
-        questions.add(new QuestionDialog("CLUE", skin, "When was Macalester founded?",
-                sample, this.stage));
+        QuestionText qt = new QuestionText();
+        qt.initQuestions();
 
-        ArrayList<ChoiceResponseTuple> sample2 = new ArrayList<>();
-        sample2.add(new ChoiceResponseTuple("Shuni", "You are correct!"));
-        sample2.add(new ChoiceResponseTuple("Zhaoqi", "You are correct!"));
-        sample2.add(new ChoiceResponseTuple("Qisheng", "You are correct!"));
-        questions.add(new QuestionDialog("CLUE", skin, "Who is the smartest?",
-                sample2, this.stage));
+        questions.add(new QuestionDialog("CLUE", skin, qt.getQuestion(0), this.stage));
+        questions.add(new QuestionDialog("CLUE", skin, qt.getQuestion(1), this.stage));
+
         return questions;
     }
 

@@ -4,8 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.data.ChoiceResponseTuple;
-
-import java.util.ArrayList;
+import com.mygdx.game.data.MultipleChoice;
 
 /**
  * Created by Shuni on 3/12/17.
@@ -15,16 +14,17 @@ public class QuestionDialog extends Dialog {
     private Skin skin;
     private Stage stage;
     private String title;
+    private MultipleChoice question;
 
-    public QuestionDialog(String title, Skin skin, String question,
-                          ArrayList<ChoiceResponseTuple> tuples, Stage stage) {
+    public QuestionDialog(String title, Skin skin, MultipleChoice question, Stage stage) {
         super(title, skin);
         this.skin = skin;
         this.stage = stage;
         this.title = title;
+        this.question = question;
 
-        text(question);
-        for (ChoiceResponseTuple t : tuples) {
+        text(question.getQuestion());
+        for (ChoiceResponseTuple t : question.getChoices()) {
             button(t.getChoice(), t.getResponse());
         }
     }
