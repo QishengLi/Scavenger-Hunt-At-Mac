@@ -61,23 +61,23 @@ public class Player extends Sprite {
                 break;
         }
 
-        if (checkOverlap(collisionRects)) {
+        if (isOverlappedArray(collisionRects)) {
             popUpMessage(questions, doorRects, skin);
             setPosition(oldXPos, oldYPos);
         }
     }
 
 
-    public boolean checkOverlap(Array<Rectangle> rects) {
+    public boolean isOverlappedArray(Array<Rectangle> rects) {
         for (Rectangle rect : rects) {
-            if (checkTileOverlap(rect)){
+            if (isOverlapped(rect)){
                 return true;
             }
         }
         return false;
     }
 
-    private boolean checkTileOverlap(Rectangle rec2) {
+    private boolean isOverlapped(Rectangle rec2) {
         float p1x = getX();
         float p1y = getY() + getHeight();
         float p2x = getX() + getWidth();
@@ -87,21 +87,7 @@ public class Player extends Sprite {
         float p3y = rec2.getY() + rec2.getHeight();
         float p4x = rec2.getX() + rec2.getWidth();
         float p4y = rec2.getY();
-        return (! ( (p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
-    }
-
-    //TODO: Merge this method with the previous one.
-    private boolean checkEnemyOverlap(Enemy rec2) {
-        float p1x = getX();
-        float p1y = getY() + getHeight();
-        float p2x = getX() + getWidth();
-        float p2y = getY();
-
-        float p3x = rec2.getX();
-        float p3y = rec2.getY() + rec2.getHeight();
-        float p4x = rec2.getX() + rec2.getWidth();
-        float p4y = rec2.getY();
-        return (! ( (p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
+        return (!((p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
     }
 
     private void popUpMessage(Array<QuestionDialog> questions, Array<Rectangle> doorRects, Skin skin) {
@@ -109,7 +95,8 @@ public class Player extends Sprite {
             return;
         }
         Rectangle rect = doorRects.first();
-        if (checkTileOverlap(rect)) {
+
+        if (isOverlapped(rect)) {
 
             if(questions.random() == null) {
                 return;
@@ -141,7 +128,7 @@ public class Player extends Sprite {
 
     public void hitEnemy(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
-            if(checkEnemyOverlap(enemy)) {
+            if(isOverlapped(enemy.getBoundingRectangle())) {
                 HEALTH--;
                 enemies.removeValue(enemy, true);
             }
