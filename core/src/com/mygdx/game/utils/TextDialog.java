@@ -1,6 +1,5 @@
 package com.mygdx.game.utils;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
@@ -8,9 +7,7 @@ import com.badlogic.gdx.utils.Align;
 /**
  * Created by Shuni on 3/12/17.
  */
-public class TextDialog extends Dialog {
-
-    private static final int LABEL_WIDTH = 300;
+public class TextDialog extends CustomDialog {
 
     public TextDialog(String title, Skin skin, String dialogText) {
         super(title, skin);
@@ -23,8 +20,8 @@ public class TextDialog extends Dialog {
         button("OK");
     }
 
-    @Override
-    protected void result(Object object) {
+    @Override protected void result(Object object) {
+        super.result(object);
         remove();
     }
 }

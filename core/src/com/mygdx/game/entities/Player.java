@@ -62,6 +62,7 @@ public class Player extends Sprite {
         if (isOverlappedArray(collisionRects)) {
             popUpMessage(questions, doorRects);
             setPosition(oldXPos, oldYPos);
+            setDirection(Direction.IDLE);
         }
     }
 
@@ -99,9 +100,9 @@ public class Player extends Sprite {
             if(questions.random() == null) {
                 return;
             }
-            QuestionDialog dialogBox = questions.removeIndex(0);
+            QuestionDialog dialogBox = questions.get(0);
             dialogBox.show(this.stage);
-            doorRects.removeValue(rect, true);
+//            doorRects.removeValue(rect, true);
         }
     }
 

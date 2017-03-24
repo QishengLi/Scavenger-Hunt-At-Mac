@@ -13,12 +13,17 @@ import java.util.Random;
 public class Enemy extends Player {
 
     Random rd = new Random();
+    private boolean shouldFreeze;
 
     public Enemy (Texture texture, Stage stage) {
-        super(texture, stage);
+    super(texture, stage);
+    this.shouldFreeze = false;
     }
 
     public void makeEnemyMove(Player player, Array<Rectangle> collisionRects){
+        if (this.shouldFreeze)
+            return;
+
         float enemySpeedX = player.getX() - getX();
         float enemySpeedY = player.getY() - getY();
         //System.out.print(enemySpeedX);
@@ -31,8 +36,8 @@ public class Enemy extends Player {
         randomMove(nextDir);
 
         //if (checkOverlap(collisionRects)) {
-        //    setPosition(150, 150);
-        //}
+        //    setPosition(150, 150);
+        // }
     }
 
     public void randomMove(int nextDir) {
@@ -51,5 +56,9 @@ public class Enemy extends Player {
                 translateX(SPEED/2.0f);
                 break;
         }
+    }
+
+    public void setFreeze(boolean freeze) {
+        this.shouldFreeze = freeze;
     }
 }
