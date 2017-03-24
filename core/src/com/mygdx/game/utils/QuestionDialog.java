@@ -20,6 +20,7 @@ public class QuestionDialog extends Dialog {
 
 
     public QuestionDialog(String title, Skin skin, MultipleChoice question, Stage stage) {
+
         super(title, skin);
         this.skin = skin;
         this.stage = stage;

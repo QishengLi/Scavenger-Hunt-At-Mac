@@ -1,13 +1,14 @@
 package com.mygdx.game.data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Shuni on 3/22/17.
  */
 public class QuestionText {
 
-    private ArrayList<MultipleChoice> Qs = new ArrayList<>();
+    private List<MultipleChoice> Qs = new ArrayList<>();
 
     public QuestionText() { }
 
@@ -29,7 +30,7 @@ public class QuestionText {
 
     }
 
-    public ArrayList<MultipleChoice> getQs(){
+    public List<MultipleChoice> getQs(){
         return this.Qs;
     }
 

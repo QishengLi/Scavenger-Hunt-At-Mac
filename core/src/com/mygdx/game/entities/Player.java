@@ -60,7 +60,7 @@ public class Player extends Sprite {
         }
 
         if (isOverlappedArray(collisionRects)) {
-            popUpMessage(questions, doorRects, skin);
+            popUpMessage(questions, doorRects);
             setPosition(oldXPos, oldYPos);
         }
     }
@@ -88,7 +88,7 @@ public class Player extends Sprite {
         return (!((p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
     }
 
-    private void popUpMessage(Array<QuestionDialog> questions, Array<Rectangle> doorRects, Skin skin) {
+    private void popUpMessage(Array<QuestionDialog> questions, Array<Rectangle> doorRects) {
         if (doorRects.random() == null) { // check if the array is empty
             return;
         }

@@ -35,7 +35,6 @@ public class MainMenu implements Screen{
 
         stage.act(delta);
         stage.draw();
-
     }
 
     @Override
@@ -76,30 +75,21 @@ public class MainMenu implements Screen{
         });
         buttonPlay.pad(15);
 
-        // putting stuff together
         table.add(heading).spaceBottom(100).row();
         table.add(buttonPlay).spaceBottom(15).row();
-//        table.add(buttonSettings).spaceBottom(15).row();
-//        table.add(buttonExit);
 
         stage.addActor(table);
 
     }
 
     @Override
-    public void hide() {
-        dispose();
-    }
+    public void hide() { dispose();}
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() { }
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() { }
 
     @Override
     public void dispose() {
