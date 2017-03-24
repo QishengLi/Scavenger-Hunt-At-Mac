@@ -3,12 +3,12 @@ package com.mygdx.game.data;
 /**
  * Created by Shuni on 3/13/17.
  */
-public class ChoiceResponseTuple {
+public final class Answer {
 
-    private String choice;
-    private String response;
+    private final String choice;
+    private final String response;
 
-    public ChoiceResponseTuple(String choice, String response) {
+    public Answer(String choice, String response) {
         this.choice = choice;
         this.response = response;
     }

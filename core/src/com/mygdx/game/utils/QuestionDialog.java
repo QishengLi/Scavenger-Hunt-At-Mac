@@ -2,8 +2,10 @@ package com.mygdx.game.utils;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.mygdx.game.data.ChoiceResponseTuple;
+import com.badlogic.gdx.utils.Align;
+import com.mygdx.game.data.Answer;
 import com.mygdx.game.data.MultipleChoice;
 
 /**
@@ -11,20 +13,24 @@ import com.mygdx.game.data.MultipleChoice;
  */
 public class QuestionDialog extends Dialog {
 
+    private static final int LABEL_WIDTH = 300;
     private Skin skin;
     private Stage stage;
     private String title;
-    private MultipleChoice question;
+
 
     public QuestionDialog(String title, Skin skin, MultipleChoice question, Stage stage) {
         super(title, skin);
         this.skin = skin;
         this.stage = stage;
         this.title = title;
-        this.question = question;
 
-        text(question.getQuestion());
-        for (ChoiceResponseTuple t : question.getChoices()) {
+        Label label = new Label(question.getQuestion(), skin);
+        label.setWrap(true);
+        label.setAlignment(Align.center);
+        getContentTable().add(label).prefWidth(LABEL_WIDTH);
+
+        for (Answer t : question.getChoices()) {
             button(t.getChoice(), t.getResponse());
         }
     }

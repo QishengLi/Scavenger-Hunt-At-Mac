@@ -28,22 +28,22 @@ import java.util.Random;
 
 public class Play implements Screen, InputProcessor {
 
-    TiledMap tiledMap;
-    CampusMap mac;
-    OrthographicCamera camera;
-    TiledMapRenderer tiledMapRenderer;
-    Stage stage;
-    SpriteBatch sb;
-    Texture playerImg;
-    Texture enemyImg;
-    Random rd;
-    Player player;
-    Array<Enemy> enemies;
-    Music bgm;
-    Skin skin;
-    Array<QuestionDialog> questions;
-    Array<Rectangle> collisionRects;
-    Array<Rectangle> doors;
+    private TiledMap tiledMap;
+    private CampusMap mac;
+    private OrthographicCamera camera;
+    private TiledMapRenderer tiledMapRenderer;
+    private Stage stage;
+    private SpriteBatch sb;
+    private Texture playerImg;
+    private Texture enemyImg;
+    private Random rd;
+    private Player player;
+    private Array<Enemy> enemies;
+    private Music bgm;
+    private Skin skin;
+    private Array<QuestionDialog> questions;
+    private Array<Rectangle> collisionRects;
+    private Array<Rectangle> doors;
 
     @Override public void show () {
 
@@ -95,8 +95,6 @@ public class Play implements Screen, InputProcessor {
             ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit());
         }
 
-        stage.draw();
-
         camera.position.set(player.getX(),player.getY(),0); // let the camera follow the player
         mac.adjustBoundary(camera);
         sb.setProjectionMatrix(camera.combined); // Combine the character with the camera?
@@ -104,10 +102,13 @@ public class Play implements Screen, InputProcessor {
         player.draw(sb); // draw the character
         drawEnemies(enemies);
         sb.end();
+
+        stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
 
     }
 
