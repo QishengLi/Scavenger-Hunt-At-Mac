@@ -88,7 +88,7 @@ public class Play implements Screen, InputProcessor {
         camera.update(); // update the position of camera
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
-        player.makeMove(questions, collisionRects, doors, skin);
+        player.makeMove(questions, collisionRects, doors);
         ememyMoves(enemies);
         player.hitEnemy(enemies);
         if(!player.isAlive(player.HEALTH)) {

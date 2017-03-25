@@ -39,7 +39,7 @@ public class Player extends Sprite {
 
     //TODO: refactor
     public void makeMove(Array<QuestionDialog> questions, Array<Rectangle> collisionRects,
-                         Array<Rectangle> doorRects, Skin skin){
+                         Array<Rectangle> doorRects){
 
         float oldXPos = getX();
         float oldYPos = getY();
@@ -117,7 +117,7 @@ public class Player extends Sprite {
             if(questions.random() == null) {
                 return;
             }
-            QuestionDialog dialogBox = questions.get(0);
+            QuestionDialog dialogBox = questions.get(newDoors.size-1);
             dialogBox.show(this.stage);
 //            doorRects.removeValue(rect, true);
         }
