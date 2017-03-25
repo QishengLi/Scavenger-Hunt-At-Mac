@@ -34,7 +34,8 @@ public class QuestionText {
         return this.Qs;
     }
 
-    public MultipleChoice getQuestion(int num) {
+    // Get the num'th question in the list Qs
+    public MultipleChoice getNthQuestion(int num) {
         return getQs().get(num);
     }
 }

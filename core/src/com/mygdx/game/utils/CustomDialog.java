@@ -25,10 +25,12 @@ public class CustomDialog extends Dialog {
         super(title, skin);
         this.ip = Gdx.input.getInputProcessor();
 
+        // Zhaoqi: I didn't understand these lines below... Start
         Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
         if (curScreen instanceof Play) {
             this.playScreen = (Play) curScreen;
         }
+        // End
     }
 
     @Override public Dialog show(Stage stage) {

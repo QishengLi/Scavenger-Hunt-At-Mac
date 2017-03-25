@@ -89,13 +89,31 @@ public class Player extends Sprite {
         return (!((p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
     }
 
+    private Array<Rectangle> getExistingDoors(Array<QuestionDialog> questions, Array<Rectangle> doorRects) {
+        Array<Rectangle> existingDoors = new Array<>();
+        int i = 0;
+        for (QuestionDialog questionDialog : questions) {
+            if (questionDialog.getCorrectAnswer()) {
+                i = questions.indexOf(questionDialog, true);
+                existingDoors.add(doorRects.get(i));
+            }
+        }
+        if(existingDoors.random() == null) {
+            existingDoors.add(doorRects.first());
+        }
+        else {
+            existingDoors.add(doorRects.get(i + 1));
+        }
+        return existingDoors;
+    }
+
     private void popUpMessage(Array<QuestionDialog> questions, Array<Rectangle> doorRects) {
         if (doorRects.random() == null) { // check if the array is empty
             return;
         }
-        Rectangle rect = doorRects.first();
+        Array<Rectangle> existingDoors = getExistingDoors(questions, doorRects);
 
-        if (isOverlapped(rect)) {
+        if (isOverlappedArray(existingDoors)) {
 
             if(questions.random() == null) {
                 return;
@@ -113,8 +131,8 @@ public class Player extends Sprite {
         QuestionText qt = new QuestionText();
         qt.initQuestions();
 
-        questions.add(new QuestionDialog("CLUE", skin, qt.getQuestion(0), this.stage));
-        questions.add(new QuestionDialog("CLUE", skin, qt.getQuestion(1), this.stage));
+        questions.add(new QuestionDialog("CLUE", skin, qt.getNthQuestion(0)));
+        questions.add(new QuestionDialog("CLUE", skin, qt.getNthQuestion(1)));
 
         return questions;
     }
