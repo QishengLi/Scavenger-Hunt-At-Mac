@@ -39,7 +39,7 @@ public class QuestionDialog extends CustomDialog {
     @Override
     protected void result(final Object object) {
         super.result(object);
-        if(object.toString().equals("You are correct! Go to the other door of Old Main")){
+        if(object.toString().contains("correct")){
             correctAnswer = true;
         }
         TextDialog responseDialog = new TextDialog(this.title, this.skin, object.toString());

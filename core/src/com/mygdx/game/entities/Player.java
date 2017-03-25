@@ -91,20 +91,18 @@ public class Player extends Sprite {
 
     private Array<Rectangle> getExistingDoors(Array<QuestionDialog> questions, Array<Rectangle> doorRects) {
         Array<Rectangle> existingDoors = new Array<>();
-        int i = 0;
         for (QuestionDialog questionDialog : questions) {
             if (questionDialog.getCorrectAnswer()) {
-                i = questions.indexOf(questionDialog, true);
-                existingDoors.add(doorRects.get(i));
+                existingDoors.add(doorRects.get(questions.indexOf(questionDialog, true)));
             }
         }
-        if(existingDoors.random() == null) {
-            existingDoors.add(doorRects.first());
-        }
-        else {
-            existingDoors.add(doorRects.get(i + 1));
-        }
         return existingDoors;
+    }
+
+    private Array<Rectangle> addNextDoor(Array<Rectangle> existingDoors, Array<Rectangle> doorRects) {
+        Array<Rectangle> newDoors = existingDoors;
+        newDoors.add(doorRects.get(existingDoors.size));
+        return newDoors;
     }
 
     private void popUpMessage(Array<QuestionDialog> questions, Array<Rectangle> doorRects) {
@@ -112,8 +110,9 @@ public class Player extends Sprite {
             return;
         }
         Array<Rectangle> existingDoors = getExistingDoors(questions, doorRects);
+        Array<Rectangle> newDoors = addNextDoor(existingDoors, doorRects);
 
-        if (isOverlappedArray(existingDoors)) {
+        if (isOverlappedArray(newDoors)) {
 
             if(questions.random() == null) {
                 return;
