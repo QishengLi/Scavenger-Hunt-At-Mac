@@ -2,7 +2,6 @@ package com.mygdx.game.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -10,6 +9,8 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.data.QuestionText;
 import com.mygdx.game.utils.QuestionDialog;
+
+import java.util.Map;
 
 /**
  * Created by Shuni on 2/25/17.
@@ -23,6 +24,10 @@ public class Player extends Sprite {
 
     private Direction movingDir;
     private Stage stage;//?
+    private Array<Rectangle> doorRects;
+    private Array<QuestionDialog> questions;
+    private Array<Rectangle> collisionRects;
+    private Map<Rectangle, QuestionDialog> spots;
 
     public Player(Texture texture, Stage stage) {
         super(texture);
@@ -39,8 +44,7 @@ public class Player extends Sprite {
     }
 
     //TODO: refactor
-    public void makeMove(Array<QuestionDialog> questions, Array<Rectangle> collisionRects,
-                         Array<Rectangle> doorRects){
+    public void makeMove(){
 
         float oldXPos = getX();
         float oldYPos = getY();
@@ -61,7 +65,7 @@ public class Player extends Sprite {
         }
 
         if (isOverlappedArray(collisionRects)) {
-            popUpMessage(questions, doorRects);
+            popUpMessage(questions, doorRects, spots);
             setPosition(oldXPos, oldYPos);
             setDirection(Direction.IDLE);
         }
@@ -90,17 +94,26 @@ public class Player extends Sprite {
         return (!((p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
     }
 
-    private Array<Rectangle> getExistingDoors(Array<QuestionDialog> questions, Array<Rectangle> doorRects) {
+    private Array<Rectangle> getExistingDoors() {
         Array<Rectangle> existingDoors = new Array<>();
         for (QuestionDialog questionDialog : questions) {
             if (questionDialog.getCorrectAnswer()) {
-                existingDoors.add(doorRects.get(questions.indexOf(questionDialog, true)));
+                existingDoors.add(Chapter.getKeyByValue(spots, questionDialog));
             }
         }
         return existingDoors;
     }
+//    private Array<Rectangle> getExistingDoors(Array<QuestionDialog> questions, Array<Rectangle> doorRects) {
+//        Array<Rectangle> existingDoors = new Array<>();
+//        for (QuestionDialog questionDialog : questions) {
+//            if (questionDialog.getCorrectAnswer()) {
+//                existingDoors.add(doorRects.get(questions.indexOf(questionDialog, true)));
+//            }
+//        }
+//        return existingDoors;
+//    }
 
-    private Array<Rectangle> addNextDoor(Array<Rectangle> existingDoors, Array<Rectangle> doorRects) {
+    private Array<Rectangle> addNextDoor(Array<Rectangle> existingDoors) {
         Array<Rectangle> newDoors = new Array<>(existingDoors);
         if(existingDoors.size < doorRects.size) {
             newDoors.add(doorRects.get(existingDoors.size));
@@ -108,12 +121,12 @@ public class Player extends Sprite {
         return newDoors;
     }
 
-    private void popUpMessage(Array<QuestionDialog> questions, Array<Rectangle> doorRects) {
+    private void popUpMessage(Array<QuestionDialog> questions, Array<Rectangle> doorRects, Map<Rectangle, QuestionDialog> spots) {
         if (doorRects.random() == null) { // check if the array is empty
             return;
         }
-        Array<Rectangle> existingDoors = getExistingDoors(questions, doorRects);
-        Array<Rectangle> newDoors = addNextDoor(existingDoors, doorRects);
+        Array<Rectangle> existingDoors = getExistingDoors();
+        Array<Rectangle> newDoors = addNextDoor(existingDoors);
         System.out.println(existingDoors.toString());
         System.out.println(newDoors.toString());
 
@@ -152,5 +165,21 @@ public class Player extends Sprite {
 
     public boolean isAlive(int health) {
         return (health > 0);
+    }
+
+    public void setCollisionRects(Array<Rectangle> collisionRects) {
+        this.collisionRects = collisionRects;
+    }
+
+    public void setDoorRects(Array<Rectangle> doorRects) {
+        this.doorRects = doorRects;
+    }
+
+    public void setQuestions(Array<QuestionDialog> questions) {
+        this.questions = questions;
+    }
+
+    public void setSpots(Map<Rectangle, QuestionDialog> spots) {
+        this.spots = spots;
     }
 }

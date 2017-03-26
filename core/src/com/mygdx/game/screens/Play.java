@@ -15,10 +15,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.entities.CampusMap;
+import com.mygdx.game.entities.Chapter;
 import com.mygdx.game.entities.Enemy;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.utils.QuestionDialog;
 
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -44,6 +46,8 @@ public class Play implements Screen, InputProcessor {
     private Array<QuestionDialog> questions;
     private Array<Rectangle> collisionRects;
     private Array<Rectangle> doors;
+    private Chapter chapters;
+    private Map<Rectangle, QuestionDialog> spots;
 
     @Override public void show () {
 
@@ -78,6 +82,15 @@ public class Play implements Screen, InputProcessor {
         questions = player.generateQuestions(skin);
         enemies = new Array<>();
         initializeEnemies(enemies, 3);
+
+        chapters = new Chapter();
+        chapters.initSpots(doors, questions);
+        spots = chapters.getSpots();
+
+        player.setCollisionRects(collisionRects);
+        player.setDoorRects(doors);
+        player.setSpots(spots);
+        player.setQuestions(questions);
     }
 
     @Override public void render (float delta) {
@@ -88,7 +101,7 @@ public class Play implements Screen, InputProcessor {
         camera.update(); // update the position of camera
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
-        player.makeMove(questions, collisionRects, doors);
+        player.makeMove();
         ememyMoves(enemies);
         player.hitEnemy(enemies);
         if(!player.isAlive(player.HEALTH)) {
