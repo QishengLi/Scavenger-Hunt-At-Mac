@@ -65,7 +65,7 @@ public class Player extends Sprite {
         }
 
         if (isOverlappedArray(collisionRects)) {
-            popUpMessage(questions, doorRects, spots);
+            popUpMessage();
             setPosition(oldXPos, oldYPos);
             setDirection(Direction.IDLE);
         }
@@ -121,23 +121,20 @@ public class Player extends Sprite {
         return newDoors;
     }
 
-    private void popUpMessage(Array<QuestionDialog> questions, Array<Rectangle> doorRects, Map<Rectangle, QuestionDialog> spots) {
-        if (doorRects.random() == null) { // check if the array is empty
+    private void popUpMessage() {
+        if (doorRects.random() == null || questions.random() == null) { // check if the array is empty
             return;
         }
         Array<Rectangle> existingDoors = getExistingDoors();
         Array<Rectangle> newDoors = addNextDoor(existingDoors);
-        System.out.println(existingDoors.toString());
-        System.out.println(newDoors.toString());
+//        System.out.println(existingDoors.toString());
+//        System.out.println(newDoors.toString());
 
-        if (isOverlappedArray(newDoors)) {
-
-            if(questions.random() == null) {
-                return;
+        for (Rectangle rect : newDoors) {
+            if (isOverlapped(rect)) {
+                QuestionDialog dialogBox = spots.get(rect);
+                dialogBox.show(this.stage);
             }
-            QuestionDialog dialogBox = questions.get(newDoors.size-1);
-            dialogBox.show(this.stage);
-//            doorRects.removeValue(rect, true);
         }
     }
 
