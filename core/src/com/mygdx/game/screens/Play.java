@@ -104,7 +104,7 @@ public class Play implements Screen, InputProcessor {
         player.makeMove();
         ememyMoves(enemies);
         player.hitEnemy(enemies);
-        if(!player.isAlive(player.HEALTH)) {
+        if(!player.isAlive(player.health)) {
             ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit());
         }
 

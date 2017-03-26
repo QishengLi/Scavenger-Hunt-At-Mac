@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.utils.QuestionDialog;
 
-import java.text.Bidi;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -21,9 +20,7 @@ public class Chapter {
 
     private Map<Rectangle, QuestionDialog> spots;
 
-    public Chapter() {
-        this.spots = spots;
-    }
+    public Chapter() {}
 
     public void initSpots(Array<Rectangle> doorRects, Array<QuestionDialog> questions) {
         spots = new HashMap<>();

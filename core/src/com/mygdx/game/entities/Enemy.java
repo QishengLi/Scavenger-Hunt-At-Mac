@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public class Enemy extends Player {
 
-    Random rd = new Random();
+    private Random rd = new Random();
     private boolean shouldFreeze;
 
     public Enemy (Texture texture, Stage stage) {

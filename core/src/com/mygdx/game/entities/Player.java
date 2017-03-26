@@ -20,7 +20,7 @@ import java.util.Map;
 public class Player extends Sprite {
 
     public static final float SPEED = 3f;
-    public int HEALTH = 4;
+    public int health = 4;
 
     private Direction movingDir;
     private Stage stage;//?
@@ -103,22 +103,9 @@ public class Player extends Sprite {
         }
         return existingDoors;
     }
-//    private Array<Rectangle> getExistingDoors(Array<QuestionDialog> questions, Array<Rectangle> doorRects) {
-//        Array<Rectangle> existingDoors = new Array<>();
-//        for (QuestionDialog questionDialog : questions) {
-//            if (questionDialog.getCorrectAnswer()) {
-//                existingDoors.add(doorRects.get(questions.indexOf(questionDialog, true)));
-//            }
-//        }
-//        return existingDoors;
-//    }
 
-    private Array<Rectangle> addNextDoor(Array<Rectangle> existingDoors) {
-        Array<Rectangle> newDoors = new Array<>(existingDoors);
-        if(existingDoors.size < doorRects.size) {
-            newDoors.add(doorRects.get(existingDoors.size));
-        }
-        return newDoors;
+    private Rectangle nextDoor(Array<Rectangle> existingDoors) {
+        return (doorRects.get(existingDoors.size));
     }
 
     private void popUpMessage() {
@@ -126,15 +113,18 @@ public class Player extends Sprite {
             return;
         }
         Array<Rectangle> existingDoors = getExistingDoors();
-        Array<Rectangle> newDoors = addNextDoor(existingDoors);
-//        System.out.println(existingDoors.toString());
-//        System.out.println(newDoors.toString());
+        Rectangle newDoor = nextDoor(existingDoors);
 
-        for (Rectangle rect : newDoors) {
+        for (Rectangle rect : existingDoors) {
             if (isOverlapped(rect)) {
                 QuestionDialog dialogBox = spots.get(rect);
                 dialogBox.show(this.stage);
             }
+        }
+
+        if (isOverlapped(newDoor)) {
+            QuestionDialog dialogBox = spots.get(newDoor);
+            dialogBox.show(this.stage);
         }
     }
 
@@ -154,7 +144,7 @@ public class Player extends Sprite {
     public void hitEnemy(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             if(isOverlapped(enemy.getBoundingRectangle())) {
-                HEALTH--;
+                health--;
                 enemies.removeValue(enemy, true);
             }
         }

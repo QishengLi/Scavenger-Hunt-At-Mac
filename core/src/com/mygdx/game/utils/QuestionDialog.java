@@ -15,6 +15,7 @@ public class QuestionDialog extends CustomDialog {
     private Skin skin;
     private String title;
     private boolean correctAnswer = false;
+    private boolean error = false;
 
     public QuestionDialog(String title, Skin skin, MultipleChoice question) {
 
@@ -41,6 +42,9 @@ public class QuestionDialog extends CustomDialog {
         super.result(object);
         if(object.toString().contains("correct")){
             correctAnswer = true;
+        }
+        else {
+            error = true;
         }
         TextDialog responseDialog = new TextDialog(this.title, this.skin, object.toString());
         responseDialog.show(getStage());
