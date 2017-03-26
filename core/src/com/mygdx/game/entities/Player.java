@@ -105,7 +105,14 @@ public class Player extends Sprite {
     }
 
     private Rectangle nextDoor(Array<Rectangle> existingDoors) {
+        if (isFinished(existingDoors)) {
+            return doorRects.get(existingDoors.size - 1);
+        }
         return (doorRects.get(existingDoors.size));
+    }
+
+    private boolean isFinished(Array<Rectangle> existingDoors) {
+        return (existingDoors.size == doorRects.size);
     }
 
     private void popUpMessage() {
@@ -118,13 +125,18 @@ public class Player extends Sprite {
         for (Rectangle rect : existingDoors) {
             if (isOverlapped(rect)) {
                 QuestionDialog dialogBox = spots.get(rect);
-                dialogBox.show(this.stage);
+                dialogBox.getResponseDialog().show(this.stage);
             }
         }
 
         if (isOverlapped(newDoor)) {
             QuestionDialog dialogBox = spots.get(newDoor);
-            dialogBox.show(this.stage);
+            if (isFinished(existingDoors)) {
+                dialogBox.getResponseDialog().show(this.stage);
+            }
+            else {
+                dialogBox.show(this.stage);
+            }
         }
     }
 

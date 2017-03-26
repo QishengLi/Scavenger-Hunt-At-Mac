@@ -16,6 +16,7 @@ public class QuestionDialog extends CustomDialog {
     private String title;
     private boolean correctAnswer = false;
     private boolean error = false;
+    private TextDialog responseDialog;
 
     public QuestionDialog(String title, Skin skin, MultipleChoice question) {
 
@@ -37,6 +38,10 @@ public class QuestionDialog extends CustomDialog {
         return this.correctAnswer;
     }
 
+    public TextDialog getResponseDialog() {
+        return responseDialog;
+    }
+
     @Override
     protected void result(final Object object) {
         super.result(object);
@@ -46,7 +51,7 @@ public class QuestionDialog extends CustomDialog {
         else {
             error = true;
         }
-        TextDialog responseDialog = new TextDialog(this.title, this.skin, object.toString());
+        responseDialog = new TextDialog(this.title, this.skin, object.toString());
         responseDialog.show(getStage());
         remove();
     }
