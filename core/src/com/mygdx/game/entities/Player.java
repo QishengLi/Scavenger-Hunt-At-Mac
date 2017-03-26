@@ -2,6 +2,7 @@ package com.mygdx.game.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -100,8 +101,10 @@ public class Player extends Sprite {
     }
 
     private Array<Rectangle> addNextDoor(Array<Rectangle> existingDoors, Array<Rectangle> doorRects) {
-        Array<Rectangle> newDoors = existingDoors;
-        newDoors.add(doorRects.get(existingDoors.size));
+        Array<Rectangle> newDoors = new Array<>(existingDoors);
+        if(existingDoors.size < doorRects.size) {
+            newDoors.add(doorRects.get(existingDoors.size));
+        }
         return newDoors;
     }
 
@@ -111,6 +114,8 @@ public class Player extends Sprite {
         }
         Array<Rectangle> existingDoors = getExistingDoors(questions, doorRects);
         Array<Rectangle> newDoors = addNextDoor(existingDoors, doorRects);
+        System.out.println(existingDoors.toString());
+        System.out.println(newDoors.toString());
 
         if (isOverlappedArray(newDoors)) {
 
