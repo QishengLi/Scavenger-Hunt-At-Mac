@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.data.Answer;
 import com.mygdx.game.data.MultipleChoice;
+import com.mygdx.game.entities.Player;
 
 /**
  * Created by Shuni on 3/12/17.
@@ -15,7 +16,6 @@ public class QuestionDialog extends CustomDialog {
     private Skin skin;
     private String title;
     private boolean correctAnswer = false;
-    private boolean error = false;
     private TextDialog responseDialog;
 
     public QuestionDialog(String title, Skin skin, MultipleChoice question) {
@@ -49,7 +49,7 @@ public class QuestionDialog extends CustomDialog {
             correctAnswer = true;
         }
         else {
-            error = true;
+            Player.health--;
         }
         responseDialog = new TextDialog(this.title, this.skin, object.toString());
         responseDialog.show(getStage());

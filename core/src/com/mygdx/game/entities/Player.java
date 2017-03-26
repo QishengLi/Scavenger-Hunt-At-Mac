@@ -20,7 +20,7 @@ import java.util.Map;
 public class Player extends Sprite {
 
     public static final float SPEED = 3f;
-    public int health = 4;
+    public static int health = 4;
 
     private Direction movingDir;
     private Stage stage;//?
@@ -115,6 +115,7 @@ public class Player extends Sprite {
         return (existingDoors.size == doorRects.size);
     }
 
+    // Called when hitting on the wall
     private void popUpMessage() {
         if (doorRects.random() == null || questions.random() == null) { // check if the array is empty
             return;
@@ -122,6 +123,7 @@ public class Player extends Sprite {
         Array<Rectangle> existingDoors = getExistingDoors();
         Rectangle newDoor = nextDoor(existingDoors);
 
+        // Visiting answered questions
         for (Rectangle rect : existingDoors) {
             if (isOverlapped(rect)) {
                 QuestionDialog dialogBox = spots.get(rect);
@@ -129,6 +131,7 @@ public class Player extends Sprite {
             }
         }
 
+        // Visiting a new spot
         if (isOverlapped(newDoor)) {
             QuestionDialog dialogBox = spots.get(newDoor);
             if (isFinished(existingDoors)) {
@@ -139,6 +142,14 @@ public class Player extends Sprite {
             }
         }
     }
+//
+//    private boolean checkAnswer(QuestionDialog dialog) {
+//        if (dialog.isError()) {
+//            dialog.setError(false);
+//            return true;
+//        }
+//        return false;
+//    }
 
     public Array<QuestionDialog> generateQuestions(Skin skin) {
 
