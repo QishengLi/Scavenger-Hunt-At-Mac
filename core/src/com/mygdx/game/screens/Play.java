@@ -51,14 +51,14 @@ public class Play implements Screen, InputProcessor {
 
     @Override public void show () {
 
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
+        float w = Gdx.graphics.getWidth()*2;
+        float h = Gdx.graphics.getHeight()*2;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false,w,h);
         camera.update();
 
-        tiledMap = new TmxMapLoader().load("campus_map.tmx");
+        tiledMap = new TmxMapLoader().load("map/full_map.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         Gdx.input.setInputProcessor(this);
         rd = new Random();
@@ -78,7 +78,8 @@ public class Play implements Screen, InputProcessor {
         playerImg = new Texture(Gdx.files.internal("pik.png"));
         enemyImg = new Texture(Gdx.files.internal("goblinsword.png"));
         player = new Player(playerImg, stage);
-        player.setCenter(w/2 + 50,h/2-50); //TODO: change position
+        // if set position: mac.mapWidth + 400, cannot hit door.
+        player.setCenter(mac.mapWidth/2+1520,mac.mapHeight/2); //TODO: change position
         questions = player.generateQuestions(skin);
         enemies = new Array<>();
         initializeEnemies(enemies, 3);

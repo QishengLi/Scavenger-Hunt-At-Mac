@@ -1,6 +1,5 @@
 package com.mygdx.game.utils;
 
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
@@ -42,6 +41,7 @@ public class QuestionDialog extends CustomDialog {
         return responseDialog;
     }
 
+    // Called when clicking on button
     @Override
     protected void result(final Object object) {
         super.result(object);

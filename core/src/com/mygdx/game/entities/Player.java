@@ -158,8 +158,9 @@ public class Player extends Sprite {
         QuestionText qt = new QuestionText();
         qt.initQuestions();
 
-        questions.add(new QuestionDialog("CLUE", skin, qt.getNthQuestion(0)));
-        questions.add(new QuestionDialog("CLUE", skin, qt.getNthQuestion(1)));
+        for (int i = 0; i <= qt.getNumQuestions()-1; i++){
+            questions.add(new QuestionDialog("CLUE", skin, qt.getNthQuestion(i)));
+        }
 
         return questions;
     }
