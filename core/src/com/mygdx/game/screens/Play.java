@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -48,6 +49,7 @@ public class Play implements Screen, InputProcessor {
     private Array<Rectangle> doors;
     private Chapter chapters;
     private Map<Rectangle, QuestionDialog> spots;
+    private BitmapFont life;
 
     @Override public void show () {
 
@@ -88,6 +90,8 @@ public class Play implements Screen, InputProcessor {
         chapters.initSpots(doors, questions);
         spots = chapters.getSpots();
 
+        life = new BitmapFont();
+
         player.setCollisionRects(collisionRects);
         player.setDoorRects(doors);
         player.setSpots(spots);
@@ -105,7 +109,7 @@ public class Play implements Screen, InputProcessor {
         player.makeMove();
         ememyMoves(enemies);
         player.hitEnemy(enemies);
-        if(!player.isAlive(player.health)) {
+        if(!player.isAlive(Player.health)) {
             ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit());
         }
 
@@ -115,6 +119,8 @@ public class Play implements Screen, InputProcessor {
         sb.begin();
         player.draw(sb); // draw the character
         drawEnemies(enemies);
+        life.getData().setScale(2, 2);
+        life.draw(sb,"Life: "+Player.health, player.getX()-50,player.getY()+camera.viewportHeight/2-20);//TODO: Change Position
         sb.end();
 
         stage.draw();
