@@ -24,7 +24,7 @@ public class Chapter {
 
     public void initSpots(Array<Rectangle> doorRects, Array<QuestionDialog> questions) {
         spots = new HashMap<>();
-        for(int i=0;i<doorRects.size;i++){
+        for(int i=0; i<doorRects.size; i++){
             Rectangle rect = doorRects.get(i);
             QuestionDialog question = questions.get(i);
             spots.put(rect, question);

@@ -33,7 +33,7 @@ public class QuestionDialog extends CustomDialog {
         }
     }
 
-    public boolean getCorrectAnswer() {
+    public boolean isAnsweredCorrectly() {
         return this.correctAnswer;
     }
 

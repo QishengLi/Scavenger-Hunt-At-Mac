@@ -10,6 +10,8 @@ import com.mygdx.game.data.Direction;
 import com.mygdx.game.data.QuestionText;
 import com.mygdx.game.utils.QuestionDialog;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,9 +22,11 @@ import java.util.Map;
 public class Player extends Sprite {
 
     public static final float SPEED = 3f;
-    public static int health = 4;
+    public static int health = 100;
 
-    private Direction movingDir;
+    private List<Direction> movingDirs;
+    private Direction currentDir;
+
     private Stage stage;//?
     private Array<Rectangle> doorRects;
     private Array<QuestionDialog> questions;
@@ -31,17 +35,41 @@ public class Player extends Sprite {
 
     public Player(Texture texture, Stage stage) {
         super(texture);
-        this.movingDir = Direction.IDLE;
+        this.movingDirs = new ArrayList<>();
+        this.currentDir = Direction.IDLE;
         this.stage = stage;
     }
 
-    public void setDirection(Direction dir) {
-        this.movingDir = dir;
+    public void addNewDirection(Direction dir) {
+        this.movingDirs.add(dir);
+        this.currentDir = dir;
     }
 
-    public Direction getDirection() {
-        return this.movingDir;
+    public void removeDirection(Direction dir) {
+        boolean isRemoveLast = false;
+
+        for (int i = 0; i < this.movingDirs.size(); ++i) {
+            if (dir.equals(this.movingDirs.get(i))) {
+                if (i == this.movingDirs.size() - 1) {
+                    isRemoveLast = true;
+                }
+                this.movingDirs.remove(i);
+            }
+        }
+
+        if (this.movingDirs.isEmpty()) {
+            this.currentDir = Direction.IDLE;
+        } else if (isRemoveLast) {
+            this.currentDir = this.movingDirs.get(this.movingDirs.size() - 1);
+        }
     }
+
+    private void resetDirection() {
+        this.movingDirs.clear();
+        this.currentDir = Direction.IDLE;
+    }
+
+
 
     //TODO: refactor
     public void makeMove(){
@@ -49,7 +77,7 @@ public class Player extends Sprite {
         float oldXPos = getX();
         float oldYPos = getY();
 
-        switch (this.movingDir) {
+        switch (this.currentDir) {
             case UP:
                 translateY(SPEED);
                 break;
@@ -67,7 +95,6 @@ public class Player extends Sprite {
         if (isOverlappedArray(collisionRects)) {
             popUpMessage();
             setPosition(oldXPos, oldYPos);
-            setDirection(Direction.IDLE);
         }
     }
 
@@ -97,7 +124,7 @@ public class Player extends Sprite {
     private Array<Rectangle> getExistingDoors() {
         Array<Rectangle> existingDoors = new Array<>();
         for (QuestionDialog questionDialog : questions) {
-            if (questionDialog.getCorrectAnswer()) {
+            if (questionDialog.isAnsweredCorrectly()) {
                 existingDoors.add(Chapter.getKeyByValue(spots, questionDialog));
             }
         }
@@ -133,6 +160,7 @@ public class Player extends Sprite {
 
         // Visiting a new spot
         if (isOverlapped(newDoor)) {
+            resetDirection();
             QuestionDialog dialogBox = spots.get(newDoor);
             if (isFinished(existingDoors)) {
                 dialogBox.getResponseDialog().show(this.stage);

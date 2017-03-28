@@ -171,26 +171,28 @@ public class Play implements Screen, InputProcessor {
     // Called when a key was pressed
     @Override public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.UP) {
-            player.setDirection(Direction.UP);
+            player.addNewDirection(Direction.UP);
         } else if (keycode == Input.Keys.DOWN) {
-            player.setDirection(Direction.DOWN);
+            player.addNewDirection(Direction.DOWN);
         } else if (keycode == Input.Keys.LEFT) {
-            player.setDirection(Direction.LEFT);
+            player.addNewDirection(Direction.LEFT);
         } else if (keycode == Input.Keys.RIGHT) {
-            player.setDirection(Direction.RIGHT);
+            player.addNewDirection(Direction.RIGHT);
         }
         return false;
     }
 
     // Called when a key was released
     @Override public boolean keyUp(int keycode) {
-        if ((keycode == Input.Keys.UP && player.getDirection() == Direction.UP) ||
-            (keycode == Input.Keys.DOWN && player.getDirection() == Direction.DOWN) ||
-            (keycode == Input.Keys.LEFT && player.getDirection() == Direction.LEFT) ||
-            (keycode == Input.Keys.RIGHT && player.getDirection() == Direction.RIGHT)) {
-            player.setDirection(Direction.IDLE);
+        if (keycode == Input.Keys.UP) {
+            player.removeDirection(Direction.UP);
+        } else if (keycode == Input.Keys.DOWN) {
+            player.removeDirection(Direction.DOWN);
+        } else if (keycode == Input.Keys.LEFT) {
+            player.removeDirection(Direction.LEFT);
+        } else if (keycode == Input.Keys.RIGHT) {
+            player.removeDirection(Direction.RIGHT);
         }
-
         return false;
     }
 
