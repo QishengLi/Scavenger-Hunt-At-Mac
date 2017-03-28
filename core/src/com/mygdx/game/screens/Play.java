@@ -51,10 +51,24 @@ public class Play implements Screen, InputProcessor {
     private Map<Rectangle, QuestionDialog> spots;
     private BitmapFont life;
 
+    private int initialWidth;
+    private int initialHeight;
+
+    public Play() {
+        initialWidth = 0;
+        initialHeight = 0;
+    }
+
+    public Play(int w, int h) {
+        initialWidth = w;
+        initialHeight = h;
+    }
+
+
     @Override public void show () {
 
-        float w = Gdx.graphics.getWidth()*2;
-        float h = Gdx.graphics.getHeight()*2;
+        float w = ((this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth) * 2;
+        float h = ((this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight) * 2;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false,w,h);

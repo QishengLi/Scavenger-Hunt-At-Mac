@@ -45,6 +45,10 @@ public class MainMenu implements Screen{
 
     @Override
     public void show() {
+
+        final int initialWidth = Gdx.graphics.getWidth();
+        final int initialHeight = Gdx.graphics.getHeight();
+
         stage = new Stage();
 
         Gdx.input.setInputProcessor(stage);
@@ -68,7 +72,7 @@ public class MainMenu implements Screen{
 
                     @Override
                     public void run() {
-                        ((Game) Gdx.app.getApplicationListener()).setScreen(new Play());
+                        ((Game) Gdx.app.getApplicationListener()).setScreen(new Play(initialWidth, initialHeight));
                     }
                 })));
             }
