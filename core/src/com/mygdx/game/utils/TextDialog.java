@@ -8,20 +8,24 @@ import com.badlogic.gdx.utils.Align;
  * Created by Shuni on 3/12/17.
  */
 public class TextDialog extends CustomDialog {
+    private Skin skin;
 
-    public TextDialog(String title, Skin skin, String dialogText) {
-        super(title, skin);
+    public TextDialog(String title, Skin skin, CustomDialog responseDialog) {
+        super(title, skin, responseDialog);
+        this.skin = skin;
+    }
 
-        Label label = new Label(dialogText, skin);
-        label.setWrap(true);
-        label.setAlignment(Align.center);
-        getContentTable().add(label).prefWidth(LABEL_WIDTH);
-
-        button("OK");
+    public void renderContent(Object object) {
+        if (object instanceof  String) {
+            Label label = new Label((String) object, skin);
+            label.setWrap(true);
+            label.setAlignment(Align.center);
+            getContentTable().add(label).prefWidth(LABEL_WIDTH);
+            button("OK");
+        }
     }
 
     @Override protected void result(Object object) {
         super.result(object);
-        remove();
     }
 }
