@@ -8,7 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.data.QuestionText;
+import com.mygdx.game.utils.CustomDialog;
 import com.mygdx.game.utils.QuestionDialog;
+import com.mygdx.game.utils.TextDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -194,7 +196,10 @@ public class Player extends Sprite {
         qt.initQuestions();
 
         for (int i = 0; i <= qt.getNumQuestions()-1; i++){
-            questions.add(new QuestionDialog("CLUE", skin, qt.getNthQuestion(i)));
+            CustomDialog responseDialog = new TextDialog("ANSWER", skin, null);
+            QuestionDialog qd = new QuestionDialog("CLUE", skin, responseDialog);
+            qd.renderContent(qt.getNthQuestion(i));
+            questions.add(qd);
         }
 
         return questions;

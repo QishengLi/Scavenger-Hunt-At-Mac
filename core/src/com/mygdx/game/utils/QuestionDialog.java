@@ -12,47 +12,44 @@ import com.mygdx.game.entities.Player;
  */
 public class QuestionDialog extends CustomDialog {
 
-    private Skin skin;
-    private String title;
     private boolean correctAnswer = false;
-    private TextDialog responseDialog;
+    private Skin skin;
 
-    public QuestionDialog(String title, Skin skin, MultipleChoice question) {
-
-        super(title, skin);
+    public QuestionDialog(String title, Skin skin, CustomDialog responseDialog) {
+        super(title, skin, responseDialog);
         this.skin = skin;
-        this.title = title;
-
-        Label label = new Label(question.getQuestion(), skin);
-        label.setWrap(true); //Zhaoqi: seems to work without it
-        label.setAlignment(Align.center);
-        getContentTable().add(label).prefWidth(LABEL_WIDTH); // Zhaoqi: what is getContentTable and prefWidth?
-
-        for (Answer t : question.getChoices()) {
-            button(t.getChoice(), t.getResponse());
-        }
     }
 
     public boolean isAnsweredCorrectly() {
         return this.correctAnswer;
     }
 
-    public TextDialog getResponseDialog() {
-        return responseDialog;
+    public void renderContent(Object object) {
+        if (object instanceof MultipleChoice) {
+            MultipleChoice question = (MultipleChoice) object;
+            Label label = new Label(question.getQuestion(), skin);
+            label.setWrap(true); //Zhaoqi: seems to work without it. Shuni: this is for wrapping text to multiple lines
+            label.setAlignment(Align.center);
+            getContentTable().add(label).prefWidth(LABEL_WIDTH); // Zhaoqi: what is getContentTable and prefWidth?
+            // Shuni: getContentTable gets the shape/ellipse of the dialog box
+            // prefWidth is width of the actual text box.
+
+            for (Answer t : question.getChoices()) {
+                button(t.getChoice(), t.getResponse());
+            }
+        }
     }
 
     // Called when clicking on button
     @Override
     protected void result(final Object object) {
-        super.result(object);
-        if(object.toString().contains("correct")){
+        if(object.toString().contains("correct")){ //hhhhhhhh What the heck.....
+            //add a boolean instance variable to multiple choice
             correctAnswer = true;
         }
         else {
             Player.health--;
         }
-        responseDialog = new TextDialog(this.title, this.skin, object.toString());
-        responseDialog.show(getStage());
-        remove();
+        super.result(object);
     }
 }

@@ -13,24 +13,43 @@ import com.mygdx.game.screens.Play;
 
 /**
  * Created by Shuni on 3/24/17.
+ *
+ * CustomDialog is an abstract class and will never be initiated.
  */
 
-public class CustomDialog extends Dialog {
+public abstract class CustomDialog extends Dialog {
+
     public static final int LABEL_WIDTH = 300;
 
     private InputProcessor ip;
     private Play playScreen;
+    private CustomDialog responseDialog;
 
-    public CustomDialog(String title, Skin skin) {
+    public CustomDialog(String title, Skin skin, CustomDialog responseDialog) {
         super(title, skin);
         this.ip = Gdx.input.getInputProcessor();
+        this.responseDialog = responseDialog;
 
+        //Shuni: To get the current screen, used to get enemies and freeze them
+        //Can be used to freeze time/clock in the future
+        //TODO: write interface freezable, enemy/player implements freezable
         // Zhaoqi: I didn't understand these lines below... Start
         Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
         if (curScreen instanceof Play) {
             this.playScreen = (Play) curScreen;
         }
         // End
+    }
+
+    /**
+     * updates the content of this dialog. will eb called in the result method to
+     * result content for response dialog
+     * @param object
+     */
+    public abstract void renderContent(Object object);
+
+    public CustomDialog getResponseDialog() {
+        return responseDialog;
     }
 
     @Override public Dialog show(Stage stage) {
@@ -44,6 +63,11 @@ public class CustomDialog extends Dialog {
         // Reset input processor to screen
         Gdx.input.setInputProcessor(this.ip);
         setEnemiesFreeze(false);
+        if (this.responseDialog != null) {
+            responseDialog.renderContent(object);
+            responseDialog.show(getStage());
+        }
+        remove();
     }
 
     private boolean checkScreen() {
