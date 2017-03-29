@@ -153,6 +153,7 @@ public class Player extends Sprite {
         // Visiting answered questions
         for (Rectangle rect : existingDoors) {
             if (isOverlapped(rect)) {
+                resetDirection();
                 QuestionDialog dialogBox = spots.get(rect);
                 dialogBox.getResponseDialog().show(this.stage);
             }
