@@ -22,7 +22,8 @@ import java.util.Map;
 public class Player extends Sprite {
 
     public static final float SPEED = 3f;
-    public static int health = 100;
+    public static int health = 15;
+    public static int TOTALHEALTH = 15;
 
     private List<Direction> movingDirs;
     private Direction currentDir;
@@ -33,11 +34,16 @@ public class Player extends Sprite {
     private Array<Rectangle> collisionRects;
     private Map<Rectangle, QuestionDialog> spots;
 
+
+    public ArrayList<Explosion> explosions;
+
     public Player(Texture texture, Stage stage) {
         super(texture);
         this.movingDirs = new ArrayList<>();
         this.currentDir = Direction.IDLE;
         this.stage = stage;
+        //TODO: Refactor!
+        explosions = new ArrayList<>();
     }
 
     public void addNewDirection(Direction dir) {
@@ -198,6 +204,7 @@ public class Player extends Sprite {
             if(isOverlapped(enemy.getBoundingRectangle())) {
                 health--;
                 enemies.removeValue(enemy, true);
+                explosions.add(new Explosion(enemy.getX(), enemy.getY()));
             }
         }
     }

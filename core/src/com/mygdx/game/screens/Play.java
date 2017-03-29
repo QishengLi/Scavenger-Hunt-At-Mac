@@ -1,6 +1,8 @@
 package com.mygdx.game.screens;
+
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,17 +17,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.data.Direction;
-import com.mygdx.game.entities.CampusMap;
-import com.mygdx.game.entities.Chapter;
-import com.mygdx.game.entities.Enemy;
-import com.mygdx.game.entities.Player;
+import com.mygdx.game.entities.*;
 import com.mygdx.game.utils.QuestionDialog;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 
 /**
- * Created by qisheng on 2/9/2017.
+ * Created by Qisheng on 2/9/2017.
  */
 
 
@@ -49,7 +49,12 @@ public class Play implements Screen, InputProcessor {
     private Array<Rectangle> doors;
     private Chapter chapters;
     private Map<Rectangle, QuestionDialog> spots;
+
     private BitmapFont life;
+    private Texture healthbar;
+    private Texture bar;
+
+
 
     @Override public void show () {
 
@@ -84,13 +89,18 @@ public class Play implements Screen, InputProcessor {
         player.setCenter(mac.mapWidth/2+1520,mac.mapHeight/2); //TODO: change position
         questions = player.generateQuestions(skin);
         enemies = new Array<>();
-        initializeEnemies(enemies, 3);
+        initializeEnemies(enemies, 10);
+
 
         chapters = new Chapter();
         chapters.initSpots(doors, questions);
         spots = chapters.getSpots();
 
         life = new BitmapFont();
+        life.setColor(Color.WHITE);
+        healthbar = new Texture(Gdx.files.internal("healthbar.png"));
+        bar = new Texture(Gdx.files.internal("bar.png"));
+
 
         player.setCollisionRects(collisionRects);
         player.setDoorRects(doors);
@@ -119,8 +129,17 @@ public class Play implements Screen, InputProcessor {
         sb.begin();
         player.draw(sb); // draw the character
         drawEnemies(enemies);
+        explode(delta);
+        for (Explosion e:player.explosions){
+            e.render(sb);
+        }
+
         life.getData().setScale(2, 2);
-        life.draw(sb,"Life: "+Player.health, player.getX()-50,player.getY()+camera.viewportHeight/2-20);//TODO: Change Position
+        //TODO: change to CONSTANT
+        sb.draw(bar, player.getX()+camera.viewportWidth/2-250, player.getY()+camera.viewportHeight/2-70);
+        sb.draw(healthbar, player.getX()+camera.viewportWidth/2-231,player.getY()+camera.viewportHeight/2-64, 177*player.health/player.TOTALHEALTH, 21);
+        //TODO: Change Position
+        life.draw(sb,"Life: "+Player.health, player.getX()+camera.viewportWidth/2-200,player.getY()+camera.viewportHeight/2-80);
         sb.end();
 
         stage.draw();
@@ -174,6 +193,18 @@ public class Play implements Screen, InputProcessor {
             enemy.draw(sb);
         }
     }
+
+    public void explode(float delta){
+        ArrayList<Explosion> explosionsToRemove= new ArrayList<>();
+        for (Explosion explosion: player.explosions){
+            explosion.update(delta);
+            if (explosion.remove){
+                explosionsToRemove.add(explosion);
+            }
+        }
+        player.explosions.removeAll(explosionsToRemove);
+    }
+
     // Called when a key was pressed
     @Override public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.UP) {
