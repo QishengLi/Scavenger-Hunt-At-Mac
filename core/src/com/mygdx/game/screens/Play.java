@@ -143,17 +143,9 @@ public class Play implements Screen, InputProcessor {
         sb.begin();
         player.draw(sb); // draw the character
         drawEnemies(enemies);
-        explode(delta);
-        for (Explosion e:player.explosions){
-            e.render(sb);
-        }
+        drawExplosion(delta);
 
-        life.getData().setScale(2, 2);
-        //TODO: change to CONSTANT
-        sb.draw(bar, player.getX()+camera.viewportWidth/2-250, player.getY()+camera.viewportHeight/2-70);
-        sb.draw(healthbar, player.getX()+camera.viewportWidth/2-231,player.getY()+camera.viewportHeight/2-64, 177*player.health/player.TOTALHEALTH, 21);
-        //TODO: Change Position
-        life.draw(sb,"Life: "+Player.health, player.getX()+camera.viewportWidth/2-200,player.getY()+camera.viewportHeight/2-80);
+        drawHealthBar();
         sb.end();
 
         stage.draw();
@@ -208,7 +200,10 @@ public class Play implements Screen, InputProcessor {
         }
     }
 
-    public void explode(float delta){
+    /**
+     * Draw the animation when player hits enemy.
+     * */
+    public void drawExplosion(float delta){
         ArrayList<Explosion> explosionsToRemove= new ArrayList<>();
         for (Explosion explosion: player.explosions){
             explosion.update(delta);
@@ -217,7 +212,21 @@ public class Play implements Screen, InputProcessor {
             }
         }
         player.explosions.removeAll(explosionsToRemove);
+
+        for (Explosion e:player.explosions){
+            e.render(sb);
+        }
     }
+
+    public void drawHealthBar(){
+        life.getData().setScale(2, 2);
+        //TODO: change to CONSTANT; adjust boundary
+        sb.draw(bar, player.getX()+camera.viewportWidth/2-250, player.getY()+camera.viewportHeight/2-70);
+        sb.draw(healthbar, player.getX()+camera.viewportWidth/2-231,player.getY()+camera.viewportHeight/2-64, 177*player.health/player.TOTALHEALTH, 21);
+        //TODO: Change Position
+        life.draw(sb,"Life: "+Player.health, player.getX()+camera.viewportWidth/2-200,player.getY()+camera.viewportHeight/2-80);
+    }
+
 
     // Called when a key was pressed
     @Override public boolean keyDown(int keycode) {
