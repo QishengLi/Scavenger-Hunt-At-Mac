@@ -2,6 +2,7 @@ package com.mygdx.game.screens;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -37,12 +38,11 @@ public class Play implements Screen, InputProcessor {
     private TiledMapRenderer tiledMapRenderer;
     private Stage stage;
     private SpriteBatch sb;
-    private Texture playerImg;
-    private Texture enemyImg;
+
     private Random rd;
     private Player player;
     private Array<Enemy> enemies;
-    private Music bgm;
+
     private Skin skin;
     private Array<QuestionDialog> questions;
     private Array<Rectangle> collisionRects;
@@ -50,9 +50,15 @@ public class Play implements Screen, InputProcessor {
     private Chapter chapters;
     private Map<Rectangle, QuestionDialog> spots;
 
+    private Music bgm;
+    public static Sound punch;
+
+    private Texture playerImg;
+    private Texture enemyImg;
     private BitmapFont life;
     private Texture healthbar;
     private Texture bar;
+    private Texture mac_logo;
 
 
 
@@ -104,6 +110,7 @@ public class Play implements Screen, InputProcessor {
         questions = player.generateQuestions(skin);
         enemies = new Array<>();
         initializeEnemies(enemies, 10);
+        punch = Gdx.audio.newSound(Gdx.files.internal("punch.wav"));
 
 
         chapters = new Chapter();
@@ -114,6 +121,7 @@ public class Play implements Screen, InputProcessor {
         life.setColor(Color.WHITE);
         healthbar = new Texture(Gdx.files.internal("healthbar.png"));
         bar = new Texture(Gdx.files.internal("bar.png"));
+        mac_logo = new Texture(Gdx.files.internal("mac_logo2.jpg"));
 
 
         player.setCollisionRects(collisionRects);
@@ -146,6 +154,7 @@ public class Play implements Screen, InputProcessor {
         drawExplosion(delta);
 
         drawHealthBar();
+        sb.draw(mac_logo, player.getX()+camera.viewportWidth/2-240, player.getY()-camera.viewportHeight/2+10);
         sb.end();
 
         stage.draw();
@@ -225,35 +234,6 @@ public class Play implements Screen, InputProcessor {
         sb.draw(healthbar, player.getX()+camera.viewportWidth/2-231,player.getY()+camera.viewportHeight/2-64, 177*player.health/player.TOTALHEALTH, 21);
         //TODO: Change Position
         life.draw(sb,"Life: "+Player.health, player.getX()+camera.viewportWidth/2-200,player.getY()+camera.viewportHeight/2-80);
-    }
-
-    public void adjustBarPosition(OrthographicCamera cam) {
-
-        float mapLeft = 0;
-        float mapBottom = 0;
-
-        // The camera dimensions, halved
-        float cameraHalfWidth = cam.viewportWidth * .5f;
-        float cameraHalfHeight = cam.viewportHeight * .5f;
-
-        float cameraLeft = cam.position.x - cameraHalfWidth;
-        float cameraRight = cam.position.x + cameraHalfWidth;
-        float cameraBottom = cam.position.y - cameraHalfHeight;
-        float cameraTop = cam.position.y + cameraHalfHeight;
-
-        if(cameraLeft + Player.SPEED <= mapLeft) {
-            cam.position.x = mapLeft + cameraHalfWidth;
-        }
-        else if(cameraRight - Player.SPEED >= mac.mapWidth) {
-            cam.position.x = mac.mapWidth - cameraHalfWidth;
-        }
-
-        if(cameraBottom + Player.SPEED <= mapBottom) {
-            cam.position.y = mapBottom + cameraHalfHeight;
-        }
-        else if(cameraTop - Player.SPEED >= mac.mapHeight) {
-            cam.position.y = mac.mapHeight - cameraHalfHeight;
-        }
     }
 
 

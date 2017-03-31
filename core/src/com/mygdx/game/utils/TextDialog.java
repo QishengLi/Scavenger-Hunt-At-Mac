@@ -25,7 +25,5 @@ public class TextDialog extends CustomDialog {
         }
     }
 
-    @Override protected void result(Object object) {
-        super.result(object);
-    }
+    @Override protected void result(Object object) {super.result(object);}
 }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.data.QuestionText;
+import com.mygdx.game.screens.Play;
 import com.mygdx.game.utils.CustomDialog;
 import com.mygdx.game.utils.QuestionDialog;
 import com.mygdx.game.utils.TextDialog;
@@ -179,6 +180,7 @@ public class Player extends Sprite {
             }
         }
     }
+
 //
 //    private boolean checkAnswer(QuestionDialog dialog) {
 //        if (dialog.isError()) {
@@ -195,7 +197,7 @@ public class Player extends Sprite {
         QuestionText qt = new QuestionText();
         qt.initQuestions();
 
-        for (int i = 0; i <= qt.getNumQuestions()-1; i++){
+        for (int i = 0; i < qt.getNumQuestions(); i++){
             CustomDialog responseDialog = new TextDialog("ANSWER", skin, null);
             QuestionDialog qd = new QuestionDialog("CLUE", skin, responseDialog);
             qd.renderContent(qt.getNthQuestion(i));
@@ -211,6 +213,7 @@ public class Player extends Sprite {
                 health--;
                 enemies.removeValue(enemy, true);
                 explosions.add(new Explosion(enemy.getX(), enemy.getY()));
+                Play.punch.play();
             }
         }
     }
