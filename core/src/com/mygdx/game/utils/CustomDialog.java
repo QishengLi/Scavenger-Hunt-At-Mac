@@ -64,6 +64,7 @@ public abstract class CustomDialog extends Dialog {
         Gdx.input.setInputProcessor(this.ip);
         setEnemiesFreeze(false);
         if (this.responseDialog != null) {
+            System.out.println(responseDialog.toString());
             responseDialog.renderContent(object);
             responseDialog.show(getStage());
         }

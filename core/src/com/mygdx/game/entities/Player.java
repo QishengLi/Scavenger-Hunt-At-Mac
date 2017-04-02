@@ -133,7 +133,7 @@ public class Player extends Sprite {
     private Array<Rectangle> getExistingDoors() {
         Array<Rectangle> existingDoors = new Array<>();
         for (QuestionDialog questionDialog : questions) {
-            if (questionDialog.isAnsweredCorrectly()) {
+            if (questionDialog.isAnswered()) {
                 existingDoors.add(Chapter.getKeyByValue(spots, questionDialog));
             }
         }

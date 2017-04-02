@@ -47,7 +47,6 @@ public class Play implements Screen, InputProcessor {
     private Array<QuestionDialog> questions;
     private Array<Rectangle> collisionRects;
     private Array<Rectangle> doors;
-    private Chapter chapters;
     private Map<Rectangle, QuestionDialog> spots;
 
     private Music bgm;
@@ -112,8 +111,7 @@ public class Play implements Screen, InputProcessor {
         initializeEnemies(enemies, 10);
         punch = Gdx.audio.newSound(Gdx.files.internal("punch.wav"));
 
-
-        chapters = new Chapter();
+        Chapter chapters = new Chapter();
         chapters.initSpots(doors, questions);
         spots = chapters.getSpots();
 

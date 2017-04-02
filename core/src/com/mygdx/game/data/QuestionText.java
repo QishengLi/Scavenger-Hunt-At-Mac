@@ -1,5 +1,7 @@
 package com.mygdx.game.data;
 
+import javafx.util.Pair;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,23 +19,23 @@ public class QuestionText {
         Qs.add(
             new MultipleChoice(
                 "When was Macalester founded?",
-                new Answer("1874", "You are correct! Please go to library!"),
-                new Answer("1974", "You are wrong! Please try again."),
-                new Answer("2074", "You are wrong! Please try again.")));
+                new Answer("1874", new Pair<>("You are correct! Please go to library!", 1)),
+                new Answer("1974", new Pair<>("You are wrong! Please try again.", 0)),
+                new Answer("2074", new Pair<>("You are wrong! Please try again.", 0))));
 
         Qs.add(
             new MultipleChoice(
                 "How many librarians are here to help students? (Hint: listed on Macalester Website)",
-                new Answer("24", "You are wrong! Please try again."),
-                new Answer("25", "You are correct! Go to the building where Department of Philosophy is located."),
-                new Answer("26", "You are wrong! Please try again.")));
+                new Answer("24", new Pair<>("You are wrong! Please try again.",0)),
+                new Answer("25", new Pair<>("You are correct! Go to the building where Department of Philosophy is located.",1)),
+                new Answer("26", new Pair<>("You are wrong! Please try again.",0))));
 
         Qs.add(
             new MultipleChoice(
                 "Which of the following department is not in this building?",
-                new Answer("Classics", "You are wrong! Please try again."),
-                new Answer("History", "You are wrong! Please try again."),
-                new Answer("Linguistics", "You are correct! Please go to CC for your next clue.")));
+                new Answer("Classics", new Pair<>("You are wrong! Please try again.",0)),
+                new Answer("History", new Pair<>("You are wrong! Please try again.",0)),
+                new Answer("Linguistics", new Pair<>("You are correct! Please go to CC for your next clue.",1))));
 
     }
 

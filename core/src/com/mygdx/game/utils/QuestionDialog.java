@@ -6,13 +6,14 @@ import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.data.Answer;
 import com.mygdx.game.data.MultipleChoice;
 import com.mygdx.game.entities.Player;
+import javafx.util.Pair;
 
 /**
  * Created by Shuni on 3/12/17.
  */
 public class QuestionDialog extends CustomDialog {
 
-    private boolean correctAnswer = false;
+    private boolean answered = false;
     private Skin skin;
 
     public QuestionDialog(String title, Skin skin, CustomDialog responseDialog) {
@@ -20,8 +21,8 @@ public class QuestionDialog extends CustomDialog {
         this.skin = skin;
     }
 
-    public boolean isAnsweredCorrectly() {
-        return this.correctAnswer;
+    public boolean isAnswered() {
+        return this.answered;
     }
 
     public void renderContent(Object object) {
@@ -43,13 +44,16 @@ public class QuestionDialog extends CustomDialog {
     // Called when clicking on button
     @Override
     protected void result(final Object object) {
-        if(object.toString().contains("correct")){ //hhhhhhhh What the heck.....
-            //add a boolean instance variable to multiple choice
-            correctAnswer = true;
+        if (object instanceof Pair) {
+            Pair<String, Integer> pair = (Pair<String, Integer>) object;
+
+            if (pair.getValue() == 1) {
+                answered = true;
+            }
+            else {
+                Player.health--;
+            }
+            super.result(pair.getKey());
         }
-        else {
-            Player.health--;
-        }
-        super.result(object);
     }
 }
