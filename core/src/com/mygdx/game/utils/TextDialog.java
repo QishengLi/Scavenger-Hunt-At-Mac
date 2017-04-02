@@ -20,10 +20,14 @@ public class TextDialog extends CustomDialog {
             Label label = new Label((String) object, skin);
             label.setWrap(true);
             label.setAlignment(Align.center);
+            getContentTable().clearChildren();
             getContentTable().add(label).prefWidth(LABEL_WIDTH);
+            getButtonTable().clearChildren();
             button("OK");
         }
     }
 
-    @Override protected void result(Object object) {super.result(object);}
+    @Override protected void result(Object object) {
+        super.result(object);
+    }
 }
