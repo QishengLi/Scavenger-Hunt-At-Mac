@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.utils.QuestionDialog;
+import com.mygdx.game.utils.TextDialog;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -126,6 +127,11 @@ public class Play implements Screen, InputProcessor {
         player.setDoorRects(doors);
         player.setSpots(spots);
         player.setQuestions(questions);
+
+
+        TextDialog bg = new TextDialog("Background", skin, null);
+        bg.renderContent("Today is May 4th, 2037. invasion, need to find clues to this invasion");
+        bg.show(this.stage);
     }
 
     @Override public void render (float delta) {
