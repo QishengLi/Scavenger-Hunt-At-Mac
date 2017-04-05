@@ -61,7 +61,6 @@ public class Play implements Screen, InputProcessor {
     private Texture mac_logo;
 
 
-
     private int initialWidth;
     private int initialHeight;
 
@@ -71,8 +70,8 @@ public class Play implements Screen, InputProcessor {
     }
 
     public Play(int w, int h) {
-        initialWidth = w;
-        initialHeight = h;
+        initialWidth = w*2;
+        initialHeight = h*2;
     }
 
 

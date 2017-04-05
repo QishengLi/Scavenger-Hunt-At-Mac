@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public class Player extends Sprite {
 
-    public static final float SPEED = 3f;
+    public static final float SPEED = 10f;
     public static int health = 15;
     public static int TOTALHEALTH = 15;
 
