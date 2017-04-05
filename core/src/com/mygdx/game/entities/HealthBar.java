@@ -15,11 +15,13 @@ public class HealthBar extends Group {
     private Image barImg;
     private Image healthBarImg;
     private Label lifeLabel;
+    private CampusMap map;
 
-    public HealthBar(Texture bar, Texture healthBar, Label life_label) {
+    public HealthBar(Texture bar, Texture healthBar, Label life_label, CampusMap map) {
         this.barImg = new Image(bar);
         this.healthBarImg = new Image(healthBar);
         this.lifeLabel = life_label;
+        this.map = map;
     }
 
     public void initBar() {
@@ -39,14 +41,31 @@ public class HealthBar extends Group {
         this.setPosition(player.getX()+camera.viewportWidth/2-250, player.getY()+camera.viewportHeight/2-70);
         this.setOrigin(barImg.getWidth()/2,barImg.getHeight()/2);
     }
+
+    public void adjustBoundary(Player player, OrthographicCamera camera) {
+
+        float mapWidth = map.mapWidth;
+        float mapHeight = map.mapHeight;
+
+        // The camera dimensions, halved
+        float cameraHalfWidth = camera.viewportWidth * .5f;
+        float cameraHalfHeight = camera.viewportHeight * .5f;
+
+        float cameraRight = camera.position.x + cameraHalfWidth;
+        float cameraTop = camera.position.y + cameraHalfHeight;
+
+        if (cameraRight + Player.SPEED >= mapWidth) {
+            this.setX(mapWidth - 250);
+        }
+        if (cameraTop + Player.SPEED >= mapHeight) {
+            this.setY(mapHeight - 70);
+        }
+        if (cameraRight + Player.SPEED < mapWidth && cameraTop + Player.SPEED < mapHeight) {
+            this.setPosition(player.getX()+camera.viewportWidth/2-250, player.getY()+camera.viewportHeight/2-70);
+        }
+    }
 }
 
-//        sb.draw(bar, player.getX()+camera.viewportWidth/2-250, player.getY()+camera.viewportHeight/2-70);
-//                sb.draw(healthBar, player.getX()+camera.viewportWidth/2-231,player.getY()+camera.viewportHeight/2-64,
-//                177*player.health/player.TOTALHEALTH, 21);
-//                //TODO: Change Position
-//                life.draw(sb,"Life: "+Player.health, player.getX()+camera.viewportWidth/2-200,
-//                player.getY()+camera.viewportHeight/2-80);
 //    public void adjustBoundary(OrthographicCamera cam) {
 //
 //        float mapLeft = 0;

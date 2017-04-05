@@ -126,7 +126,7 @@ public class Play implements Screen, InputProcessor {
         mac_logo = new Texture(Gdx.files.internal("mac_logo2.jpg"));
 
         lifeLabel = new Label("Life: "+ Player.health, skin);
-        barGroup = new HealthBar(bar, healthBar, lifeLabel);
+        barGroup = new HealthBar(bar, healthBar, lifeLabel, mac);
         barGroup.initBar();
 
         player.setCollisionRects(collisionRects);
@@ -161,6 +161,7 @@ public class Play implements Screen, InputProcessor {
         sb.draw(mac_logo, player.getX()+camera.viewportWidth/2-240, player.getY()-camera.viewportHeight/2+10);
 
         barGroup.updateBar(player, camera);
+        barGroup.adjustBoundary(player, camera);
         barGroup.draw(sb, 1);
         sb.end();
 
