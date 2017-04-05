@@ -43,12 +43,7 @@ public class Play implements Screen, InputProcessor {
     private OrthographicCamera camera;
     private TiledMapRenderer tiledMapRenderer;
     private Stage stage;
-    private Group barGroup;
     private SpriteBatch sb;
-
-    private Image barImg;
-    private Image healthBarImg;
-    private Label life_label;
 
     private Random rd;
     private Player player;
@@ -65,12 +60,12 @@ public class Play implements Screen, InputProcessor {
 
     private Texture playerImg;
     private Texture enemyImg;
-    private BitmapFont life;
     private Texture healthBar;
     private Texture bar;
     private Texture mac_logo;
 
-
+    private HealthBar barGroup;
+    private Label lifeLabel;
 
     private int initialWidth;
     private int initialHeight;
@@ -126,23 +121,13 @@ public class Play implements Screen, InputProcessor {
         chapters.initSpots(doors, questions);
         spots = chapters.getSpots();
 
-        life = new BitmapFont();
-        life.setColor(Color.WHITE);
         healthBar = new Texture(Gdx.files.internal("healthbar.png"));
         bar = new Texture(Gdx.files.internal("bar.png"));
         mac_logo = new Texture(Gdx.files.internal("mac_logo2.jpg"));
 
-        barGroup = new Group();
-        barImg = new Image(bar);
-        healthBarImg = new Image(healthBar);
-        life_label = new Label("Life: "+player.health, skin);
-        life_label.setFontScale(3);
-        barImg.setPosition(0, 0);
-        healthBarImg.setPosition(19, 6);
-        life_label.setPosition(50, -15);
-        barGroup.addActor(barImg);
-        barGroup.addActor(healthBarImg);
-        barGroup.addActor(life_label);
+        lifeLabel = new Label("Life: "+ Player.health, skin);
+        barGroup = new HealthBar(bar, healthBar, lifeLabel);
+        barGroup.initBar();
 
         player.setCollisionRects(collisionRects);
         player.setDoorRects(doors);
@@ -174,14 +159,8 @@ public class Play implements Screen, InputProcessor {
         drawExplosion(delta);
 
         sb.draw(mac_logo, player.getX()+camera.viewportWidth/2-240, player.getY()-camera.viewportHeight/2+10);
-        //drawHealthBar();
 
-        life_label.setText("Life: "+player.health);
-        healthBarImg.setWidth(177*player.health/player.TOTALHEALTH);
-        healthBarImg.setHeight(21);
-
-        barGroup.setPosition(player.getX()+camera.viewportWidth/2-250, player.getY()+camera.viewportHeight/2-70);
-        barGroup.setOrigin(barImg.getWidth()/2,barImg.getHeight()/2);
+        barGroup.updateBar(player, camera);
         barGroup.draw(sb, 1);
         sb.end();
 
@@ -255,10 +234,10 @@ public class Play implements Screen, InputProcessor {
         }
     }
 
-    public void drawHealthBar() {
-        life.getData().setScale(2, 2);
-        //TODO: change to CONSTANT; adjust boundary
-        //        if (Player.health > 10) {
+//    public void drawHealthBar() {
+//        life.getData().setScale(2, 2);
+//        //TODO: change to CONSTANT; adjust boundary
+//                if (Player.health > 10) {
 //            sb.setColor(Color.GREEN);
 //        }
 //        else if(Player.health > 5) {
@@ -267,13 +246,13 @@ public class Play implements Screen, InputProcessor {
 //        else {
 //            sb.setColor(Color.RED);
 //        }
-        sb.draw(bar, player.getX()+camera.viewportWidth/2-250, player.getY()+camera.viewportHeight/2-70);
-        sb.draw(healthBar, player.getX()+camera.viewportWidth/2-231,player.getY()+camera.viewportHeight/2-64,
-                177*player.health/player.TOTALHEALTH, 21);
-        //TODO: Change Position
-        life.draw(sb,"Life: "+Player.health, player.getX()+camera.viewportWidth/2-200,
-                player.getY()+camera.viewportHeight/2-80);
-    }
+//        sb.draw(bar, player.getX()+camera.viewportWidth/2-250, player.getY()+camera.viewportHeight/2-70);
+//        sb.draw(healthBar, player.getX()+camera.viewportWidth/2-231,player.getY()+camera.viewportHeight/2-64,
+//                177*player.health/player.TOTALHEALTH, 21);
+//        //TODO: Change Position
+//        life.draw(sb,"Life: "+Player.health, player.getX()+camera.viewportWidth/2-200,
+//                player.getY()+camera.viewportHeight/2-80);
+//    }
 
 
     // Called when a key was pressed
