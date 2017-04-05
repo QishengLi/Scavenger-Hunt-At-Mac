@@ -72,7 +72,7 @@ public class MainMenu implements Screen{
 
                     @Override
                     public void run() {
-                        ((Game) Gdx.app.getApplicationListener()).setScreen(new Play(initialWidth, initialHeight));
+                        ((Game) Gdx.app.getApplicationListener()).setScreen(new Instruction(initialWidth, initialHeight));
                     }
                 })));
             }
