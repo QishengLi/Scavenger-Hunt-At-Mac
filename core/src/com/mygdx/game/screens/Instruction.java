@@ -8,13 +8,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Scaling;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
@@ -28,7 +28,9 @@ public class Instruction implements Screen {
     private Table table;
 
     private SpriteBatch batch;
-    private Sprite keyboard;
+    private Sprite keyboardImg;
+    private Sprite doorImg;
+    private Sprite enemyImg;
 
 
     private int initialWidth;
@@ -49,10 +51,7 @@ public class Instruction implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch.begin();
-        keyboard.draw(batch);
-        batch.end();
-
+        //stage.setDebugAll(true);
         stage.act(delta);
         stage.draw();
 
@@ -75,19 +74,31 @@ public class Instruction implements Screen {
         skin = new Skin(Gdx.files.internal("ui/menuSkin.json"), new TextureAtlas("ui/atlas.pack"));
 
         batch = new SpriteBatch();
-        Texture keyBoardTexure = new Texture(Gdx.files.internal("keys.png"));
-        keyboard = new Sprite(keyBoardTexure);
-//        keyboard.setBounds();
+
+        Image imageKeys = new Image();
+        imageKeys.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("keys.png")))));
+
+
+        Image imageDoor = new Image();
+        imageDoor.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("map/door3.png")))));
+
+
+        Image imageEnemy = new Image();
+        imageEnemy.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("goblinsword.png")))));
+
 
 
         Label heading = new Label("Instructions", skin, "default");
         heading.setFontScale(2);
 
-        Label arrowKeysInstr = new Label("use this to navigate", skin, "default");
-        heading.setFontScale(2);
+        Label arrowKeysInstr = new Label("Navigate", skin, "default");
+        arrowKeysInstr.setFontScale(1);
 
-        Label doorsInstr = new Label("this is a door", skin, "default");
-        heading.setFontScale(2);
+        Label doorsInstr = new Label("Hit doors for clues", skin, "default");
+        doorsInstr.setFontScale(1);
+
+        Label enemyInstr = new Label("Avoid enemies", skin, "default");
+        enemyInstr.setFontScale(1);
 
 
         table = new Table(skin);
@@ -110,10 +121,29 @@ public class Instruction implements Screen {
         });
         buttonPlay.pad(15);
 
-        table.add(heading).spaceBottom(100).row();
-        table.add(arrowKeysInstr).spaceBottom(80).row();
-        table.add(doorsInstr).spaceBottom(60).row();
-        table.add(buttonPlay).spaceBottom(15).row();
+
+
+        table.add(heading).spaceBottom(50).colspan(2).center();
+        table.row();
+        imageKeys.setScaling(Scaling.fit);
+        table.add(imageKeys);
+        table.add(arrowKeysInstr).spaceBottom(30);
+        table.row();
+
+        imageDoor.setScaling(Scaling.fit);
+        table.add(imageDoor).fill().expand();
+        table.add(doorsInstr).spaceBottom(25);
+        table.row();
+
+        imageEnemy.setScaling(Scaling.fit);
+        table.add(imageEnemy).fill().expand();
+        table.add(enemyInstr).spaceBottom(20);
+        table.row();
+
+        table.add(buttonPlay).spaceBottom(15).colspan(2).center();
+        table.row();
+
+       // table.debug();
 
         stage.addActor(table);
     }
@@ -137,7 +167,7 @@ public class Instruction implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
-        keyboard.getTexture().dispose();
+        keyboardImg.getTexture().dispose();
 
     }
 }
