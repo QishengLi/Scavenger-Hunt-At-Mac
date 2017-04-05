@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -28,10 +27,6 @@ public class Instruction implements Screen {
     private Table table;
 
     private SpriteBatch batch;
-    private Sprite keyboardImg;
-    private Sprite doorImg;
-    private Sprite enemyImg;
-
 
     private int initialWidth;
     private int initialHeight;
@@ -73,8 +68,6 @@ public class Instruction implements Screen {
         Gdx.input.setInputProcessor(stage);
         skin = new Skin(Gdx.files.internal("ui/menuSkin.json"), new TextureAtlas("ui/atlas.pack"));
 
-        batch = new SpriteBatch();
-
         Image imageKeys = new Image();
         imageKeys.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("keys.png")))));
 
@@ -85,8 +78,6 @@ public class Instruction implements Screen {
 
         Image imageEnemy = new Image();
         imageEnemy.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("goblinsword.png")))));
-
-
 
         Label heading = new Label("Instructions", skin, "default");
         heading.setFontScale(2);
@@ -99,7 +90,6 @@ public class Instruction implements Screen {
 
         Label enemyInstr = new Label("Avoid enemies", skin, "default");
         enemyInstr.setFontScale(1);
-
 
         table = new Table(skin);
         table.setFillParent(true);
@@ -120,8 +110,6 @@ public class Instruction implements Screen {
             }
         });
         buttonPlay.pad(15);
-
-
 
         table.add(heading).spaceBottom(50).colspan(2).center();
         table.row();
@@ -166,8 +154,8 @@ public class Instruction implements Screen {
 
     @Override
     public void dispose() {
-        batch.dispose();
-        keyboardImg.getTexture().dispose();
+        stage.dispose();
+        skin.dispose();
 
     }
 }
