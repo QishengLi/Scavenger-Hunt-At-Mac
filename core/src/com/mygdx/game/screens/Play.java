@@ -14,9 +14,15 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.utils.QuestionDialog;
@@ -37,7 +43,12 @@ public class Play implements Screen, InputProcessor {
     private OrthographicCamera camera;
     private TiledMapRenderer tiledMapRenderer;
     private Stage stage;
+    private Group barGroup;
     private SpriteBatch sb;
+
+    private Image barImg;
+    private Image healthBarImg;
+    private Label life_label;
 
     private Random rd;
     private Player player;
@@ -55,7 +66,7 @@ public class Play implements Screen, InputProcessor {
     private Texture playerImg;
     private Texture enemyImg;
     private BitmapFont life;
-    private Texture healthbar;
+    private Texture healthBar;
     private Texture bar;
     private Texture mac_logo;
 
@@ -117,10 +128,21 @@ public class Play implements Screen, InputProcessor {
 
         life = new BitmapFont();
         life.setColor(Color.WHITE);
-        healthbar = new Texture(Gdx.files.internal("healthbar.png"));
+        healthBar = new Texture(Gdx.files.internal("healthbar.png"));
         bar = new Texture(Gdx.files.internal("bar.png"));
         mac_logo = new Texture(Gdx.files.internal("mac_logo2.jpg"));
 
+        barGroup = new Group();
+        barImg = new Image(bar);
+        healthBarImg = new Image(healthBar);
+        life_label = new Label("Life: "+player.health, skin);
+        life_label.setFontScale(3);
+        barImg.setPosition(0, 0);
+        healthBarImg.setPosition(19, 6);
+        life_label.setPosition(50, -15);
+        barGroup.addActor(barImg);
+        barGroup.addActor(healthBarImg);
+        barGroup.addActor(life_label);
 
         player.setCollisionRects(collisionRects);
         player.setDoorRects(doors);
@@ -151,8 +173,16 @@ public class Play implements Screen, InputProcessor {
         drawEnemies(enemies);
         drawExplosion(delta);
 
-        drawHealthBar();
         sb.draw(mac_logo, player.getX()+camera.viewportWidth/2-240, player.getY()-camera.viewportHeight/2+10);
+        //drawHealthBar();
+
+        life_label.setText("Life: "+player.health);
+        healthBarImg.setWidth(177*player.health/player.TOTALHEALTH);
+        healthBarImg.setHeight(21);
+
+        barGroup.setPosition(player.getX()+camera.viewportWidth/2-250, player.getY()+camera.viewportHeight/2-70);
+        barGroup.setOrigin(barImg.getWidth()/2,barImg.getHeight()/2);
+        barGroup.draw(sb, 1);
         sb.end();
 
         stage.draw();
@@ -225,13 +255,24 @@ public class Play implements Screen, InputProcessor {
         }
     }
 
-    public void drawHealthBar(){
+    public void drawHealthBar() {
         life.getData().setScale(2, 2);
         //TODO: change to CONSTANT; adjust boundary
+        //        if (Player.health > 10) {
+//            sb.setColor(Color.GREEN);
+//        }
+//        else if(Player.health > 5) {
+//            sb.setColor(Color.YELLOW);
+//        }
+//        else {
+//            sb.setColor(Color.RED);
+//        }
         sb.draw(bar, player.getX()+camera.viewportWidth/2-250, player.getY()+camera.viewportHeight/2-70);
-        sb.draw(healthbar, player.getX()+camera.viewportWidth/2-231,player.getY()+camera.viewportHeight/2-64, 177*player.health/player.TOTALHEALTH, 21);
+        sb.draw(healthBar, player.getX()+camera.viewportWidth/2-231,player.getY()+camera.viewportHeight/2-64,
+                177*player.health/player.TOTALHEALTH, 21);
         //TODO: Change Position
-        life.draw(sb,"Life: "+Player.health, player.getX()+camera.viewportWidth/2-200,player.getY()+camera.viewportHeight/2-80);
+        life.draw(sb,"Life: "+Player.health, player.getX()+camera.viewportWidth/2-200,
+                player.getY()+camera.viewportHeight/2-80);
     }
 
 
