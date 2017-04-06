@@ -117,7 +117,7 @@ public class Player extends Sprite {
         return false;
     }
 
-    private boolean isOverlapped(Rectangle rec2) {
+    public boolean isOverlapped(Rectangle rec2) {
         float p1x = getX();
         float p1y = getY() + getHeight();
         float p2x = getX() + getWidth();

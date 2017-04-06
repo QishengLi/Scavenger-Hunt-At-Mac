@@ -14,9 +14,15 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.utils.QuestionDialog;
@@ -55,11 +61,12 @@ public class Play implements Screen, InputProcessor {
 
     private Texture playerImg;
     private Texture enemyImg;
-    private BitmapFont life;
-    private Texture healthbar;
+    private Texture healthBar;
     private Texture bar;
     private Texture mac_logo;
 
+    private HealthBar barGroup;
+    private Label lifeLabel;
 
     private int initialWidth;
     private int initialHeight;
@@ -115,12 +122,13 @@ public class Play implements Screen, InputProcessor {
         chapters.initSpots(doors, questions);
         spots = chapters.getSpots();
 
-        life = new BitmapFont();
-        life.setColor(Color.WHITE);
-        healthbar = new Texture(Gdx.files.internal("healthbar.png"));
+        healthBar = new Texture(Gdx.files.internal("healthbar.png"));
         bar = new Texture(Gdx.files.internal("bar.png"));
         mac_logo = new Texture(Gdx.files.internal("mac_logo2.jpg"));
 
+        lifeLabel = new Label("Life: "+ Player.health, skin);
+        barGroup = new HealthBar(bar, healthBar, lifeLabel, mac);
+        barGroup.initBar();
 
         player.setCollisionRects(collisionRects);
         player.setDoorRects(doors);
@@ -156,8 +164,11 @@ public class Play implements Screen, InputProcessor {
         drawEnemies(enemies);
         drawExplosion(delta);
 
-        drawHealthBar();
         sb.draw(mac_logo, player.getX()+camera.viewportWidth/2-240, player.getY()-camera.viewportHeight/2+10);
+
+        barGroup.updateBar(player, camera);
+        barGroup.adjustBoundary(player, camera);
+        barGroup.draw(sb, 1);
         sb.end();
 
         stage.draw();
@@ -230,14 +241,25 @@ public class Play implements Screen, InputProcessor {
         }
     }
 
-    public void drawHealthBar(){
-        life.getData().setScale(2, 2);
-        //TODO: change to CONSTANT; adjust boundary
-        sb.draw(bar, player.getX()+camera.viewportWidth/2-250, player.getY()+camera.viewportHeight/2-70);
-        sb.draw(healthbar, player.getX()+camera.viewportWidth/2-231,player.getY()+camera.viewportHeight/2-64, 177*player.health/player.TOTALHEALTH, 21);
-        //TODO: Change Position
-        life.draw(sb,"Life: "+Player.health, player.getX()+camera.viewportWidth/2-200,player.getY()+camera.viewportHeight/2-80);
-    }
+//    public void drawHealthBar() {
+//        life.getData().setScale(2, 2);
+//        //TODO: change to CONSTANT; adjust boundary
+//                if (Player.health > 10) {
+//            sb.setColor(Color.GREEN);
+//        }
+//        else if(Player.health > 5) {
+//            sb.setColor(Color.YELLOW);
+//        }
+//        else {
+//            sb.setColor(Color.RED);
+//        }
+//        sb.draw(bar, player.getX()+camera.viewportWidth/2-250, player.getY()+camera.viewportHeight/2-70);
+//        sb.draw(healthBar, player.getX()+camera.viewportWidth/2-231,player.getY()+camera.viewportHeight/2-64,
+//                177*player.health/player.TOTALHEALTH, 21);
+//        //TODO: Change Position
+//        life.draw(sb,"Life: "+Player.health, player.getX()+camera.viewportWidth/2-200,
+//                player.getY()+camera.viewportHeight/2-80);
+//    }
 
 
     // Called when a key was pressed

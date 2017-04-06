@@ -24,9 +24,12 @@ public class Enemy extends Player {
         if (this.shouldFreeze)
             return;
 
+        float oldX = getX();
+        float oldY = getY();
+
         float enemySpeedX = player.getX() - getX();
         float enemySpeedY = player.getY() - getY();
-        //System.out.print(enemySpeedX);
+
         float speedMag = (float) Math.sqrt(enemySpeedX * enemySpeedX + enemySpeedY * enemySpeedY);
         enemySpeedX = enemySpeedX / speedMag * SPEED / 2.0f;
         enemySpeedY = enemySpeedY / speedMag * SPEED / 2.0f;
@@ -35,9 +38,14 @@ public class Enemy extends Player {
         int nextDir = rd.nextInt(4);
         randomMove(nextDir);
 
-        //if (checkOverlap(collisionRects)) {
-        //    setPosition(150, 150);
-        // }
+        float newX = getX();
+        float newY = getY();
+
+        for (Rectangle rect : collisionRects) {
+            if (isOverlapped(rect)){
+                updatePosition(oldX, oldY, newX, newY, rect);
+            }
+        }
     }
 
     public void randomMove(int nextDir) {
@@ -58,6 +66,23 @@ public class Enemy extends Player {
         }
     }
 
+    public void updatePosition(float oldX, float oldY, float newX, float newY, Rectangle rec) {
+        setX(oldX);
+        if (!isOverlapped(rec)) {
+            return;
+        }
+        else {
+            setY(oldY);
+            setX(newX);
+            if (!isOverlapped(rec)) {
+                return;
+            }
+            else {
+                setX(oldX);
+                return;
+            }
+        }
+    }
     public void setFreeze(boolean freeze) {
         this.shouldFreeze = freeze;
     }
