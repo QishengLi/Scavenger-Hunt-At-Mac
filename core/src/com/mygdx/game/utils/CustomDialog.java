@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
@@ -81,6 +82,13 @@ public abstract class CustomDialog extends Dialog {
         for (Enemy e : enemies) {
             e.setFreeze(freeze);
         }
+    }
+
+    @Override
+    public Dialog button (Button button, Object object) {
+        Dialog result = super.button(button, object);
+        getButtonTable().row();
+        return result;
     }
 }
 
