@@ -67,6 +67,7 @@ public class Play implements Screen, InputProcessor {
 
     public static long startTime;
     public static long elapseTime;
+    public static final long SECOND = 1000;
 
     public Play() {
         initialWidth = 0;
@@ -216,6 +217,10 @@ public class Play implements Screen, InputProcessor {
     public void ememyMoves(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             enemy.makeEnemyMove(player, collisionRects);
+        }
+        if (elapseTime > SECOND) {
+            elapseTime = 0;
+            startTime = TimeUtils.millis();
         }
     }
 

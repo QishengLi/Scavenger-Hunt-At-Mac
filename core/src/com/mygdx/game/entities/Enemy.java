@@ -34,14 +34,12 @@ public class Enemy extends Player {
 
         chasePlayer(player, SCALE);
 
-        if (Play.elapseTime > 2000) {
+        if (Play.elapseTime > Play.SECOND) {
             int next = rd.nextInt(4);
             setDirection(next);
-            Play.elapseTime = 0;
-            Play.startTime = TimeUtils.millis();
         }
 
-        makeMove(this.nextDir, (float) Math.sqrt(1 - SCALE * SCALE));
+        this.makeMove(this.nextDir, (float) Math.sqrt(1 - SCALE * SCALE));
 
         float newX = getX();
         float newY = getY();
