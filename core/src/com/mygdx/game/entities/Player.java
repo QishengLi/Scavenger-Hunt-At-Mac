@@ -26,7 +26,7 @@ public class Player extends Sprite {
 
     public static final float SPEED = 10f;
     public static int health = 15;
-    public static int TOTALHEALTH = 15;
+    public static final int TOTALHEALTH = 15;
 
     private List<Direction> movingDirs;
     private Direction currentDir;
@@ -81,29 +81,33 @@ public class Player extends Sprite {
 
 
     //TODO: refactor
-    public void makeMove(){
+    public void makePlayerMove(){
 
         float oldXPos = getX();
         float oldYPos = getY();
 
-        switch (this.currentDir) {
-            case UP:
-                translateY(SPEED);
-                break;
-            case DOWN:
-                translateY(-SPEED);
-                break;
-            case LEFT:
-                translateX(-SPEED);
-                break;
-            case RIGHT:
-                translateX(SPEED);
-                break;
-        }
+        makeMove(this.currentDir, 1.0f);
 
         if (isOverlappedArray(collisionRects)) {
             popUpMessage();
             setPosition(oldXPos, oldYPos);
+        }
+    }
+
+    public void makeMove(Direction currentDir, float scale) {
+        switch (currentDir) {
+            case UP:
+                translateY(SPEED * scale);
+                break;
+            case DOWN:
+                translateY(-SPEED * scale);
+                break;
+            case LEFT:
+                translateX(-SPEED * scale);
+                break;
+            case RIGHT:
+                translateX(SPEED * scale);
+                break;
         }
     }
 
