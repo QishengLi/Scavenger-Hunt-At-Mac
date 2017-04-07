@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
@@ -25,8 +25,6 @@ public class Instruction implements Screen {
     private Stage stage;
     private Skin skin;
     private Table table;
-
-    private SpriteBatch batch;
 
     private int initialWidth;
     private int initialHeight;
@@ -46,7 +44,7 @@ public class Instruction implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        //stage.setDebugAll(true);
+       // stage.setDebugAll(true);
         stage.act(delta);
         stage.draw();
 
@@ -71,10 +69,8 @@ public class Instruction implements Screen {
         Image imageKeys = new Image();
         imageKeys.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("keys.png")))));
 
-
         Image imageDoor = new Image();
         imageDoor.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("map/door3.png")))));
-
 
         Image imageEnemy = new Image();
         imageEnemy.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("goblinsword.png")))));
@@ -95,7 +91,7 @@ public class Instruction implements Screen {
         table.setFillParent(true);
 
         // creating buttons
-        TextButton buttonPlay = new TextButton("PLAY", skin, "default");
+        TextButton buttonPlay = new TextButton("Play", skin, "default");
         buttonPlay.addListener(new ClickListener() {
 
             @Override
@@ -111,28 +107,46 @@ public class Instruction implements Screen {
         });
         buttonPlay.pad(15);
 
-        table.add(heading).spaceBottom(50).colspan(2).center();
+        TextButton buttonBack = new TextButton("Back", skin, "default");
+        buttonBack.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                stage.addAction(sequence(moveTo(0, -stage.getHeight(), .5f), run(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu(initialWidth, initialHeight));
+                    }
+                })));
+            }
+        });
+        buttonBack.pad(15);
+
+        table.add(heading).spaceBottom(10).colspan(2).center();
         table.row();
         imageKeys.setScaling(Scaling.fit);
-        table.add(imageKeys);
-        table.add(arrowKeysInstr).spaceBottom(30);
+        table.add(imageKeys).spaceBottom(15);
+        table.add(arrowKeysInstr).spaceBottom(15);
         table.row();
 
         imageDoor.setScaling(Scaling.fit);
-        table.add(imageDoor).fill().expand();
-        table.add(doorsInstr).spaceBottom(25);
+        table.add(imageDoor).spaceBottom(15);
+        table.add(doorsInstr).spaceBottom(15);
         table.row();
+
+        //table.getCell(imageDoor).setActorHeight(imageDoor.getImageHeight() * 0.5f);
 
         imageEnemy.setScaling(Scaling.fit);
-        table.add(imageEnemy).fill().expand();
-        table.add(enemyInstr).spaceBottom(20);
+        table.add(imageEnemy).spaceBottom(15);
+        table.add(enemyInstr).spaceBottom(15);
         table.row();
 
-        table.add(buttonPlay).spaceBottom(15).colspan(2).center();
+        table.add(buttonBack).spaceBottom(15).align(Align.right);;
+        table.add(buttonPlay).spaceBottom(15);
         table.row();
 
-       // table.debug();
-
+        //table.debug();
         stage.addActor(table);
     }
 
@@ -156,6 +170,5 @@ public class Instruction implements Screen {
     public void dispose() {
         stage.dispose();
         skin.dispose();
-
     }
 }

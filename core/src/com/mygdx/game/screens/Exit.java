@@ -31,7 +31,6 @@ public class Exit implements Screen{
 
         stage.act(delta);
         stage.draw();
-
     }
 
     @Override

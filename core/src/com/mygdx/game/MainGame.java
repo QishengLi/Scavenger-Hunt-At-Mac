@@ -8,7 +8,7 @@ import com.mygdx.game.screens.MainMenu;
  */
 public class MainGame extends Game {
 
-    public static final String TITLE = "ScavengerHunt", VERSION = "0.0.0.0.reallyEarly";
+    public static final String TITLE = "Scavenger Hunt", VERSION = "0.0.0.0.reallyEarly";
 
     @Override
     public void create() {

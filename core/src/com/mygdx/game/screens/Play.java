@@ -75,8 +75,8 @@ public class Play implements Screen, InputProcessor {
     }
 
     public Play(int w, int h) {
-        initialWidth = w*2;
-        initialHeight = h*2;
+        initialWidth = w * 2;
+        initialHeight = h * 2;
     }
 
 

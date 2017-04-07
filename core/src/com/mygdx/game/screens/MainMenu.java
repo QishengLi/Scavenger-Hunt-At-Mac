@@ -28,6 +28,19 @@ public class MainMenu implements Screen{
     private Skin skin;
     private Table table;
 
+    private int initialWidth;
+    private int initialHeight;
+
+    public MainMenu() {
+        initialWidth = 0;
+        initialHeight = 0;
+    }
+
+    public MainMenu(int w, int h) {
+        initialWidth = w;
+        initialHeight = h;
+    }
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -50,7 +63,6 @@ public class MainMenu implements Screen{
         final int initialHeight = Gdx.graphics.getHeight();
 
         stage = new Stage();
-
         Gdx.input.setInputProcessor(stage);
 
         skin = new Skin(Gdx.files.internal("ui/menuSkin.json"), new TextureAtlas("ui/atlas.pack"));
@@ -72,15 +84,32 @@ public class MainMenu implements Screen{
 
                     @Override
                     public void run() {
-                        ((Game) Gdx.app.getApplicationListener()).setScreen(new Instruction(initialWidth, initialHeight));
+                        ((Game) Gdx.app.getApplicationListener()).setScreen(new Play(initialWidth, initialHeight));
                     }
                 })));
             }
         });
         buttonPlay.pad(15);
 
+        TextButton buttonInstruction = new TextButton("Instructions", skin, "default");
+        buttonInstruction.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                stage.addAction(sequence(moveTo(0, -stage.getHeight(), .5f), run(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        ((Game) Gdx.app.getApplicationListener()).setScreen(new Instruction(initialWidth, initialHeight));
+                    }
+                })));
+            }
+        });
+        buttonInstruction.pad(15);
+
         table.add(heading).spaceBottom(100).row();
-        table.add(buttonPlay).spaceBottom(15).row();
+        table.add(buttonPlay).spaceBottom(20).row();
+        table.add(buttonInstruction).spaceBottom(15).row();
 
         stage.addActor(table);
 
