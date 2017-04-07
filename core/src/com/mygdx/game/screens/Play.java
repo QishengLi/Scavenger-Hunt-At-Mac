@@ -3,26 +3,20 @@ package com.mygdx.game.screens;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.utils.QuestionDialog;
@@ -70,6 +64,10 @@ public class Play implements Screen, InputProcessor {
 
     private int initialWidth;
     private int initialHeight;
+
+    public static long startTime;
+    public static long elapseTime;
+    public static final long SECOND = 1000;
 
     public Play() {
         initialWidth = 0;
@@ -139,6 +137,9 @@ public class Play implements Screen, InputProcessor {
         TextDialog bg = new TextDialog("Background", skin, null);
         bg.renderContent("Today is May 4th, 2037. invasion, need to find clues to this invasion");
         bg.show(this.stage);
+
+        startTime = TimeUtils.millis();
+        elapseTime = 0;
     }
 
     @Override public void render (float delta) {
@@ -149,7 +150,9 @@ public class Play implements Screen, InputProcessor {
         camera.update(); // update the position of camera
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
-        player.makeMove();
+
+        player.makePlayerMove();
+        elapseTime = TimeUtils.timeSinceMillis(startTime);
         ememyMoves(enemies);
         player.hitEnemy(enemies);
         if(!player.isAlive(Player.health)) {
@@ -214,6 +217,10 @@ public class Play implements Screen, InputProcessor {
     public void ememyMoves(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             enemy.makeEnemyMove(player, collisionRects);
+        }
+        if (elapseTime > SECOND) {
+            elapseTime = 0;
+            startTime = TimeUtils.millis();
         }
     }
 
