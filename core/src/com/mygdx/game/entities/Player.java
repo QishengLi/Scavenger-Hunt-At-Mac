@@ -55,20 +55,12 @@ public class Player extends Sprite {
     }
 
     public void removeDirection(Direction dir) {
-        boolean isRemoveLast = false;
 
-        for (int i = 0; i < this.movingDirs.size(); ++i) {
-            if (dir.equals(this.movingDirs.get(i))) {
-                if (i == this.movingDirs.size() - 1) {
-                    isRemoveLast = true;
-                }
-                this.movingDirs.remove(i);
-            }
-        }
+        this.movingDirs.remove(dir);
 
         if (this.movingDirs.isEmpty()) {
             this.currentDir = Direction.IDLE;
-        } else if (isRemoveLast) {
+        } else {
             this.currentDir = this.movingDirs.get(this.movingDirs.size() - 1);
         }
     }
@@ -86,7 +78,9 @@ public class Player extends Sprite {
         float oldXPos = getX();
         float oldYPos = getY();
 
-        makeMove(this.currentDir, 1.0f);
+        for (Direction dirInCurDir : movingDirs) {
+            makeMove(dirInCurDir, 1.0f);
+        }
 
         if (isOverlappedArray(collisionRects)) {
             popUpMessage();
@@ -94,8 +88,8 @@ public class Player extends Sprite {
         }
     }
 
-    public void makeMove(Direction currentDir, float scale) {
-        switch (currentDir) {
+    public void makeMove(Direction direction, float scale) {
+        switch (direction) {
             case UP:
                 translateY(SPEED * scale);
                 break;

@@ -135,8 +135,6 @@ public class Instruction implements Screen {
         table.add(doorsInstr).spaceBottom(15);
         table.row();
 
-        //table.getCell(imageDoor).setActorHeight(imageDoor.getImageHeight() * 0.5f);
-
         imageEnemy.setScaling(Scaling.fit);
         table.add(imageEnemy).spaceBottom(15);
         table.add(enemyInstr).spaceBottom(15);
