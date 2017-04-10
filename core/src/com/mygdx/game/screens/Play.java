@@ -156,7 +156,7 @@ public class Play implements Screen, InputProcessor {
         ememyMoves(enemies);
         player.hitEnemy(enemies);
         if(!player.isAlive(Player.health)) {
-            ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit());
+            ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight));
         }
 
         camera.position.set(player.getX(),player.getY(),0); // let the camera follow the player

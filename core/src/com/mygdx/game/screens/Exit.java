@@ -4,6 +4,7 @@ package com.mygdx.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
  * Created by Shuni on 3/19/17.
@@ -23,6 +26,19 @@ public class Exit implements Screen{
     private Stage stage;
     private Skin skin;
     private Table table;
+
+    private int initialWidth;
+    private int initialHeight;
+
+    public Exit() {
+        initialWidth = 0;
+        initialHeight = 0;
+    }
+
+    public Exit(int w, int h) {
+        initialWidth = w;
+        initialHeight = h;
+    }
 
     @Override
     public void render(float delta) {
@@ -41,7 +57,12 @@ public class Exit implements Screen{
 
     @Override
     public void show() {
-        stage = new Stage();
+
+        float w = (this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth;
+        float h = (this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight;
+
+        Viewport viewport = new FitViewport(w, h, new OrthographicCamera());
+        stage = new Stage(viewport);
 
         Gdx.input.setInputProcessor(stage);
 

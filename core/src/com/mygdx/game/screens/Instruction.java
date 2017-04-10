@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
@@ -59,10 +62,12 @@ public class Instruction implements Screen {
     @Override
     public void show() {
 
-        final int initialWidth = Gdx.graphics.getWidth();
-        final int initialHeight = Gdx.graphics.getHeight();
+        float w = (this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth;
+        float h = (this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight;
 
-        stage = new Stage();
+        Viewport viewport = new FitViewport(w, h, new OrthographicCamera());
+        stage = new Stage(viewport);
+
         Gdx.input.setInputProcessor(stage);
         skin = new Skin(Gdx.files.internal("ui/menuSkin.json"), new TextureAtlas("ui/atlas.pack"));
 

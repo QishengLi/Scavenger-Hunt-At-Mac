@@ -25,8 +25,8 @@ import java.util.Map;
 public class Player extends Sprite {
 
     public static final float SPEED = 10f;
-    public static int health = 15;
-    public static final int TOTALHEALTH = 15;
+    public static int health = 3;
+    public static final int TOTALHEALTH = 3;
 
     private List<Direction> movingDirs;
     private Direction currentDir;
