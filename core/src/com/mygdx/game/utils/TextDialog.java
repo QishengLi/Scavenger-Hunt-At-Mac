@@ -16,7 +16,7 @@ public class TextDialog extends CustomDialog {
     }
 
     public void renderContent(Object object) {
-        if (object instanceof  String) {
+        if (object instanceof String) {
             Label label = new Label((String) object, skin);
             label.setWrap(true);
             label.setAlignment(Align.center);
@@ -27,7 +27,8 @@ public class TextDialog extends CustomDialog {
         }
     }
 
-    @Override protected void result(Object object) {
+    @Override
+    protected void result(Object object) {
         super.result(object);
     }
 }

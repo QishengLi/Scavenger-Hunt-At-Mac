@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.screens.Play;
 
@@ -18,7 +17,7 @@ public class Enemy extends Player {
     private Random rd = new Random();
     private boolean shouldFreeze;
     private Direction nextDir = Direction.IDLE;
-    private final float SCALE = 0.5f;
+    private final float SCALE = 0.2f;
 
     public Enemy (Texture texture, Stage stage) {
     super(texture, stage);
