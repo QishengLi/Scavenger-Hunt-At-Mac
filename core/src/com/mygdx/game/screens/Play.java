@@ -135,7 +135,9 @@ public class Play implements Screen, InputProcessor {
 
 
         TextDialog bg = new TextDialog("Background", skin, null);
-        bg.renderContent("Today is May 4th, 2037. Invasion, need to find clues to this invasion");
+        bg.renderContent("Today is May 4th, 2037. Here is an invasion on campus. " +
+                "In order to prevent the danger, you need to solve all the puzzles on campus. " +
+                "Please go to Kirk Section 9 to get your first clue.");
         bg.show(this.stage);
 
         startTime = TimeUtils.millis();
