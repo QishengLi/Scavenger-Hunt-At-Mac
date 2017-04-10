@@ -29,7 +29,7 @@ public class Player extends Sprite {
     public static final int TOTALHEALTH = 15;
 
     private List<Direction> movingDirs;
-    private Direction currentDir;
+    //private Direction currentDir;
 
     private Stage stage;//?
     private Array<Rectangle> doorRects;
@@ -43,7 +43,7 @@ public class Player extends Sprite {
     public Player(Texture texture, Stage stage) {
         super(texture);
         this.movingDirs = new ArrayList<>();
-        this.currentDir = Direction.IDLE;
+        //this.currentDir = Direction.IDLE;
         this.stage = stage;
         //TODO: Refactor!
         explosions = new ArrayList<>();
@@ -51,23 +51,23 @@ public class Player extends Sprite {
 
     public void addNewDirection(Direction dir) {
         this.movingDirs.add(dir);
-        this.currentDir = dir;
+        //this.currentDir = dir;
     }
 
     public void removeDirection(Direction dir) {
 
         this.movingDirs.remove(dir);
 
-        if (this.movingDirs.isEmpty()) {
-            this.currentDir = Direction.IDLE;
-        } else {
-            this.currentDir = this.movingDirs.get(this.movingDirs.size() - 1);
-        }
+//        if (this.movingDirs.isEmpty()) {
+//            this.currentDir = Direction.IDLE;
+//        } else {
+//            this.currentDir = this.movingDirs.get(this.movingDirs.size() - 1);
+//        }
     }
 
     private void resetDirection() {
         this.movingDirs.clear();
-        this.currentDir = Direction.IDLE;
+        //this.currentDir = Direction.IDLE;
     }
 
 
@@ -201,7 +201,6 @@ public class Player extends Sprite {
             qd.renderContent(qt.getNthQuestion(i));
             questions.add(qd);
         }
-
         return questions;
     }
 
