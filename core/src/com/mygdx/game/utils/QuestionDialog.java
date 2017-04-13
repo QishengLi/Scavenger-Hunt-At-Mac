@@ -36,7 +36,7 @@ public class QuestionDialog extends CustomDialog {
             // prefWidth is width of the actual text box.
 
             for (Answer t : question.getChoices()) {
-                button(t.getChoice(), t.getResponse());
+                button(t.getChoice(), t);
             }
         }
     }
@@ -44,16 +44,16 @@ public class QuestionDialog extends CustomDialog {
     // Called when clicking on button
     @Override
     protected void result(final Object object) {
-        if (object instanceof Pair) {
-            Pair<String, Integer> pair = (Pair<String, Integer>) object;
+        if (object instanceof Answer) {
+            Answer answer = (Answer) object;
 
-            if (pair.getValue() == 1) {
+            if (answer.isCorrect()) {
                 answered = true;
             }
             else {
                 Player.health--;
             }
-            super.result(pair.getKey());
+            super.result(answer.getResponse());
         }
     }
 }
