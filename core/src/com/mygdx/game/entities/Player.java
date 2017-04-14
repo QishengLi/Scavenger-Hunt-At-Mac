@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.data.Direction;
+import com.mygdx.game.data.MultipleChoice;
 import com.mygdx.game.data.QuestionText;
 import com.mygdx.game.screens.Play;
 import com.mygdx.game.utils.CustomDialog;
@@ -199,10 +200,17 @@ public class Player extends Sprite {
         qt.initQuestions();
 
         for (int i = 0; i < qt.getNumQuestions(); i++){
+            CustomDialog td = new TextDialog("TEXT", skin, null);
             CustomDialog responseDialog = new TextDialog("ANSWER", skin, null);
-            QuestionDialog qd = new QuestionDialog("CLUE", skin, responseDialog);
-            qd.renderContent(qt.getNthQuestion(i));
-            questions.add(qd);
+            CustomDialog qd = new QuestionDialog("CLUE", skin, responseDialog);
+            if (qt.getNthQuestion(i) instanceof MultipleChoice) {
+                qd.renderContent(qt.getNthQuestion(i));
+                questions.add(qd);
+            }
+            else if (qt.getNthQuestion(i) instanceof String) {
+                td.renderContent(qt.getNthQuestion(i));
+                questions.add(td);
+            }
         }
         return questions;
     }

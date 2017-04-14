@@ -16,8 +16,10 @@ public class TextDialog extends CustomDialog {
     }
 
     public void renderContent(Object object) {
-        if (object instanceof String) {
-            Label label = new Label((String) object, skin);
+        if (object instanceof String[]) {
+            String[] strs = (String[]) object;
+            String str1 = strs[0];
+            Label label = new Label(str1, skin);
             label.setWrap(true);
             label.setAlignment(Align.center);
             getContentTable().clearChildren();
