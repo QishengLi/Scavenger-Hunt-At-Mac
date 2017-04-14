@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.entities.*;
+import com.mygdx.game.utils.CustomDialog;
 import com.mygdx.game.utils.QuestionDialog;
 import com.mygdx.game.utils.TextDialog;
 
@@ -45,10 +46,10 @@ public class Play implements Screen, InputProcessor {
     private Array<Enemy> enemies;
 
     private Skin skin;
-    private Array<QuestionDialog> questions;
+    private Array<CustomDialog> questions;
     private Array<Rectangle> collisionRects;
     private Array<Rectangle> doors;
-    private Map<Rectangle, QuestionDialog> spots;
+    private Map<Rectangle, CustomDialog> spots;
 
     private Music bgm;
     public static Sound punch;

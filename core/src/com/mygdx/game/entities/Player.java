@@ -25,17 +25,17 @@ import java.util.Map;
 public class Player extends Sprite {
 
     public static final float SPEED = 10f;
-    public static int health = 30;
-    public static final int TOTALHEALTH = 30;
+    public static int health = 3;
+    public static final int TOTALHEALTH = 3;
 
     private List<Direction> movingDirs;
     //private Direction currentDir;
 
     private Stage stage;//?
     private Array<Rectangle> doorRects;
-    private Array<QuestionDialog> questions;
+    private Array<CustomDialog> questions;
     private Array<Rectangle> collisionRects;
-    private Map<Rectangle, QuestionDialog> spots;
+    private Map<Rectangle, CustomDialog> spots;
 
 
     public ArrayList<Explosion> explosions;
@@ -130,9 +130,12 @@ public class Player extends Sprite {
 
     private Array<Rectangle> getExistingDoors() {
         Array<Rectangle> existingDoors = new Array<>();
-        for (QuestionDialog questionDialog : questions) {
-            if (questionDialog.isAnswered()) {
-                existingDoors.add(Chapter.getKeyByValue(spots, questionDialog));
+        for (CustomDialog questionDialog : questions) {
+            if (questionDialog instanceof QuestionDialog) {
+                QuestionDialog question = (QuestionDialog) questionDialog;
+                if (question.isAnswered()) {
+                    existingDoors.add(Chapter.getKeyByValue(spots, question));
+                }
             }
         }
         return existingDoors;
@@ -161,7 +164,7 @@ public class Player extends Sprite {
         for (Rectangle rect : existingDoors) {
             if (isOverlapped(rect)) {
                 resetDirection();
-                QuestionDialog dialogBox = spots.get(rect);
+                CustomDialog dialogBox = spots.get(rect);
                 dialogBox.getResponseDialog().show(this.stage);
             }
         }
@@ -169,7 +172,7 @@ public class Player extends Sprite {
         // Visiting a new spot
         if (isOverlapped(newDoor)) {
             resetDirection();
-            QuestionDialog dialogBox = spots.get(newDoor);
+            CustomDialog dialogBox = spots.get(newDoor);
             if (isFinished(existingDoors)) {
                 dialogBox.getResponseDialog().show(this.stage);
             }
@@ -188,9 +191,9 @@ public class Player extends Sprite {
 //        return false;
 //    }
 
-    public Array<QuestionDialog> generateQuestions(Skin skin) {
+    public Array<CustomDialog> generateQuestions(Skin skin) {
 
-        Array<QuestionDialog> questions = new Array<>();
+        Array<CustomDialog> questions = new Array<>();
 
         QuestionText qt = new QuestionText();
         qt.initQuestions();
@@ -227,11 +230,11 @@ public class Player extends Sprite {
         this.doorRects = doorRects;
     }
 
-    public void setQuestions(Array<QuestionDialog> questions) {
+    public void setQuestions(Array<CustomDialog> questions) {
         this.questions = questions;
     }
 
-    public void setSpots(Map<Rectangle, QuestionDialog> spots) {
+    public void setSpots(Map<Rectangle, CustomDialog> spots) {
         this.spots = spots;
     }
 }

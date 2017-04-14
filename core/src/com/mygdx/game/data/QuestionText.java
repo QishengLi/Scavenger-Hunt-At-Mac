@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class QuestionText {
 
-    private List<MultipleChoice> Qs = new ArrayList<>();
+    private List<Object> Qs = new ArrayList<>();
 
     public QuestionText() { }
 
@@ -91,14 +91,18 @@ public class QuestionText {
                 new Answer("The scavenger hunt game is too difficult!", "Keep going.", false)
             )
         );
+
+        Qs.add(
+                "hello world"
+        );
     }
 
-    public List<MultipleChoice> getQs(){
+    public List<Object> getQs(){
         return this.Qs;
     }
 
     // Get the num'th question in the list Qs
-    public MultipleChoice getNthQuestion(int num) {
+    public Object getNthQuestion(int num) {
         return getQs().get(num);
     }
 
