@@ -20,7 +20,7 @@ import com.mygdx.game.screens.Play;
 
 public abstract class CustomDialog extends Dialog {
 
-    public static final int LABEL_WIDTH = 300;
+    public static final int LABEL_WIDTH = 400;
 
     private InputProcessor ip;
     private Play playScreen;
