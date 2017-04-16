@@ -20,7 +20,7 @@ public class QuestionText {
 
         Qs.add(
             new MultipleChoice(
-                new String[]{"When was Macalester founded??"},
+                new String[]{"When was", "Macalester founded??"},
                 new Answer("1770",
                         new String[]{"Ugh! You are wrong. Hit the door to answer the question again.\n",
                                 "Keep an eye on your life bar. Each wrong answer will cost you a life"}, false),
@@ -38,7 +38,7 @@ public class QuestionText {
         //Door at Theater.
         Qs.add(
             new MultipleChoice(
-                new String[]{"You made it! Winter is coming. Our smart ancestors once built tunnels between buildings to avoid the coldness. Which building is connected to Theater?"},
+                new String[]{"You made it!, Winter is coming. Our smart ancestors once built tunnels between buildings to avoid the coldness. Which building is connected to Theater?"},
                 new Answer("Olin Rice Science Building", new String[]{"Not really... Please try again."},false),
                 new Answer("Old Main Humanity Building", new String[]{"Not really... Please try again."},false),
                 new Answer("Janet Wallace Art Building", new String[]{"Wonderful! Go to J-Wall for the next clue. " +

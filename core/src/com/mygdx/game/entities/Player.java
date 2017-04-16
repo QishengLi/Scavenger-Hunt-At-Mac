@@ -139,6 +139,15 @@ public class Player extends Sprite {
                     existingDoors.add(Chapter.getKeyByValue(spots, question));
                 }
             }
+            if (questionDialog instanceof TextDialog) {
+                TextDialog text = (TextDialog) questionDialog;
+                if (text.getResponseDialog() instanceof QuestionDialog) {
+                    QuestionDialog question = (QuestionDialog) text.getResponseDialog();
+                    if (question.isAnswered()) {
+                        existingDoors.add(Chapter.getKeyByValue(spots, text));
+                    }
+                }
+            }
         }
         return existingDoors;
     }
@@ -167,7 +176,12 @@ public class Player extends Sprite {
             if (isOverlapped(rect)) {
                 resetDirection();
                 CustomDialog dialogBox = spots.get(rect);
-                dialogBox.getResponseDialog().show(this.stage);
+                if (dialogBox instanceof TextDialog) {
+                    dialogBox.getResponseDialog().getResponseDialog().show(this.stage);
+                }
+                else {
+                    dialogBox.getResponseDialog().show(this.stage);
+                }
             }
         }
 
@@ -184,15 +198,6 @@ public class Player extends Sprite {
         }
     }
 
-//
-//    private boolean checkAnswer(QuestionDialog dialog) {
-//        if (dialog.isError()) {
-//            dialog.setError(false);
-//            return true;
-//        }
-//        return false;
-//    }
-
     public Array<CustomDialog> generateQuestions(Skin skin) {
 
         Array<CustomDialog> questions = new Array<>();
@@ -204,21 +209,27 @@ public class Player extends Sprite {
             CustomDialog td = new TextDialog("TEXT", skin, null);
             List<CustomDialog> responseDialogs = generateTextDialog(skin, 3, "ANSWER");
             CustomDialog responseDialog = responseDialogs.get(0);
-            System.out.println(responseDialog.getResponseDialog());
-//            CustomDialog responseDialog3 = new TextDialog("ANSWER", skin, null);
-//            CustomDialog responseDialog2 = new TextDialog("ANSWER", skin, responseDialog3);
-//            CustomDialog responseDialog = new TextDialog("ANSWER", skin, responseDialog2);
+            //System.out.println(responseDialog.getResponseDialog());
             CustomDialog qd = new QuestionDialog("CLUE", skin, responseDialog);
             Object ithQuestion = qt.getNthQuestion(i);
             if (ithQuestion instanceof MultipleChoice) {
-//                for (int j = 0; j < ((MultipleChoice) ithQuestion).getQuestion().length; j++) {
-//                    CustomDialog responseDialogj = new TextDialog("QUESTION", skin, null);
-//                }
-//                for (int j = 0; j < ((MultipleChoice) ithQuestion).getQuestion().length; j++) {
-//
-//                }
-                qd.renderContent(ithQuestion);
-                questions.add(qd);
+                MultipleChoice ithMC = (MultipleChoice) ithQuestion;
+                if (ithMC.getQuestion().length > 1) {
+                    List<CustomDialog> longQuestionChain = generateTextDialog(skin, ithMC
+                            .getQuestion().length-1, "CLUE");
+                    CustomDialog lastElement = longQuestionChain.get(longQuestionChain.size()-1);
+                    lastElement.setResponseDialog(qd);
+                    longQuestionChain.set(longQuestionChain.size()-1, lastElement);
+                    CustomDialog firstElement = longQuestionChain.get(0);
+                    //System.out.println(firstElement.getResponseDialog());
+                    //System.out.println(ithMC.getQuestion() instanceof String[]);
+                    firstElement.renderContent(ithMC);
+                    questions.add(firstElement);
+                }
+                else {
+                    qd.renderContent(ithQuestion);
+                    questions.add(qd);
+                }
             }
             else if (ithQuestion instanceof String) {
                 td.renderContent(ithQuestion);
@@ -228,6 +239,7 @@ public class Player extends Sprite {
         return questions;
     }
 
+    // Generate num of TextDialogs in a list
     public List<CustomDialog> generateTextDialog(Skin skin, int num, String title) {
         List<CustomDialog> responseDialogs = new ArrayList<>();
         for (int i = 0; i < num; i++) {
@@ -243,7 +255,7 @@ public class Player extends Sprite {
         Collections.reverse(responseDialogs);
         return responseDialogs;
     }
-    
+
     public void hitEnemy(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             if(isOverlapped(enemy.getBoundingRectangle())) {

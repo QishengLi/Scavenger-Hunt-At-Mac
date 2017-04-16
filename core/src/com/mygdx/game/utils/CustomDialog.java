@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.data.MultipleChoice;
 import com.mygdx.game.entities.Enemy;
 import com.mygdx.game.screens.Play;
 
@@ -69,6 +70,11 @@ public abstract class CustomDialog extends Dialog {
         Gdx.input.setInputProcessor(this.ip);
         setEnemiesFreeze(false);
         if (this.responseDialog != null) {
+            if (object instanceof MultipleChoice) {
+                responseDialog.renderContent(object);
+                responseDialog.show(getStage());
+            }
+            // if the object is passed from a TextDialog
             if (object instanceof String[]) {
                 String[] strs = (String[]) object;
                 if (!(strs.length == 0)) {
