@@ -7,7 +7,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.data.MultipleChoice;
 import com.mygdx.game.entities.Enemy;
@@ -84,6 +86,15 @@ public abstract class CustomDialog extends Dialog {
             }
         }
         remove();
+    }
+
+    protected void addLabel(String str, Skin skin) {
+        Label label = new Label(str, skin);
+        label.setWrap(true); // wrapping text to multiple lines
+        label.setAlignment(Align.center);
+        getContentTable().clearChildren();
+        getContentTable().add(label).prefWidth(LABEL_WIDTH); // prefWidth is width of the actual text box
+        getButtonTable().clearChildren();
     }
 
     private boolean checkScreen() {
