@@ -7,8 +7,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.data.MultipleChoice;
 import com.mygdx.game.entities.Enemy;
 import com.mygdx.game.screens.Play;
 
@@ -53,6 +56,10 @@ public abstract class CustomDialog extends Dialog {
         return responseDialog;
     }
 
+    public void setResponseDialog(CustomDialog responseDialog) {
+        this.responseDialog = responseDialog;
+    }
+
     @Override public Dialog show(Stage stage) {
         // Set input processor to dialog
         Gdx.input.setInputProcessor(stage);
@@ -65,11 +72,29 @@ public abstract class CustomDialog extends Dialog {
         Gdx.input.setInputProcessor(this.ip);
         setEnemiesFreeze(false);
         if (this.responseDialog != null) {
-            System.out.println(responseDialog.toString());
-            responseDialog.renderContent(object);
-            responseDialog.show(getStage());
+            if (object instanceof MultipleChoice) {
+                responseDialog.renderContent(object);
+                responseDialog.show(getStage());
+            }
+            // if the object is passed from a TextDialog
+            if (object instanceof String[]) {
+                String[] strs = (String[]) object;
+                if (!(strs.length == 0)) {
+                    responseDialog.renderContent(strs);
+                    responseDialog.show(getStage());
+                }
+            }
         }
         remove();
+    }
+
+    protected void addLabel(String str, Skin skin) {
+        Label label = new Label(str, skin);
+        label.setWrap(true); // wrapping text to multiple lines
+        label.setAlignment(Align.center);
+        getContentTable().clearChildren();
+        getContentTable().add(label).prefWidth(LABEL_WIDTH); // prefWidth is width of the actual text box
+        getButtonTable().clearChildren();
     }
 
     private boolean checkScreen() {

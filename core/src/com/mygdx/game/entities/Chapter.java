@@ -3,6 +3,7 @@ package com.mygdx.game.entities;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.utils.CustomDialog;
 import com.mygdx.game.utils.QuestionDialog;
 
 import java.util.HashMap;
@@ -18,15 +19,15 @@ import java.util.Objects;
  */
 public class Chapter {
 
-    private Map<Rectangle, QuestionDialog> spots;
+    private Map<Rectangle, CustomDialog> spots;
 
     public Chapter() {}
 
-    public void initSpots(Array<Rectangle> doorRects, Array<QuestionDialog> questions) {
+    public void initSpots(Array<Rectangle> doorRects, Array<CustomDialog> questions) {
         spots = new HashMap<>();
         for(int i=0; i<doorRects.size; i++){
             Rectangle rect = doorRects.get(i);
-            QuestionDialog question = questions.get(i);
+            CustomDialog question = questions.get(i);
             spots.put(rect, question);
         }
     }
@@ -40,7 +41,7 @@ public class Chapter {
         return null;
     }
 
-    public Map<Rectangle, QuestionDialog> getSpots() {
+    public Map<Rectangle, CustomDialog> getSpots() {
         return spots;
     }
 }

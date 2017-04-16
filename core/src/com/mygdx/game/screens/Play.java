@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.entities.*;
+import com.mygdx.game.utils.CustomDialog;
 import com.mygdx.game.utils.QuestionDialog;
 import com.mygdx.game.utils.TextDialog;
 
@@ -45,10 +46,10 @@ public class Play implements Screen, InputProcessor {
     private Array<Enemy> enemies;
 
     private Skin skin;
-    private Array<QuestionDialog> questions;
+    private Array<CustomDialog> questions;
     private Array<Rectangle> collisionRects;
     private Array<Rectangle> doors;
-    private Map<Rectangle, QuestionDialog> spots;
+    private Map<Rectangle, CustomDialog> spots;
 
     private Music bgm;
     public static Sound punch;
@@ -133,12 +134,15 @@ public class Play implements Screen, InputProcessor {
         player.setSpots(spots);
         player.setQuestions(questions);
 
-        TextDialog bg1 = new TextDialog("Background", skin, null);
-        bg1.renderContent("Fortunately, you don’t have to face it alone. People left you with pieces of clues around the campus. " +
-                "Go to Kirk Section 9 to start your adventure.");
+        TextDialog bg3 = new TextDialog("Background", skin, null);
+        TextDialog bg2 = new TextDialog("Background", skin, bg3);
+        TextDialog bg1 = new TextDialog("Background", skin, bg2);
+        //bg1.renderContent(new String[]{});
         TextDialog bg = new TextDialog("Background", skin, bg1);
-        bg.renderContent("Today is May 4th, 2037. Our pretty Macalester campus has been invaded by unknown creatures. " +
-                "You, the only survivor, must solve all the puzzles and gather all information to destroy the energy source of enemies.");
+        bg.renderContent(new String[]{"Today is May 4th, 2037. Our pretty Macalester campus has been invaded by unknown creatures. " +
+                "You, the only survivor, must solve all the puzzles and gather all information to destroy the energy source of enemies.",
+                "Fortunately, you don’t have to face it alone. People left you with pieces of clues around the campus. " +
+                "Go to Kirk Section 9 to start your adventure."});
         bg.show(this.stage);
 
         startTime = TimeUtils.millis();
