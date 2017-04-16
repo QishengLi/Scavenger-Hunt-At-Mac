@@ -15,6 +15,7 @@ import com.mygdx.game.utils.QuestionDialog;
 import com.mygdx.game.utils.TextDialog;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -201,12 +202,21 @@ public class Player extends Sprite {
 
         for (int i = 0; i < qt.getNumQuestions(); i++){
             CustomDialog td = new TextDialog("TEXT", skin, null);
-            CustomDialog responseDialog3 = new TextDialog("ANSWER", skin, null);
-            CustomDialog responseDialog2 = new TextDialog("ANSWER", skin, responseDialog3);
-            CustomDialog responseDialog = new TextDialog("ANSWER", skin, responseDialog2);
+            List<CustomDialog> responseDialogs = generateTextDialog(skin, 3, "ANSWER");
+            CustomDialog responseDialog = responseDialogs.get(0);
+            System.out.println(responseDialog.getResponseDialog());
+//            CustomDialog responseDialog3 = new TextDialog("ANSWER", skin, null);
+//            CustomDialog responseDialog2 = new TextDialog("ANSWER", skin, responseDialog3);
+//            CustomDialog responseDialog = new TextDialog("ANSWER", skin, responseDialog2);
             CustomDialog qd = new QuestionDialog("CLUE", skin, responseDialog);
             Object ithQuestion = qt.getNthQuestion(i);
             if (ithQuestion instanceof MultipleChoice) {
+//                for (int j = 0; j < ((MultipleChoice) ithQuestion).getQuestion().length; j++) {
+//                    CustomDialog responseDialogj = new TextDialog("QUESTION", skin, null);
+//                }
+//                for (int j = 0; j < ((MultipleChoice) ithQuestion).getQuestion().length; j++) {
+//
+//                }
                 qd.renderContent(ithQuestion);
                 questions.add(qd);
             }
@@ -218,6 +228,22 @@ public class Player extends Sprite {
         return questions;
     }
 
+    public List<CustomDialog> generateTextDialog(Skin skin, int num, String title) {
+        List<CustomDialog> responseDialogs = new ArrayList<>();
+        for (int i = 0; i < num; i++) {
+            if (i == 0) {
+                CustomDialog responseDialog = new TextDialog(title, skin, null);
+                responseDialogs.add(responseDialog);
+            }
+            else {
+                CustomDialog responseDialog = new TextDialog(title, skin, responseDialogs.get(i-1));
+                responseDialogs.add(responseDialog);
+            }
+        }
+        Collections.reverse(responseDialogs);
+        return responseDialogs;
+    }
+    
     public void hitEnemy(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             if(isOverlapped(enemy.getBoundingRectangle())) {

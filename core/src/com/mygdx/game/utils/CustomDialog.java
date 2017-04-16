@@ -53,6 +53,10 @@ public abstract class CustomDialog extends Dialog {
         return responseDialog;
     }
 
+    public void setResponseDialog(CustomDialog responseDialog) {
+        this.responseDialog = responseDialog;
+    }
+
     @Override public Dialog show(Stage stage) {
         // Set input processor to dialog
         Gdx.input.setInputProcessor(stage);

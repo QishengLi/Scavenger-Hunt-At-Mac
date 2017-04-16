@@ -28,7 +28,7 @@ public class QuestionDialog extends CustomDialog {
     public void renderContent(Object object) {
         if (object instanceof MultipleChoice) {
             MultipleChoice question = (MultipleChoice) object;
-            Label label = new Label(question.getQuestion(), skin);
+            Label label = new Label(question.getQuestion()[question.getQuestion().length-1], skin);
             label.setWrap(true); //Zhaoqi: seems to work without it. Shuni: this is for wrapping text to multiple lines
             label.setAlignment(Align.center);
             getContentTable().add(label).prefWidth(LABEL_WIDTH); // Zhaoqi: what is getContentTable and prefWidth?

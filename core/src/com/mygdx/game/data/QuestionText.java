@@ -20,7 +20,7 @@ public class QuestionText {
 
         Qs.add(
             new MultipleChoice(
-                "When was Macalester founded??",
+                new String[]{"When was Macalester founded??"},
                 new Answer("1770",
                         new String[]{"Ugh! You are wrong. Hit the door to answer the question again.\n",
                                 "Keep an eye on your life bar. Each wrong answer will cost you a life"}, false),
@@ -38,7 +38,7 @@ public class QuestionText {
         //Door at Theater.
         Qs.add(
             new MultipleChoice(
-                "You made it! Winter is coming. Our smart ancestors once built tunnels between buildings to avoid the coldness. Which building is connected to Theater?",
+                new String[]{"You made it! Winter is coming. Our smart ancestors once built tunnels between buildings to avoid the coldness. Which building is connected to Theater?"},
                 new Answer("Olin Rice Science Building", new String[]{"Not really... Please try again."},false),
                 new Answer("Old Main Humanity Building", new String[]{"Not really... Please try again."},false),
                 new Answer("Janet Wallace Art Building", new String[]{"Wonderful! Go to J-Wall for the next clue. " +
@@ -49,9 +49,9 @@ public class QuestionText {
         //Door at Music.
         Qs.add(
             new MultipleChoice(
-                "Things start to unfold. Years ago, many music majors figured out that some weird music is the weapon of aliens. They can control and mess up people’s minds. \n" +
+                new String[]{"Things start to unfold. Years ago, many music majors figured out that some weird music is the weapon of aliens. They can control and mess up people’s minds. \n" +
                         "Shelley Hanson, one of the musicians at Mac, came up with an idea to destroy this music. She hides this valuable clue in the name of her ensemble. " +
-                        "Which ensemble is under her direction at Macalester?",
+                        "Which ensemble is under her direction at Macalester?"},
                 new Answer("African Music Ensemble", new String[]{"Don't give up. People are counting on you! Try again."},false),
                 new Answer("Wind Ensemble", new String[]{"Correct! Wind... How can wind help you destroy these enemies? " +
                         "Something on this campus gathers the power of wind. Go find it!"},true),
@@ -64,7 +64,7 @@ public class QuestionText {
         //TODO: add sign to tell people about the toxic music...
         Qs.add(
             new MultipleChoice(
-                "Shelley notices that grass, flowers and other organisms near the wind turbine are not affected by this invasion! Why?",
+                new String[]{"Shelley notices that grass, flowers and other organisms near the wind turbine are not affected by this invasion! Why?"},
                 new Answer("It is installed in April 2003.", new String[]{""},false),
                 new Answer("It is the second wind turbine of its size installed in the city of St. Paul.", new String[]{"Your answer is correct! " +
                         "We actually had the FIRST large wind turbine (total height of 103') installed in the city in 2003. " +
@@ -78,10 +78,10 @@ public class QuestionText {
         //Door at Olin Rice.
         Qs.add(
             new MultipleChoice(
-                "What are the three numbers? " +
+                new String[]{"What are the three numbers? " +
                         "1. Number of years of bad luck fo breaking a mirror. " +
                         "2. The loneliest number. " +
-                        "3. What a stitch in time saves.",
+                        "3. What a stitch in time saves."},
                 new Answer("917",new String[]{ "Not really... Try again!"}, false),
                 new Answer("612", new String[]{"Not really... Who is your math professor? (Qisheng: I'm just kidding...)"}, false),
                 new Answer("719", new String[]{"Yes! But... wait! You can not go to ES department any more. " +
@@ -91,7 +91,7 @@ public class QuestionText {
 
         Qs.add(
             new MultipleChoice(
-                "What do you think is the reason that there are enemies?",
+                new String[]{"What do you think is the reason that there are enemies?"},
                 new Answer("Music", new String[]{"Good, my boy. 写不动了..."}, true),
                 new Answer("The scavenger hunt game is too difficult!",new String[]{ "Keep going."}, false)
             )

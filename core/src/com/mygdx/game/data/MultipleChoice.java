@@ -9,10 +9,10 @@ import java.util.List;
  */
 public final class MultipleChoice {
 
-    private final String question;
+    private final String[] question;
     private final List<Answer> choices;
 
-    public MultipleChoice(String question, Answer... choices) {
+    public MultipleChoice(String[] question, Answer... choices) {
         if(choices.length == 0) {
             throw new IllegalArgumentException("Multiple choice questions must have at least one answer");
         }
@@ -24,7 +24,7 @@ public final class MultipleChoice {
         return Collections.unmodifiableList(choices);
     }
 
-    public String getQuestion() {
+    public String[] getQuestion() {
         return question;
     }
 }
