@@ -134,12 +134,15 @@ public class Play implements Screen, InputProcessor {
         player.setSpots(spots);
         player.setQuestions(questions);
 
-        TextDialog bg1 = new TextDialog("Background", skin, null);
-        bg1.renderContent(new String[]{"Fortunately, you don’t have to face it alone. People left you with pieces of clues around the campus. " +
-                "Go to Kirk Section 9 to start your adventure."});
+        TextDialog bg3 = new TextDialog("Background", skin, null);
+        TextDialog bg2 = new TextDialog("Background", skin, bg3);
+        TextDialog bg1 = new TextDialog("Background", skin, bg2);
+        //bg1.renderContent(new String[]{});
         TextDialog bg = new TextDialog("Background", skin, bg1);
         bg.renderContent(new String[]{"Today is May 4th, 2037. Our pretty Macalester campus has been invaded by unknown creatures. " +
-                "You, the only survivor, must solve all the puzzles and gather all information to destroy the energy source of enemies."});
+                "You, the only survivor, must solve all the puzzles and gather all information to destroy the energy source of enemies.",
+                "Fortunately, you don’t have to face it alone. People left you with pieces of clues around the campus. " +
+                "Go to Kirk Section 9 to start your adventure."});
         bg.show(this.stage);
 
         startTime = TimeUtils.millis();

@@ -201,14 +201,17 @@ public class Player extends Sprite {
 
         for (int i = 0; i < qt.getNumQuestions(); i++){
             CustomDialog td = new TextDialog("TEXT", skin, null);
-            CustomDialog responseDialog = new TextDialog("ANSWER", skin, null);
+            CustomDialog responseDialog3 = new TextDialog("ANSWER", skin, null);
+            CustomDialog responseDialog2 = new TextDialog("ANSWER", skin, responseDialog3);
+            CustomDialog responseDialog = new TextDialog("ANSWER", skin, responseDialog2);
             CustomDialog qd = new QuestionDialog("CLUE", skin, responseDialog);
-            if (qt.getNthQuestion(i) instanceof MultipleChoice) {
-                qd.renderContent(qt.getNthQuestion(i));
+            Object ithQuestion = qt.getNthQuestion(i);
+            if (ithQuestion instanceof MultipleChoice) {
+                qd.renderContent(ithQuestion);
                 questions.add(qd);
             }
-            else if (qt.getNthQuestion(i) instanceof String) {
-                td.renderContent(qt.getNthQuestion(i));
+            else if (ithQuestion instanceof String) {
+                td.renderContent(ithQuestion);
                 questions.add(td);
             }
         }

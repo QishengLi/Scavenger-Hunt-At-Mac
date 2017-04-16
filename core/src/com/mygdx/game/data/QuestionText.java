@@ -22,9 +22,9 @@ public class QuestionText {
             new MultipleChoice(
                 "When was Macalester founded??",
                 new Answer("1770",
-                        new String[]{"Ugh! You are wrong. Hit the door to answer the question again.\n" +
+                        new String[]{"Ugh! You are wrong. Hit the door to answer the question again.\n",
                                 "Keep an eye on your life bar. Each wrong answer will cost you a life"}, false),
-                new Answer("1874", new String[]{"Great! Indeed, it has been 163 years since Mac was founded. \n" +
+                new Answer("1874", new String[]{"Great! Indeed, it has been 163 years since Mac was founded. \n",
                         "Does this number, 163, ring a bell? Someone hides a clue for you on 163 Macalester Street."}, true),
                 new Answer("1980", new String[]{"Ugh! You are wrong. Hit the door to answer the question again.\n" +
                         "Keep an eye on your life bar. Each wrong answer will cost you a life"}, false)
