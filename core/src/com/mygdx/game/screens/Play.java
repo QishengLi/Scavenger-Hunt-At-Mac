@@ -12,9 +12,13 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.data.Direction;
@@ -64,6 +68,10 @@ public class Play implements Screen, InputProcessor {
     private HealthBar barGroup;
     private Label lifeLabel;
 
+    private Label curClue;
+    private SelectBox<Object> clueBox;
+    private Table table;
+
     private int initialWidth;
     private int initialHeight;
 
@@ -109,7 +117,7 @@ public class Play implements Screen, InputProcessor {
 
         sb = new SpriteBatch();
         playerImg = new Texture(Gdx.files.internal("pik.png"));
-        enemyImg = new Texture(Gdx.files.internal("goblinsword.png"));
+        enemyImg = new Texture(Gdx.files.internal("sprite/robot8.png"));
         player = new Player(playerImg, stage);
         // if set position: mac.mapWidth + 400, cannot hit door.
         player.setCenter(mac.mapWidth/2+1520,mac.mapHeight/2); //TODO: change position
@@ -139,6 +147,7 @@ public class Play implements Screen, InputProcessor {
         player.setSpots(spots);
         player.setQuestions(questions);
 
+
         TextDialog bg3 = new TextDialog("Background", skin, null);
         TextDialog bg2 = new TextDialog("Background", skin, bg3);
         TextDialog bg1 = new TextDialog("Background", skin, bg2);
@@ -149,6 +158,30 @@ public class Play implements Screen, InputProcessor {
                 "Fortunately, you don’t have to face it alone. People left you with pieces of clues around the campus. " +
                 "Go to Kirk Section 9 to start your adventure."});
         bg.show(this.stage);
+
+        Label title = new Label("Current clue", skin);
+        curClue = new Label("kijgf",skin);
+        Object[] sample = new Object[2];
+        sample[0] = title;
+        sample[1] = curClue;
+        clueBox = new SelectBox<Object>(skin);
+        clueBox.setItems(sample);
+        table = new Table();
+        table.setFillParent(true);
+        table.top();
+
+        table.add(clueBox);
+        stage.addActor(table);
+
+        clueBox.addListener(new ChangeListener() {
+
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.println(((Label) clueBox.getSelected()).getText());
+            }
+        });
+
+
 
         startTime = TimeUtils.millis();
         elapseTime = 0;
