@@ -12,13 +12,11 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.data.Direction;
@@ -173,16 +171,6 @@ public class Play implements Screen, InputProcessor {
         table.add(clueBox);
         stage.addActor(table);
 
-        clueBox.addListener(new ChangeListener() {
-
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                System.out.println(((Label) clueBox.getSelected()).getText());
-            }
-        });
-
-
-
         startTime = TimeUtils.millis();
         elapseTime = 0;
     }
@@ -219,6 +207,7 @@ public class Play implements Screen, InputProcessor {
         barGroup.draw(sb, 1);
         sb.end();
 
+        stage.act();
         stage.draw();
     }
 
