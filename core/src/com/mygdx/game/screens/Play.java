@@ -157,11 +157,10 @@ public class Play implements Screen, InputProcessor {
                 "Go to Kirk Section 9 to start your adventure."});
         bg.show(this.stage);
 
-        Label title = new Label("Current clue", skin);
-        curClue = new Label("kijgf",skin);
-        Object[] sample = new Object[2];
-        sample[0] = title;
-        sample[1] = curClue;
+        Object[] sample = new Object[3];
+        sample[0] = "Current Clue List";
+        sample[1] = "你他妈在逗我，为啥不work？";
+        sample[2] = "long long long long long long long long clue";
         clueBox = new SelectBox<Object>(skin);
         clueBox.setItems(sample);
         table = new Table();
