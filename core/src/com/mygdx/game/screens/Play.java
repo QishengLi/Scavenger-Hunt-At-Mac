@@ -20,7 +20,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.utils.CustomDialog;
-import com.mygdx.game.utils.QuestionDialog;
 import com.mygdx.game.utils.TextDialog;
 
 import java.util.ArrayList;
@@ -53,6 +52,8 @@ public class Play implements Screen, InputProcessor {
 
     private Music bgm;
     public static Sound punch;
+    public static Sound hitCorrectDoor;
+    public static Sound hitWrongDoor;
 
     private Texture playerImg;
     private Texture enemyImg;
@@ -102,7 +103,7 @@ public class Play implements Screen, InputProcessor {
         skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
         // Add background music
-        bgm = Gdx.audio.newMusic(Gdx.files.internal("Fireflies.mp3"));
+        bgm = Gdx.audio.newMusic(Gdx.files.internal("soundEffects/Winds Of Stories.mp3"));
         bgm.setLooping(true); // looping music after it's finished
         bgm.play();
 
@@ -113,9 +114,13 @@ public class Play implements Screen, InputProcessor {
         // if set position: mac.mapWidth + 400, cannot hit door.
         player.setCenter(mac.mapWidth/2+1520,mac.mapHeight/2); //TODO: change position
         questions = player.generateQuestions(skin);
+
         enemies = new Array<>();
         initializeEnemies(enemies, 10);
         punch = Gdx.audio.newSound(Gdx.files.internal("punch.wav"));
+        hitCorrectDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorOpen.mp3"));
+        hitWrongDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorPunch.mp3"));
+
 
         Chapter chapters = new Chapter();
         chapters.initSpots(doors, questions);

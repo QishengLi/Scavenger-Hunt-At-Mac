@@ -174,6 +174,7 @@ public class Player extends Sprite {
         // Visiting answered questions
         for (Rectangle rect : existingDoors) {
             if (isOverlapped(rect)) {
+                Play.hitCorrectDoor.play();
                 resetDirection();
                 CustomDialog dialogBox = spots.get(rect);
                 if (dialogBox instanceof TextDialog) {
@@ -187,6 +188,7 @@ public class Player extends Sprite {
 
         // Visiting a new spot
         if (isOverlapped(newDoor)) {
+            Play.hitCorrectDoor.play();
             resetDirection();
             CustomDialog dialogBox = spots.get(newDoor);
             if (isFinished(existingDoors)) {
@@ -194,6 +196,13 @@ public class Player extends Sprite {
             }
             else {
                 dialogBox.show(this.stage);
+            }
+        }
+
+        for (Rectangle rect : doorRects) {
+            if (isOverlapped(rect) && !existingDoors.contains(rect, true)) {
+                Play.hitWrongDoor.play();
+                resetDirection();
             }
         }
     }
