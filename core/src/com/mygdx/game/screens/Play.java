@@ -136,14 +136,16 @@ public class Play implements Screen, InputProcessor {
         player.setSpots(spots);
         player.setQuestions(questions);
 
-        TextDialog bg3 = new TextDialog("Background", skin, null);
+        TextDialog bg4 = new TextDialog("Background", skin, null);
+        TextDialog bg3 = new TextDialog("Background", skin, bg4);
         TextDialog bg2 = new TextDialog("Background", skin, bg3);
         TextDialog bg1 = new TextDialog("Background", skin, bg2);
         TextDialog bg = new TextDialog("Background", skin, bg1);
-        bg.renderContent(new String[]{"Today is May 4th, 2037. Our pretty Macalester campus has been invaded by unknown creatures. " +
-                "You, the only survivor, must solve all the puzzles and gather all information to destroy the energy source of enemies.",
-                "Fortunately, you don’t have to face it alone. People left you with pieces of clues around the campus. " +
-                "Go to Kirk Section 9 to start your adventure."});
+        bg.renderContent(new String[]{"Today is May 4th, 2037.",
+                "1600 Grand Ave, Saint Paul. Macalester College Campus.",
+                "The robots… they revolted.",
+                "Richard says, \"There’s something I haven’t told you. I have designed a way to turn the clock back\"",
+                "I, I don’t have much time left. Go… Go to Kirk Section 9!\" Richard drew his last breath."});
         bg.show(this.stage);
 
         startTime = TimeUtils.millis();
@@ -164,7 +166,7 @@ public class Play implements Screen, InputProcessor {
 
         setTimeStart(player);
         if (timeLimitStart != 0) {
-            timeLeft = 5000 - TimeUtils.timeSinceMillis(timeLimitStart);
+            timeLeft = 100000 - TimeUtils.timeSinceMillis(timeLimitStart);
             System.out.println("Time Left:" + timeLeft);
         }
 
