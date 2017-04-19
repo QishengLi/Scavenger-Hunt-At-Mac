@@ -84,13 +84,13 @@ public class QuestionText {
         );
 
 
-//        Qs.add(
-//            new MultipleChoice(
-//                new String[]{"If you break a mirror, " +
-//                        "how many years of bad luck might you get? Remember this number!"},
-//                    new Answer("OK", new String[]{"Go to next Mac sign"}, true)
-//            )
-//        );
+        Qs.add(
+            new MultipleChoice(
+                new String[]{"If you break a mirror, " +
+                        "how many years of bad luck might you get? Remember this number!"},
+                    new Answer("OK", new String[]{"Go to next Mac sign"}, true)
+            )
+        );
 
 
         //Door at Olin Rice.
