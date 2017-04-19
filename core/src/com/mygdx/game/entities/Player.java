@@ -198,6 +198,7 @@ public class Player extends Sprite {
                 dialogBox.show(this.stage);
             }
 
+
             Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
             if (curScreen instanceof Play) {
                 Play play = (Play) curScreen;
@@ -212,6 +213,13 @@ public class Player extends Sprite {
                 }
                 play.sampleSelectBox[old.length] = "update";
 
+            }
+        }
+
+        for (Rectangle rect : doorRects) {
+            if (isOverlapped(rect) && !existingDoors.contains(rect, true)) {
+                Play.hitWrongDoor.play();
+                resetDirection();
             }
         }
 
