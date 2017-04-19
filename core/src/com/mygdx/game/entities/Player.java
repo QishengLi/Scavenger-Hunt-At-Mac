@@ -17,10 +17,7 @@ import com.mygdx.game.utils.CustomDialog;
 import com.mygdx.game.utils.QuestionDialog;
 import com.mygdx.game.utils.TextDialog;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Shuni on 2/25/17.
@@ -206,7 +203,15 @@ public class Player extends Sprite {
                 Play play = (Play) curScreen;
 
                 play.setCurClue(new String[]{"update clue hahhaha"});
-                play.sampleSelectBox[1] =  "update";
+
+                Object[] old = play.sampleSelectBox;
+
+                play.sampleSelectBox = new Object[old.length + 1];
+                for (int i = 0; i < old.length; i++) {
+                    play.sampleSelectBox[i] =  old[i];
+                }
+                play.sampleSelectBox[old.length] = "update";
+
             }
         }
 
