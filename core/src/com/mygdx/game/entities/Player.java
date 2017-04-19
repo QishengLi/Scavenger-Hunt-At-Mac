@@ -1,8 +1,5 @@
 package com.mygdx.game.entities;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
@@ -17,7 +14,10 @@ import com.mygdx.game.utils.CustomDialog;
 import com.mygdx.game.utils.QuestionDialog;
 import com.mygdx.game.utils.TextDialog;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Shuni on 2/25/17.
@@ -199,21 +199,17 @@ public class Player extends Sprite {
             }
 
 
-            Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
-            if (curScreen instanceof Play) {
-                Play play = (Play) curScreen;
-
-                play.setCurClue(new String[]{"update clue hahhaha"});
-
-                Object[] old = play.sampleSelectBox;
-
-                play.sampleSelectBox = new Object[old.length + 1];
-                for (int i = 0; i < old.length; i++) {
-                    play.sampleSelectBox[i] =  old[i];
-                }
-                play.sampleSelectBox[old.length] = "update";
-
-            }
+            //Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
+            //if (curScreen instanceof Play) {
+                //Play play = (Play) curScreen;
+                //play.setCurClue(new String[]{"update clue hahhaha"});
+                //Object[] old = play.sampleSelectBox;
+                //play.sampleSelectBox = new Object[old.length + 1];
+                //for (int i = 0; i < old.length; i++) {
+                //    play.sampleSelectBox[i] =  old[i];
+                //}
+                //play.sampleSelectBox[old.length] = "update";
+            //}
         }
 
         for (Rectangle rect : doorRects) {
@@ -222,8 +218,6 @@ public class Player extends Sprite {
                 resetDirection();
             }
         }
-
-
     }
 
     public Array<CustomDialog> generateQuestions(Skin skin) {

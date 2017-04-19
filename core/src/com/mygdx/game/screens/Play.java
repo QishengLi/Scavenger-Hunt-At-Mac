@@ -68,10 +68,10 @@ public class Play implements Screen, InputProcessor {
     private Label lifeLabel;
 
     public String[] clue;
-    public Object[] sampleSelectBox;
+    //public Object[] sampleSelectBox;
     public TextDialog curClueDialog;
-    private SelectBox<Object> clueBox;
-    private Table table;
+    //private SelectBox<Object> clueBox;
+    //private Table table;
 
     private int initialWidth;
     private int initialHeight;
@@ -112,7 +112,7 @@ public class Play implements Screen, InputProcessor {
         skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
         // Add background music
-        bgm = Gdx.audio.newMusic(Gdx.files.internal("soundEffects/Winds Of Stories.mp3"));
+        bgm = Gdx.audio.newMusic(Gdx.files.internal("soundEffects/bgm.mp3"));
         bgm.setLooping(true); // looping music after it's finished
         bgm.play();
 
@@ -159,17 +159,18 @@ public class Play implements Screen, InputProcessor {
                 "Fortunately, you don’t have to face it alone. People left you with pieces of clues around the campus. " +
                 "Go to Kirk Section 9 to start your adventure."});
 
-        sampleSelectBox = new Object[2];
-        sampleSelectBox[0] = "Current Clue List";
-        sampleSelectBox[1] = "Current clue 1, 他妈的逗我呢，为啥不work？";
-        clueBox = new SelectBox<Object>(skin);
-        clueBox.setItems(sampleSelectBox);
-        Table table1 = new Table();
-        table1.setFillParent(true);
-        table1.top();
-
-        table1.add(clueBox);
-        stage.addActor(table1);
+          //不要删，list of clues
+//        sampleSelectBox = new Object[2];
+//        sampleSelectBox[0] = "Current Clue List";
+//        sampleSelectBox[1] = "Current clue 1, 他妈的逗我呢，为啥不work？";
+//        clueBox = new SelectBox<Object>(skin);
+//        clueBox.setItems(sampleSelectBox);
+//        Table table1 = new Table();
+//        table1.setFillParent(true);
+//        table1.top();
+//
+//        table1.add(clueBox);
+//        stage.addActor(table1);
 
 
         curClueDialog = new TextDialog("Current Clue",skin, null);
@@ -190,6 +191,7 @@ public class Play implements Screen, InputProcessor {
         Table table2 = new Table();
         table2.setFillParent(true);
         table2.bottom();
+        table2.left();
 
         table2.add(curClue);
         stage.addActor(table2);
@@ -232,7 +234,8 @@ public class Play implements Screen, InputProcessor {
         barGroup.draw(sb, 1);
         sb.end();
 
-        clueBox.setItems(sampleSelectBox);
+        //不要删
+        //clueBox.setItems(sampleSelectBox);
 
         stage.act();
         stage.draw();
