@@ -22,7 +22,6 @@ import java.util.Map;
 /**
  * Created by Shuni on 2/25/17.
  *
- * TODO: game stops when message pops up
  */
 public class Player extends Sprite {
 
@@ -31,9 +30,8 @@ public class Player extends Sprite {
     public static final int TOTALHEALTH = 3;
 
     private List<Direction> movingDirs;
-    //private Direction currentDir;
 
-    private Stage stage;//?
+    private Stage stage;
     private Array<Rectangle> doorRects;
     private Array<CustomDialog> questions;
     private Array<Rectangle> collisionRects;
@@ -45,7 +43,6 @@ public class Player extends Sprite {
     public Player(Texture texture, Stage stage) {
         super(texture);
         this.movingDirs = new ArrayList<>();
-        //this.currentDir = Direction.IDLE;
         this.stage = stage;
         //TODO: Refactor!
         explosions = new ArrayList<>();
@@ -53,23 +50,14 @@ public class Player extends Sprite {
 
     public void addNewDirection(Direction dir) {
         this.movingDirs.add(dir);
-        //this.currentDir = dir;
     }
 
     public void removeDirection(Direction dir) {
-
         this.movingDirs.remove(dir);
-
-//        if (this.movingDirs.isEmpty()) {
-//            this.currentDir = Direction.IDLE;
-//        } else {
-//            this.currentDir = this.movingDirs.get(this.movingDirs.size() - 1);
-//        }
     }
 
     private void resetDirection() {
         this.movingDirs.clear();
-        //this.currentDir = Direction.IDLE;
     }
 
 
@@ -130,22 +118,27 @@ public class Player extends Sprite {
         return (!((p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
     }
 
-    private Array<Rectangle> getExistingDoors() {
+    public Array<Rectangle> getExistingDoors() {
         Array<Rectangle> existingDoors = new Array<>();
         for (CustomDialog questionDialog : questions) {
+            int i = 0;
+            if (questionDialog instanceof TextDialog) {
+                CustomDialog customDialog = questionDialog;
+                while (customDialog instanceof TextDialog && i < 7) { //TODO: change parameter. 7: number of nested dialogs
+                    customDialog = customDialog.getResponseDialog(); //@nullable if the whole chain is TextDialog
+                    i++;
+                }
+                if (customDialog instanceof QuestionDialog) {
+                    QuestionDialog question = (QuestionDialog) customDialog;
+                    if (question.isAnswered()) {
+                        existingDoors.add(Chapter.getKeyByValue(spots, questionDialog));
+                    }
+                }
+            }
             if (questionDialog instanceof QuestionDialog) {
                 QuestionDialog question = (QuestionDialog) questionDialog;
                 if (question.isAnswered()) {
                     existingDoors.add(Chapter.getKeyByValue(spots, question));
-                }
-            }
-            if (questionDialog instanceof TextDialog) {
-                TextDialog text = (TextDialog) questionDialog;
-                if (text.getResponseDialog() instanceof QuestionDialog) {
-                    QuestionDialog question = (QuestionDialog) text.getResponseDialog();
-                    if (question.isAnswered()) {
-                        existingDoors.add(Chapter.getKeyByValue(spots, text));
-                    }
                 }
             }
         }
@@ -170,18 +163,15 @@ public class Player extends Sprite {
         }
         Array<Rectangle> existingDoors = getExistingDoors();
         Rectangle newDoor = nextDoor(existingDoors);
-
         // Visiting answered questions
         for (Rectangle rect : existingDoors) {
             if (isOverlapped(rect)) {
                 resetDirection();
                 CustomDialog dialogBox = spots.get(rect);
-                if (dialogBox instanceof TextDialog) {
-                    dialogBox.getResponseDialog().getResponseDialog().show(this.stage);
+                while (dialogBox instanceof TextDialog) {
+                    dialogBox = dialogBox.getResponseDialog();
                 }
-                else {
-                    dialogBox.getResponseDialog().show(this.stage);
-                }
+                dialogBox.getResponseDialog().show(this.stage);
             }
         }
 
@@ -209,7 +199,6 @@ public class Player extends Sprite {
             CustomDialog td = new TextDialog("TEXT", skin, null);
             List<CustomDialog> responseDialogs = generateTextDialog(skin, 3, "ANSWER");
             CustomDialog responseDialog = responseDialogs.get(0);
-            //System.out.println(responseDialog.getResponseDialog());
             CustomDialog qd = new QuestionDialog("CLUE", skin, responseDialog);
             Object ithQuestion = qt.getNthQuestion(i);
             if (ithQuestion instanceof MultipleChoice) {
@@ -221,8 +210,6 @@ public class Player extends Sprite {
                     lastElement.setResponseDialog(qd);
                     longQuestionChain.set(longQuestionChain.size()-1, lastElement);
                     CustomDialog firstElement = longQuestionChain.get(0);
-                    //System.out.println(firstElement.getResponseDialog());
-                    //System.out.println(ithMC.getQuestion() instanceof String[]);
                     firstElement.renderContent(ithMC);
                     questions.add(firstElement);
                 }

@@ -1,7 +1,5 @@
 package com.mygdx.game.data;
 
-import javafx.util.Pair;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,14 +18,14 @@ public class QuestionText {
 
         Qs.add(
             new MultipleChoice(
-                new String[]{"When was", "Macalester founded??"},
-                new Answer("1770",
-                        new String[]{"Ugh! You are wrong. Hit the door to answer the question again.\n",
-                                "Keep an eye on your life bar. Each wrong answer will cost you a life"}, false),
-                new Answer("1874", new String[]{"Great! Indeed, it has been 163 years since Mac was founded. \n",
-                        "Does this number, 163, ring a bell? Someone hides a clue for you on 163 Macalester Street."}, true),
-                new Answer("1980", new String[]{"Ugh! You are wrong. Hit the door to answer the question again.\n" +
-                        "Keep an eye on your life bar. Each wrong answer will cost you a life"}, false)
+                new String[]{"If you are reading this, it is very likely that Macalester has not survived the robot revolt. " +
+                        "The technology you will be using is very dangerous, and it should not fall into the wrong hands. " +
+                        "You must prove yourself to be a true Macalester Scot.",
+                        "When was Macalester founded?"},
+                new Answer("1770", new String[]{"Ouch! An electric shock! I think the answer was wrong. (Hit the door to answer the question again)"},false),
+                new Answer("1916", new String[]{"Ouch! An electric shock! I think the answer was wrong. (Hit the door to answer the question again)"},false),
+                new Answer("1874", new String[]{"Yes!","The first experiment was conducted somewhere on Macalester Street. " +
+                        "Find it! (Hint: it’s 2037. How long has it been since Mac’s founding?)"},true)
             )
         );
 
@@ -35,23 +33,36 @@ public class QuestionText {
 //                "hello world"
 //        );
 
+
         //Door at Theater.
         Qs.add(
             new MultipleChoice(
-                new String[]{"You made it!, Winter is coming. Our smart ancestors once built tunnels between buildings to avoid the coldness. Which building is connected to Theater?"},
-                new Answer("Olin Rice Science Building", new String[]{"Not really... Please try again."},false),
-                new Answer("Old Main Humanity Building", new String[]{"Not really... Please try again."},false),
-                new Answer("Janet Wallace Art Building", new String[]{"Wonderful! Go to J-Wall for the next clue. " +
-                        "Think before you take the road. Some roads have more enemies."},true)
+                new String[]{"What a familiar place… " +
+                        "It is winter here more than half of the year. " +
+                        "The first robot we developed helped the school build tunnels between buildings, " +
+                        "while people could hide indoors and avoid the cold. ",
+                        "Which building was connected to Theater in 2017?"},
+                new Answer("Olin Rice Science Building", new String[]{"Ouch! An electric shock! I think the answer was wrong. (Hit the door to answer the question again)\n"},false),
+                new Answer("Old Main Humanity Building", new String[]{"Ouch! An electric shock! I think the answer was wrong. (Hit the door to answer the question again)\n"},false),
+                new Answer("Janet Wallace Art Building", new String[]{"Yes! After the tunnel was built, the Janet Wallace building became a center for experiments with robots",
+                        " Think before you take the road. Some roads have more enemies. (Hint: where are all the early robot prototypes?)"},true)
             )
         );
 
         //Door at Music.
         Qs.add(
             new MultipleChoice(
-                new String[]{"Things start to unfold. Years ago, many music majors figured out that some weird music is the weapon of aliens. They can control and mess up people’s minds. \n" +
-                        "Shelley Hanson, one of the musicians at Mac, came up with an idea to destroy this music. She hides this valuable clue in the name of her ensemble. " +
-                        "Which ensemble is under her direction at Macalester?"},
+                new String[]{"I’m glad you found this place. " +
+                        "Somewhere in the middle of the 2020s, " +
+                        "some Mac musicians collaborated with CS students in an attempt to use robots to recognize different genres of music. " +
+                        "These musicians wanted new inspirations for music composition.",
+                        "One of these musicians was Shelley Hanson. " +
+                                "She was a key member of the team that eventually created the robot that had the capability to recognize music. " +
+                                "It was a huge technical breakthrough.",
+                        "With the help of the robot, Shelley created her masterpiece, " +
+                                "a new composition that won her numerous awards. She became the director of a Mac ensemble.",
+                        "Which ensemble is it?"},
+
                 new Answer("African Music Ensemble", new String[]{"Don't give up. People are counting on you! Try again."},false),
                 new Answer("Wind Ensemble", new String[]{"Correct! Wind... How can wind help you destroy these enemies? " +
                         "Something on this campus gathers the power of wind. Go find it!"},true),
@@ -64,16 +75,23 @@ public class QuestionText {
         //TODO: add sign to tell people about the toxic music...
         Qs.add(
             new MultipleChoice(
-                new String[]{"Shelley notices that grass, flowers and other organisms near the wind turbine are not affected by this invasion! Why?"},
-                new Answer("It is installed in April 2003.", new String[]{""},false),
-                new Answer("It is the second wind turbine of its size installed in the city of St. Paul.", new String[]{"Your answer is correct! " +
-                        "We actually had the FIRST large wind turbine (total height of 103') installed in the city in 2003. " +
-                        "Next step: find people who know this well. It might help uncover the secret."},true),
-                new Answer("It provides an educational opportunity for students, staff and faculty learn about wind energy, " +
-                        "wind patterns, geography and the practicality of wind turbines in urban areas.",new String[]{ ""},false),
-                new Answer("It is used to generate renewable energy to use on campus.",new String[]{ ""}, false)
+                new String[]{"What is the initial use of this wind turbine?"},
+                new Answer("Environmental Protection", new String[]{"Try again"},false),
+                new Answer("Campus Icon",new String[]{"Try again"},false),
+                new Answer("Electricity Generation",new String[]{"Yes!","Why are robots near the wind turbine friendly to me? Hmm… ",
+                "In the development of robots, environmentalists in our team deal with environmental-friendliness. Maybe there are clues in their places. "}, true)
             )
         );
+
+
+//        Qs.add(
+//            new MultipleChoice(
+//                new String[]{"If you break a mirror, " +
+//                        "how many years of bad luck might you get? Remember this number!"},
+//                    new Answer("OK", new String[]{"Go to next Mac sign"}, true)
+//            )
+//        );
+
 
         //Door at Olin Rice.
         Qs.add(
@@ -89,13 +107,13 @@ public class QuestionText {
             )
         );
 
-        Qs.add(
-            new MultipleChoice(
-                new String[]{"What do you think is the reason that there are enemies?"},
-                new Answer("Music", new String[]{"Good, my boy. 写不动了..."}, true),
-                new Answer("The scavenger hunt game is too difficult!",new String[]{ "Keep going."}, false)
-            )
-        );
+//        Qs.add(
+//            new MultipleChoice(
+//                new String[]{"What do you think is the reason that there are enemies?"},
+//                new Answer("Music", new String[]{"Good, my boy. 写不动了..."}, true),
+//                new Answer("The scavenger hunt game is too difficult!",new String[]{ "Keep going."}, false)
+//            )
+//        );
     }
 
     public List<Object> getQs(){

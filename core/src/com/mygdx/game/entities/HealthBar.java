@@ -19,10 +19,10 @@ public class HealthBar extends Group {
     private final float HORIZONTAL_MARGIN = 250;
     private final float VERTICAL_MARGIN = 70;
 
-    public HealthBar(Texture bar, Texture healthBar, Label life_label, CampusMap map) {
+    public HealthBar(Texture bar, Texture healthBar, Label lifeLabel, CampusMap map) {
         this.barImg = new Image(bar);
         this.healthBarImg = new Image(healthBar);
-        this.lifeLabel = life_label;
+        this.lifeLabel = lifeLabel;
         this.map = map;
     }
 

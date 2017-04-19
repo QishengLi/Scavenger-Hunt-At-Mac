@@ -20,7 +20,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.utils.CustomDialog;
-import com.mygdx.game.utils.QuestionDialog;
 import com.mygdx.game.utils.TextDialog;
 
 import java.util.ArrayList;
@@ -58,16 +57,19 @@ public class Play implements Screen, InputProcessor {
     private Texture enemyImg;
     private Texture healthBar;
     private Texture bar;
-    private Texture mac_logo;
 
     private HealthBar barGroup;
     private Label lifeLabel;
+    private Label timeLabel;
 
     private int initialWidth;
     private int initialHeight;
 
     public static long startTime;
     public static long elapseTime;
+    public long timeLimitStart;
+    public static long timeLeft;
+    public boolean timeHasStarted;
     public static final long SECOND = 1000;
 
     public Play() {
@@ -110,7 +112,6 @@ public class Play implements Screen, InputProcessor {
         playerImg = new Texture(Gdx.files.internal("pik.png"));
         enemyImg = new Texture(Gdx.files.internal("goblinsword.png"));
         player = new Player(playerImg, stage);
-        // if set position: mac.mapWidth + 400, cannot hit door.
         player.setCenter(mac.mapWidth/2+1520,mac.mapHeight/2); //TODO: change position
         questions = player.generateQuestions(skin);
         enemies = new Array<>();
@@ -123,30 +124,35 @@ public class Play implements Screen, InputProcessor {
 
         healthBar = new Texture(Gdx.files.internal("healthbar.png"));
         bar = new Texture(Gdx.files.internal("bar.png"));
-        mac_logo = new Texture(Gdx.files.internal("mac_logo2.jpg"));
 
         lifeLabel = new Label("Life: "+ Player.health, skin);
         barGroup = new HealthBar(bar, healthBar, lifeLabel, mac);
         barGroup.initBar();
+
+        timeLabel = new Label("Time:" + timeLeft, skin);
 
         player.setCollisionRects(collisionRects);
         player.setDoorRects(doors);
         player.setSpots(spots);
         player.setQuestions(questions);
 
-        TextDialog bg3 = new TextDialog("Background", skin, null);
+        TextDialog bg4 = new TextDialog("Background", skin, null);
+        TextDialog bg3 = new TextDialog("Background", skin, bg4);
         TextDialog bg2 = new TextDialog("Background", skin, bg3);
         TextDialog bg1 = new TextDialog("Background", skin, bg2);
-        //bg1.renderContent(new String[]{});
         TextDialog bg = new TextDialog("Background", skin, bg1);
-        bg.renderContent(new String[]{"Today is May 4th, 2037. Our pretty Macalester campus has been invaded by unknown creatures. " +
-                "You, the only survivor, must solve all the puzzles and gather all information to destroy the energy source of enemies.",
-                "Fortunately, you don’t have to face it alone. People left you with pieces of clues around the campus. " +
-                "Go to Kirk Section 9 to start your adventure."});
+        bg.renderContent(new String[]{"Today is May 4th, 2037.",
+                "1600 Grand Ave, Saint Paul. Macalester College Campus.",
+                "The robots… they revolted.",
+                "Richard says, \"There’s something I haven’t told you. I have designed a way to turn the clock back\"",
+                "I, I don’t have much time left. Go… Go to Kirk Section 9!\" Richard drew his last breath."});
         bg.show(this.stage);
 
         startTime = TimeUtils.millis();
         elapseTime = 0;
+        timeLimitStart = 0;
+        timeLeft = 5000; //5s
+        timeHasStarted = false;
     }
 
     @Override public void render (float delta) {
@@ -158,11 +164,17 @@ public class Play implements Screen, InputProcessor {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
 
+        setTimeStart(player);
+        if (timeLimitStart != 0) {
+            timeLeft = 100000 - TimeUtils.timeSinceMillis(timeLimitStart);
+            System.out.println("Time Left:" + timeLeft);
+        }
+
         player.makePlayerMove();
         elapseTime = TimeUtils.timeSinceMillis(startTime);
         ememyMoves(enemies);
         player.hitEnemy(enemies);
-        if(!player.isAlive(Player.health)) {
+        if(!player.isAlive(Player.health) || timeLeft < 0) { // time > 5s
             ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight));
         }
 
@@ -174,7 +186,10 @@ public class Play implements Screen, InputProcessor {
         drawEnemies(enemies);
         drawExplosion(delta);
 
-        sb.draw(mac_logo, player.getX()+camera.viewportWidth/2-240, player.getY()-camera.viewportHeight/2+10);
+        if (timeLimitStart != 0) {
+            updateTimeLabel(player, camera);
+            timeLabel.draw(sb, 1);
+        }
 
         barGroup.updateBar(player, camera);
         barGroup.adjustBoundary(player, camera);
@@ -255,26 +270,19 @@ public class Play implements Screen, InputProcessor {
         }
     }
 
-//    public void drawHealthBar() {
-//        life.getData().setScale(2, 2);
-//        //TODO: change to CONSTANT; adjust boundary
-//                if (Player.health > 10) {
-//            sb.setColor(Color.GREEN);
-//        }
-//        else if(Player.health > 5) {
-//            sb.setColor(Color.YELLOW);
-//        }
-//        else {
-//            sb.setColor(Color.RED);
-//        }
-//        sb.draw(bar, player.getX()+camera.viewportWidth/2-250, player.getY()+camera.viewportHeight/2-70);
-//        sb.draw(healthBar, player.getX()+camera.viewportWidth/2-231,player.getY()+camera.viewportHeight/2-64,
-//                177*player.health/player.TOTALHEALTH, 21);
-//        //TODO: Change Position
-//        life.draw(sb,"Life: "+Player.health, player.getX()+camera.viewportWidth/2-200,
-//                player.getY()+camera.viewportHeight/2-80);
-//    }
+    public void setTimeStart(Player player) {
+        if (!(timeHasStarted) && player.getExistingDoors().size >= 2) { //TODO: change parameter: the door that triggers time limit
+            timeLimitStart = TimeUtils.millis();
+            timeHasStarted = true;
+        }
+    }
 
+    public void updateTimeLabel(Player player, OrthographicCamera camera) {
+        timeLabel.setFontScale(3);
+        timeLabel.setText("Time Left: "+ Play.timeLeft);
+        timeLabel.setPosition(player.getX()+camera.viewportWidth/2-400,
+                player.getY()-camera.viewportHeight/2+10);
+    }
 
     // Called when a key was pressed
     @Override public boolean keyDown(int keycode) {
