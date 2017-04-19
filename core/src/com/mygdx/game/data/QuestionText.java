@@ -15,7 +15,6 @@ public class QuestionText {
     public void initQuestions() {
 
         //Door at Kirk
-
         Qs.add(
             new MultipleChoice(
                 new String[]{"If you are reading this, it is very likely that Macalester has not survived the robot revolt. " +
