@@ -57,7 +57,6 @@ public class Play implements Screen, InputProcessor {
     private Texture enemyImg;
     private Texture healthBar;
     private Texture bar;
-    private Texture mac_logo;
 
     private HealthBar barGroup;
     private Label lifeLabel;
@@ -113,7 +112,6 @@ public class Play implements Screen, InputProcessor {
         playerImg = new Texture(Gdx.files.internal("pik.png"));
         enemyImg = new Texture(Gdx.files.internal("goblinsword.png"));
         player = new Player(playerImg, stage);
-        // if set position: mac.mapWidth + 400, cannot hit door.
         player.setCenter(mac.mapWidth/2+1520,mac.mapHeight/2); //TODO: change position
         questions = player.generateQuestions(skin);
         enemies = new Array<>();
@@ -126,7 +124,6 @@ public class Play implements Screen, InputProcessor {
 
         healthBar = new Texture(Gdx.files.internal("healthbar.png"));
         bar = new Texture(Gdx.files.internal("bar.png"));
-        mac_logo = new Texture(Gdx.files.internal("mac_logo2.jpg"));
 
         lifeLabel = new Label("Life: "+ Player.health, skin);
         barGroup = new HealthBar(bar, healthBar, lifeLabel, mac);
@@ -142,7 +139,6 @@ public class Play implements Screen, InputProcessor {
         TextDialog bg3 = new TextDialog("Background", skin, null);
         TextDialog bg2 = new TextDialog("Background", skin, bg3);
         TextDialog bg1 = new TextDialog("Background", skin, bg2);
-        //bg1.renderContent(new String[]{});
         TextDialog bg = new TextDialog("Background", skin, bg1);
         bg.renderContent(new String[]{"Today is May 4th, 2037. Our pretty Macalester campus has been invaded by unknown creatures. " +
                 "You, the only survivor, must solve all the puzzles and gather all information to destroy the energy source of enemies.",
@@ -273,7 +269,7 @@ public class Play implements Screen, InputProcessor {
     }
 
     public void setTimeStart(Player player) {
-        if (player.getExistingDoors().size >= 1 && !(timeHasStarted)) {
+        if (!(timeHasStarted) && player.getExistingDoors().size >= 2) { //TODO: change parameter: the door that triggers time limit
             timeLimitStart = TimeUtils.millis();
             timeHasStarted = true;
         }

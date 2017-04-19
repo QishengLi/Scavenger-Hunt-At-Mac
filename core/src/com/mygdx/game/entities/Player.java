@@ -121,19 +121,24 @@ public class Player extends Sprite {
     public Array<Rectangle> getExistingDoors() {
         Array<Rectangle> existingDoors = new Array<>();
         for (CustomDialog questionDialog : questions) {
+            int i = 0;
+            if (questionDialog instanceof TextDialog) {
+                CustomDialog customDialog = questionDialog;
+                while (customDialog instanceof TextDialog && i < 7) { //TODO: change parameter. 7: number of nested dialogs
+                    customDialog = customDialog.getResponseDialog(); //@nullable if the whole chain is TextDialog
+                    i++;
+                }
+                if (customDialog instanceof QuestionDialog) {
+                    QuestionDialog question = (QuestionDialog) customDialog;
+                    if (question.isAnswered()) {
+                        existingDoors.add(Chapter.getKeyByValue(spots, questionDialog));
+                    }
+                }
+            }
             if (questionDialog instanceof QuestionDialog) {
                 QuestionDialog question = (QuestionDialog) questionDialog;
                 if (question.isAnswered()) {
                     existingDoors.add(Chapter.getKeyByValue(spots, question));
-                }
-            }
-            if (questionDialog instanceof TextDialog) {
-                TextDialog text = (TextDialog) questionDialog;
-                if (text.getResponseDialog() instanceof QuestionDialog) {
-                    QuestionDialog question = (QuestionDialog) text.getResponseDialog();
-                    if (question.isAnswered()) {
-                        existingDoors.add(Chapter.getKeyByValue(spots, text));
-                    }
                 }
             }
         }
@@ -158,18 +163,15 @@ public class Player extends Sprite {
         }
         Array<Rectangle> existingDoors = getExistingDoors();
         Rectangle newDoor = nextDoor(existingDoors);
-
         // Visiting answered questions
         for (Rectangle rect : existingDoors) {
             if (isOverlapped(rect)) {
                 resetDirection();
                 CustomDialog dialogBox = spots.get(rect);
-                if (dialogBox instanceof TextDialog) {
-                    dialogBox.getResponseDialog().getResponseDialog().show(this.stage);
+                while (dialogBox instanceof TextDialog) {
+                    dialogBox = dialogBox.getResponseDialog();
                 }
-                else {
-                    dialogBox.getResponseDialog().show(this.stage);
-                }
+                dialogBox.getResponseDialog().show(this.stage);
             }
         }
 

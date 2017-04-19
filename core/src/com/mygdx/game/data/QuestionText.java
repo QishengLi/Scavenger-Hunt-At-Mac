@@ -20,7 +20,7 @@ public class QuestionText {
 
         Qs.add(
             new MultipleChoice(
-                new String[]{"When was", "Macalester founded??"},
+                new String[]{"When was", "Macalester", "founded??"},
                 new Answer("1770",
                         new String[]{"Ugh! You are wrong. Hit the door to answer the question again.\n",
                                 "Keep an eye on your life bar. Each wrong answer will cost you a life"}, false),
