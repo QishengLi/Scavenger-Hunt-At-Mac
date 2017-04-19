@@ -12,11 +12,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.data.Direction;
@@ -30,6 +29,8 @@ import java.util.Random;
 
 /**
  * Created by Qisheng on 2/9/2017.
+ *
+ * The order in show method MATTERS!!!!!
  */
 
 
@@ -66,7 +67,9 @@ public class Play implements Screen, InputProcessor {
     private HealthBar barGroup;
     private Label lifeLabel;
 
-    private Label curClue;
+    public String[] clue;
+    public Object[] sampleSelectBox;
+    public TextDialog curClueDialog;
     private SelectBox<Object> clueBox;
     private Table table;
 
@@ -155,20 +158,43 @@ public class Play implements Screen, InputProcessor {
                 "You, the only survivor, must solve all the puzzles and gather all information to destroy the energy source of enemies.",
                 "Fortunately, you don’t have to face it alone. People left you with pieces of clues around the campus. " +
                 "Go to Kirk Section 9 to start your adventure."});
-        bg.show(this.stage);
 
-        Object[] sample = new Object[3];
-        sample[0] = "Current Clue List";
-        sample[1] = "你他妈在逗我，为啥不work？";
-        sample[2] = "long long long long long long long long clue";
+        sampleSelectBox = new Object[2];
+        sampleSelectBox[0] = "Current Clue List";
+        sampleSelectBox[1] = "Current clue 1, 他妈的逗我呢，为啥不work？";
         clueBox = new SelectBox<Object>(skin);
-        clueBox.setItems(sample);
-        table = new Table();
-        table.setFillParent(true);
-        table.top();
+        clueBox.setItems(sampleSelectBox);
+        Table table1 = new Table();
+        table1.setFillParent(true);
+        table1.top();
 
-        table.add(clueBox);
-        stage.addActor(table);
+        table1.add(clueBox);
+        stage.addActor(table1);
+
+
+        curClueDialog = new TextDialog("Current Clue",skin, null);
+        clue = new String[]{"You could click the button to show the current clue."};
+
+        TextButton curClue = new TextButton("Current Clue", skin, "default");
+        curClue.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                curClueDialog.renderContent(clue);
+                    //System.out.println("show message begins");
+                curClueDialog.show(stage);
+                    //System.out.println("show message ends");
+            }
+        });
+        curClue.pad(10);
+
+        Table table2 = new Table();
+        table2.setFillParent(true);
+        table2.bottom();
+
+        table2.add(curClue);
+        stage.addActor(table2);
+
+        bg.show(this.stage);
 
         startTime = TimeUtils.millis();
         elapseTime = 0;
@@ -206,8 +232,15 @@ public class Play implements Screen, InputProcessor {
         barGroup.draw(sb, 1);
         sb.end();
 
+        clueBox.setItems(sampleSelectBox);
+
         stage.act();
         stage.draw();
+    }
+
+    public void setCurClue(String[] clue) {
+        this.clue = clue;
+
     }
 
     @Override

@@ -1,5 +1,8 @@
 package com.mygdx.game.entities;
 
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
@@ -197,14 +200,17 @@ public class Player extends Sprite {
             else {
                 dialogBox.show(this.stage);
             }
-        }
 
-        for (Rectangle rect : doorRects) {
-            if (isOverlapped(rect) && !existingDoors.contains(rect, true)) {
-                Play.hitWrongDoor.play();
-                resetDirection();
+            Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
+            if (curScreen instanceof Play) {
+                Play play = (Play) curScreen;
+
+                play.setCurClue(new String[]{"update clue hahhaha"});
+                play.sampleSelectBox[1] =  "update";
             }
         }
+
+
     }
 
     public Array<CustomDialog> generateQuestions(Skin skin) {

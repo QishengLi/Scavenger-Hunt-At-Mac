@@ -1,7 +1,5 @@
 package com.mygdx.game.data;
 
-import javafx.util.Pair;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +15,6 @@ public class QuestionText {
     public void initQuestions() {
 
         //Door at Kirk
-
         Qs.add(
             new MultipleChoice(
                 new String[]{"When was", "Macalester founded??"},
