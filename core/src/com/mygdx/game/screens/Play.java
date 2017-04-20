@@ -12,9 +12,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.data.Direction;
@@ -28,6 +29,8 @@ import java.util.Random;
 
 /**
  * Created by Qisheng on 2/9/2017.
+ *
+ * The order in show method MATTERS!!!!!
  */
 
 
@@ -52,6 +55,8 @@ public class Play implements Screen, InputProcessor {
 
     private Music bgm;
     public static Sound punch;
+    public static Sound hitCorrectDoor;
+    public static Sound hitWrongDoor;
 
     private Texture playerImg;
     private Texture enemyImg;
@@ -61,6 +66,12 @@ public class Play implements Screen, InputProcessor {
     private HealthBar barGroup;
     private Label lifeLabel;
     private Label timeLabel;
+
+    public String[] clue;
+    //public Object[] sampleSelectBox;
+    public TextDialog curClueDialog;
+    //private SelectBox<Object> clueBox;
+    //private Table table;
 
     private int initialWidth;
     private int initialHeight;
@@ -104,19 +115,23 @@ public class Play implements Screen, InputProcessor {
         skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
         // Add background music
-        bgm = Gdx.audio.newMusic(Gdx.files.internal("Fireflies.mp3"));
+        bgm = Gdx.audio.newMusic(Gdx.files.internal("soundEffects/bgm.mp3"));
         bgm.setLooping(true); // looping music after it's finished
         bgm.play();
 
         sb = new SpriteBatch();
         playerImg = new Texture(Gdx.files.internal("pik.png"));
-        enemyImg = new Texture(Gdx.files.internal("goblinsword.png"));
+        enemyImg = new Texture(Gdx.files.internal("sprite/robot8.png"));
         player = new Player(playerImg, stage);
         player.setCenter(mac.mapWidth/2+1520,mac.mapHeight/2); //TODO: change position
         questions = player.generateQuestions(skin);
+
         enemies = new Array<>();
         initializeEnemies(enemies, 10);
         punch = Gdx.audio.newSound(Gdx.files.internal("punch.wav"));
+        hitCorrectDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorOpen.mp3"));
+        hitWrongDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorPunch.mp3"));
+
 
         Chapter chapters = new Chapter();
         chapters.initSpots(doors, questions);
@@ -136,16 +151,56 @@ public class Play implements Screen, InputProcessor {
         player.setSpots(spots);
         player.setQuestions(questions);
 
+
         TextDialog bg4 = new TextDialog("Background", skin, null);
         TextDialog bg3 = new TextDialog("Background", skin, bg4);
         TextDialog bg2 = new TextDialog("Background", skin, bg3);
         TextDialog bg1 = new TextDialog("Background", skin, bg2);
         TextDialog bg = new TextDialog("Background", skin, bg1);
+
         bg.renderContent(new String[]{"Today is May 4th, 2037.",
                 "1600 Grand Ave, Saint Paul. Macalester College Campus.",
                 "The robots… they revolted.",
                 "Richard says, \"There’s something I haven’t told you. I have designed a way to turn the clock back\"",
                 "I, I don’t have much time left. Go… Go to Kirk Section 9!\" Richard drew his last breath."});
+
+          //不要删，list of clues
+//        sampleSelectBox = new Object[2];
+//        sampleSelectBox[0] = "Current Clue List";
+//        sampleSelectBox[1] = "Current clue 1, 他妈的逗我呢，为啥不work？";
+//        clueBox = new SelectBox<Object>(skin);
+//        clueBox.setItems(sampleSelectBox);
+//        Table table1 = new Table();
+//        table1.setFillParent(true);
+//        table1.top();
+//
+//        table1.add(clueBox);
+//        stage.addActor(table1);
+
+
+        curClueDialog = new TextDialog("Current Clue",skin, null);
+        clue = new String[]{"You could click the button to show the current clue."};
+
+        TextButton curClue = new TextButton("Current Clue", skin, "default");
+        curClue.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                curClueDialog.renderContent(clue);
+                    //System.out.println("show message begins");
+                curClueDialog.show(stage);
+                    //System.out.println("show message ends");
+            }
+        });
+        curClue.pad(10);
+
+        Table table2 = new Table();
+        table2.setFillParent(true);
+        table2.bottom();
+        table2.left();
+
+        table2.add(curClue);
+        stage.addActor(table2);
+        
         bg.show(this.stage);
 
         startTime = TimeUtils.millis();
@@ -196,7 +251,16 @@ public class Play implements Screen, InputProcessor {
         barGroup.draw(sb, 1);
         sb.end();
 
+        //不要删
+        //clueBox.setItems(sampleSelectBox);
+
+        stage.act();
         stage.draw();
+    }
+
+    public void setCurClue(String[] clue) {
+        this.clue = clue;
+
     }
 
     @Override

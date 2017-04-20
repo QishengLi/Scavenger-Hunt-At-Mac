@@ -166,6 +166,7 @@ public class Player extends Sprite {
         // Visiting answered questions
         for (Rectangle rect : existingDoors) {
             if (isOverlapped(rect)) {
+                Play.hitCorrectDoor.play();
                 resetDirection();
                 CustomDialog dialogBox = spots.get(rect);
                 while (dialogBox instanceof TextDialog) {
@@ -177,6 +178,7 @@ public class Player extends Sprite {
 
         // Visiting a new spot
         if (isOverlapped(newDoor)) {
+            Play.hitCorrectDoor.play();
             resetDirection();
             CustomDialog dialogBox = spots.get(newDoor);
             if (isFinished(existingDoors)) {
@@ -184,6 +186,26 @@ public class Player extends Sprite {
             }
             else {
                 dialogBox.show(this.stage);
+            }
+
+
+            //Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
+            //if (curScreen instanceof Play) {
+                //Play play = (Play) curScreen;
+                //play.setCurClue(new String[]{"update clue hahhaha"});
+                //Object[] old = play.sampleSelectBox;
+                //play.sampleSelectBox = new Object[old.length + 1];
+                //for (int i = 0; i < old.length; i++) {
+                //    play.sampleSelectBox[i] =  old[i];
+                //}
+                //play.sampleSelectBox[old.length] = "update";
+            //}
+        }
+
+        for (Rectangle rect : doorRects) {
+            if (isOverlapped(rect) && !existingDoors.contains(rect, true)) {
+                Play.hitWrongDoor.play();
+                resetDirection();
             }
         }
     }
