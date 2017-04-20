@@ -37,7 +37,7 @@ public class QuestionText {
         //Door at Theater.
         Qs.add(
             new MultipleChoice(
-                new String[]{"What a familiar place… " +
+                new String[]{"What a familiar place... " +
                         "It is winter here more than half of the year. " +
                         "The first robot we developed helped the school build tunnels between buildings, " +
                         "while people could hide indoors and avoid the cold. ",
