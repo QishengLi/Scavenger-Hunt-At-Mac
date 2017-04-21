@@ -1,8 +1,6 @@
 package com.mygdx.game.utils;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.data.Answer;
 import com.mygdx.game.data.MultipleChoice;
 
@@ -27,7 +25,7 @@ public class TextDialog extends CustomDialog {
             addLabel(str1, skin);
             MultipleChoice newProblem = new MultipleChoice(Arrays.copyOfRange(strs, 1, strs.length),
                     (Answer[]) problem.getChoices().toArray());
-            button("OK", newProblem);
+            button("NEXT", newProblem);
         }
         if (object instanceof String[]) {
             String[] strs = (String[]) object;

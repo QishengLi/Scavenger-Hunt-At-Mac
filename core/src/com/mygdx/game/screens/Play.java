@@ -151,8 +151,10 @@ public class Play implements Screen, InputProcessor {
         player.setSpots(spots);
         player.setQuestions(questions);
 
-
-        TextDialog bg4 = new TextDialog("Background", skin, null);
+        TextDialog bg7 = new TextDialog("Background", skin, null);
+        TextDialog bg6 = new TextDialog("Background", skin, bg7);
+        TextDialog bg5 = new TextDialog("Background", skin, bg6);
+        TextDialog bg4 = new TextDialog("Background", skin, bg5);
         TextDialog bg3 = new TextDialog("Background", skin, bg4);
         TextDialog bg2 = new TextDialog("Background", skin, bg3);
         TextDialog bg1 = new TextDialog("Background", skin, bg2);
@@ -160,9 +162,13 @@ public class Play implements Screen, InputProcessor {
 
         bg.renderContent(new String[]{"Today is May 4th, 2037.",
                 "1600 Grand Ave, Saint Paul. Macalester College Campus.",
-                "The robots… they revolted.",
-                "Richard says, \"There’s something I haven’t told you. I have designed a way to turn the clock back\"",
-                "I, I don’t have much time left. Go… Go to Kirk Section 9!\" Richard drew his last breath."});
+                "The robots... they revolted.",
+                "\"Zhaoqi! Zhaoqi!...\" Richard is severely injured.",
+                "\"There's something I haven't told you. I have designed, a way, to turn the clock back...\"",
+                "Turn the clock back? Wait! -- \"Richard! You mean, we could go back to, to 20 years ago?\"",
+                "Richard: \"I, I don’t have much time left. Go... Go to Kirk Section 9!\"",
+                "Richard drew his last breath."
+        });
 
           //不要删，list of clues
 //        sampleSelectBox = new Object[2];
@@ -222,7 +228,7 @@ public class Play implements Screen, InputProcessor {
         setTimeStart(player);
         if (timeLimitStart != 0) {
             timeLeft = 100000 - TimeUtils.timeSinceMillis(timeLimitStart);
-            System.out.println("Time Left:" + timeLeft);
+            //System.out.println("Time Left:" + timeLeft);
         }
 
         player.makePlayerMove();
@@ -335,7 +341,7 @@ public class Play implements Screen, InputProcessor {
     }
 
     public void setTimeStart(Player player) {
-        if (!(timeHasStarted) && player.getExistingDoors().size >= 2) { //TODO: change parameter: the door that triggers time limit
+        if (!(timeHasStarted) && player.getExistingDoors().size >= 9) { //TODO: change parameter: the door that triggers time limit
             timeLimitStart = TimeUtils.millis();
             timeHasStarted = true;
         }
