@@ -67,6 +67,7 @@ public class Play implements Screen, InputProcessor {
     private Label lifeLabel;
     private Label timeLabel;
 
+    //不要删
     public String[] clue;
     //public Object[] sampleSelectBox;
     public TextDialog curClueDialog;
@@ -200,7 +201,7 @@ public class Play implements Screen, InputProcessor {
 
         table2.add(curClue);
         stage.addActor(table2);
-        
+
         bg.show(this.stage);
 
         startTime = TimeUtils.millis();
@@ -258,10 +259,11 @@ public class Play implements Screen, InputProcessor {
         stage.draw();
     }
 
-    public void setCurClue(String[] clue) {
-        this.clue = clue;
-
-    }
+//    不要删
+//    public void setCurClue(String[] clue) {
+//        this.clue = clue;
+//
+//    }
 
     @Override
     public void resize(int width, int height) {

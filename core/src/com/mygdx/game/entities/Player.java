@@ -156,7 +156,7 @@ public class Player extends Sprite {
         return (existingDoors.size == doorRects.size);
     }
 
-    // Called when hitting on the wall
+    // TODO：factor out sound playing and update current clue
     private void popUpMessage() {
         if (doorRects.random() == null || questions.random() == null) { // check if the array is empty
             return;
@@ -189,6 +189,7 @@ public class Player extends Sprite {
             }
 
 
+            //不要删，list of clues
             //Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
             //if (curScreen instanceof Play) {
                 //Play play = (Play) curScreen;
