@@ -220,7 +220,7 @@ public class Player extends Sprite {
 
         for (int i = 0; i < qt.getNumQuestions(); i++){
             CustomDialog td = new TextDialog("TEXT", skin, null);
-            List<CustomDialog> responseDialogs = generateTextDialog(skin, 3, "ANSWER");
+            List<CustomDialog> responseDialogs = generateTextDialog(skin, 20, "ANSWER");
             CustomDialog responseDialog = responseDialogs.get(0);
             CustomDialog qd = new QuestionDialog("CLUE", skin, responseDialog);
             Object ithQuestion = qt.getNthQuestion(i);

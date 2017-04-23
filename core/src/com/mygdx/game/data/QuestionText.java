@@ -146,7 +146,7 @@ public class QuestionText {
                     "There are fewer of them around the campus center. I should go there!"}, true),
                 new Answer("7, 1, 9", new String[]{"\"No, it’s not right.\", ",
                     "\"How is it possible? I solved all the clues! These are the right answers!\"",
-                    "Wait, his smiles look weird...",
+                    "Wait, his smile looks weird...",
                     "Robots! They are coming from all directions! It's a trap!",
                     "There are fewer of them around the campus center. I should go there!"}, true)
                 )
