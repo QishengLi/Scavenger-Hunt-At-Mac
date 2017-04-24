@@ -77,4 +77,5 @@ public class CampusMap extends TiledMap {
         }
         return rects;
     }
+
 }

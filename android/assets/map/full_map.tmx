@@ -91,7 +91,7 @@
   <object id="45" name="Art" x="1419.39" y="3379.9" width="442.424" height="100"/>
   <object id="47" name="CC" x="4668.36" y="61.4845" width="667.76" height="1557.82"/>
   <object id="48" name="Olin Rice" x="2763.06" y="5488.6" width="978.364" height="789.455"/>
-  <object id="49" name="Olin Rice" x="1865.79" y="5529.69" width="776.061" height="913.394"/>
+  <object id="49" name="Olin Rice" x="1865.79" y="5485.69" width="776.061" height="957.394"/>
   <object id="50" name="Olin Rice" x="2648.94" y="5467.51" width="199.091" height="869.576"/>
   <object id="51" name="Olin Rice" x="1606.76" y="5139.15" width="255.939" height="1198.24"/>
   <object id="52" name="Olin Rice" x="1812.76" y="5139.15" width="451.939" height="386.364"/>
@@ -119,15 +119,15 @@
   <object id="29" name="door1" x="4843.79" y="3282.59" width="26.16" height="161.162"/>
   <object id="59" name="door2" x="839.168" y="5648.14" width="155.725" height="37.785"/>
   <object id="60" name="door3" x="1701.33" y="4460.97" width="18.3939" height="154.121"/>
-  <object id="61" name="Door4" x="4227.03" y="6325.03" width="56" height="320"/>
-  <object id="69" name="Door5" x="2344.91" y="5448.97" width="156" height="30"/>
+  <object id="61" name="door4" x="4227.03" y="6325.03" width="56" height="320"/>
+  <object id="69" name="door5" x="2338.91" y="5445.97" width="165" height="30"/>
   <object id="70" name="door6" x="1366.3" y="109.818" width="403.758" height="194.364"/>
-  <object id="84" name="Door 7" x="793.939" y="6687.88" width="403.03" height="175.758"/>
-  <object id="85" name="Door 8" x="3905.06" y="6754.55" width="387.879" height="160.606"/>
-  <object id="87" name="Door 9" x="2333.33" y="5445.42" width="174.939" height="35.4242"/>
-  <object id="88" name="Door 10" x="4493.94" y="678.788" width="18.1818" height="157.576"/>
-  <object id="90" name="Door 11" x="2402" y="898" width="26" height="160"/>
-  <object id="91" name="Door 12" x="2329" y="5440" width="183" height="42"/>
-  <object id="92" name="Door 13" x="1696" y="4461" width="30" height="144"/>
+  <object id="84" name="door7" x="793.939" y="6687.88" width="403.03" height="175.758"/>
+  <object id="85" name="door8" x="3905.06" y="6754.55" width="387.879" height="160.606"/>
+  <object id="87" name="door9" x="2333.33" y="5443.42" width="174.939" height="35.4242"/>
+  <object id="88" name="door10" x="4493.94" y="678.788" width="18.1818" height="157.576"/>
+  <object id="90" name="door11" x="2402" y="898" width="26" height="160"/>
+  <object id="91" name="door12" x="2329" y="5440" width="183" height="42"/>
+  <object id="92" name="door13" x="1696" y="4461" width="30" height="144"/>
  </objectgroup>
 </map>

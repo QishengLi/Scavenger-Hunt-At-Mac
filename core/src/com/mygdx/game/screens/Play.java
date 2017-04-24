@@ -122,13 +122,13 @@ public class Play implements Screen, InputProcessor {
 
         sb = new SpriteBatch();
         playerImg = new Texture(Gdx.files.internal("pik.png"));
-        enemyImg = new Texture(Gdx.files.internal("sprite/robot8.png"));
+        enemyImg = new Texture(Gdx.files.internal("sprite/robot.png"));
         player = new Player(playerImg, stage);
         player.setCenter(mac.mapWidth/2+1520,mac.mapHeight/2); //TODO: change position
         questions = player.generateQuestions(skin);
 
         enemies = new Array<>();
-        initializeEnemies(enemies, 10);
+        initializeEnemies(enemies, 20);
         punch = Gdx.audio.newSound(Gdx.files.internal("punch.wav"));
         hitCorrectDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorOpen.mp3"));
         hitWrongDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorPunch.mp3"));
@@ -343,7 +343,8 @@ public class Play implements Screen, InputProcessor {
     }
 
     public void setTimeStart(Player player) {
-        if (!(timeHasStarted) && player.getExistingDoors().size >= 9) { //TODO: change parameter: the door that triggers time limit
+        //Qisheng: it should be 10 if it is still CC.
+        if (!(timeHasStarted) && player.getExistingDoors().size >= 10) { //TODO: change parameter: the door that triggers time limit
             timeLimitStart = TimeUtils.millis();
             timeHasStarted = true;
         }
