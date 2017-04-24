@@ -130,7 +130,7 @@ public class QuestionText {
         Qs.add(
             new MultipleChoice(
                 new String[]{"Still remembering the previous two numbers?"},
-                new Answer("Yes!", new String[]{"What does a stitch saves in time?",
+                new Answer("Yes!", new String[]{"What does a stitch save in time?",
                         "Now you have got all three numbers. Go back to where you met the mysterious man."}, true)
                 )
         );
