@@ -40,8 +40,10 @@ public class Player extends Sprite {
     private Array<Rectangle> collisionRects;
     private Map<Rectangle, CustomDialog> spots;
 
+    public QuestionText qt = new QuestionText();
 
     public ArrayList<Explosion> explosions;
+
 
     public Player(Texture texture, Stage stage) {
         super(texture);
@@ -200,7 +202,12 @@ public class Player extends Sprite {
             Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
             if (curScreen instanceof Play) {
                 Play play = (Play) curScreen;
-                play.setCurClue(new String[]{"update clue hahhaha"});
+
+                if ((qt.getQs().get(existingDoors.size)) instanceof MultipleChoice) {
+                    MultipleChoice mc = (MultipleChoice) qt.getQs().get(existingDoors.size);
+                    play.setCurClue(mc.getCorretResponse());
+                }
+
                 //Object[] old = play.sampleSelectBox;
                 //play.sampleSelectBox = new Object[old.length + 1];
                 //for (int i = 0; i < old.length; i++) {
@@ -221,9 +228,6 @@ public class Player extends Sprite {
     public Array<CustomDialog> generateQuestions(Skin skin) {
 
         Array<CustomDialog> questions = new Array<>();
-
-        QuestionText qt = new QuestionText();
-        qt.initQuestions();
 
         for (int i = 0; i < qt.getNumQuestions(); i++){
             CustomDialog td = new TextDialog("TEXT", skin, null);

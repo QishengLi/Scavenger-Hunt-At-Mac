@@ -11,13 +11,15 @@ public final class MultipleChoice {
 
     private final String[] question;
     private final List<Answer> choices;
+   // private final String[] clue;
 
-    public MultipleChoice(String[] question, Answer... choices) {
-        if(choices.length == 0) {
+    public MultipleChoice(String[] myQuestion, Answer... myChoices) {
+        if (myChoices.length == 0) {
             throw new IllegalArgumentException("Multiple choice questions must have at least one answer");
         }
-        this.question = question;
-        this.choices = Arrays.asList(choices);
+        this.question = myQuestion;
+        this.choices = Arrays.asList(myChoices);
+        //this.clue = myClue;
     }
 
     public List<Answer> getChoices() {
@@ -26,5 +28,22 @@ public final class MultipleChoice {
 
     public String[] getQuestion() {
         return question;
+    }
+
+//    public String[] getClue() {
+//        return clue;
+//    }
+
+    public String getCorretResponse() {
+
+        String result = "";
+        if (choices.size() != 0) {
+            for (Answer answer : choices) {
+                if (answer.isCorrect()) {
+                    result = ("" + Arrays.asList(answer.getResponse())).replaceAll("(^.|.$)", "").replace(", ", " " );
+                }
+            }
+        }
+        return result;
     }
 }

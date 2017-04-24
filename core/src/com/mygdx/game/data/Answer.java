@@ -1,9 +1,5 @@
 package com.mygdx.game.data;
 
-import javafx.util.Pair;
-
-import java.util.List;
-
 /**
  * Created by Shuni on 3/13/17.
  */
@@ -30,4 +26,5 @@ public final class Answer {
     public boolean isCorrect() {
         return correct;
     }
+
 }
