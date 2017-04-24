@@ -77,4 +77,13 @@ public class CampusMap extends TiledMap {
         }
         return rects;
     }
+
+    //好像不用了
+//    public int getDoorIndex(Rectangle door){
+//        MapLayer doorLayer = map.getLayers().get("Doors");
+//        //MapObjects doors = doorLayer.getObjects();
+//        Array<Rectangle> doorRects = getRects(doorLayer);
+//        int ind = doorRects.indexOf(door, true);
+//        return ind;
+//    }
 }

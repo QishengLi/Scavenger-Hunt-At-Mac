@@ -165,6 +165,9 @@ public class Player extends Sprite {
         Rectangle newDoor = nextDoor(existingDoors);
         // Visiting answered questions
         for (Rectangle rect : existingDoors) {
+            //If it's the 5th door, skip.
+            if ((existingDoors.size >= 6 && rect == existingDoors.get(4))
+                    ||(existingDoors.size >= 10 && rect == existingDoors.get(8))) continue;
             if (isOverlapped(rect)) {
                 Play.hitCorrectDoor.play();
                 resetDirection();
@@ -220,7 +223,7 @@ public class Player extends Sprite {
 
         for (int i = 0; i < qt.getNumQuestions(); i++){
             CustomDialog td = new TextDialog("TEXT", skin, null);
-            List<CustomDialog> responseDialogs = generateTextDialog(skin, 3, "ANSWER");
+            List<CustomDialog> responseDialogs = generateTextDialog(skin, 20, "ANSWER");
             CustomDialog responseDialog = responseDialogs.get(0);
             CustomDialog qd = new QuestionDialog("CLUE", skin, responseDialog);
             Object ithQuestion = qt.getNthQuestion(i);

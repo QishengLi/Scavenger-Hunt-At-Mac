@@ -122,7 +122,7 @@ public class Play implements Screen, InputProcessor {
 
         sb = new SpriteBatch();
         playerImg = new Texture(Gdx.files.internal("pik.png"));
-        enemyImg = new Texture(Gdx.files.internal("sprite/robot8.png"));
+        enemyImg = new Texture(Gdx.files.internal("sprite/robot.png"));
         player = new Player(playerImg, stage);
         player.setCenter(mac.mapWidth/2+1520,mac.mapHeight/2); //TODO: change position
         questions = player.generateQuestions(skin);
@@ -343,7 +343,7 @@ public class Play implements Screen, InputProcessor {
     }
 
     public void setTimeStart(Player player) {
-        if (!(timeHasStarted) && player.getExistingDoors().size >= 9) { //TODO: change parameter: the door that triggers time limit
+        if (!(timeHasStarted) && player.getExistingDoors().size >= 10) { //TODO: change parameter: the door that triggers time limit
             timeLimitStart = TimeUtils.millis();
             timeHasStarted = true;
         }

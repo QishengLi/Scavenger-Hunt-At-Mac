@@ -25,7 +25,7 @@ public class TextDialog extends CustomDialog {
             addLabel(str1, skin);
             MultipleChoice newProblem = new MultipleChoice(Arrays.copyOfRange(strs, 1, strs.length),
                     (Answer[]) problem.getChoices().toArray());
-            button("NEXT", newProblem);
+            button("OK", newProblem);
         }
         if (object instanceof String[]) {
             String[] strs = (String[]) object;
