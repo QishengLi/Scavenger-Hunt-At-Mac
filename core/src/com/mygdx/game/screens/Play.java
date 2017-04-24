@@ -343,6 +343,7 @@ public class Play implements Screen, InputProcessor {
     }
 
     public void setTimeStart(Player player) {
+        //Qisheng: it should be 10 if it is still CC.
         if (!(timeHasStarted) && player.getExistingDoors().size >= 10) { //TODO: change parameter: the door that triggers time limit
             timeLimitStart = TimeUtils.millis();
             timeHasStarted = true;

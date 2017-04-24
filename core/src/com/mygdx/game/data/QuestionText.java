@@ -17,8 +17,11 @@ public class QuestionText {
         //Door 1 at Kirk
         Qs.add(
             new MultipleChoice(
-                new String[]{"An LCD screen: I don't think I have seen this since 2018. It's all aerial imagery these days.",
-                            "\"If you are reading this, it is very likely that Macalester has not survived the robot revolt. The technology you will be using is very dangerous, and it should not fall into the wrong hands. You must prove yourself to be a true Macalester Scot.\"",
+                new String[]{"An LCD screen.",
+                            "I don't think I have seen this since 2018. It's all aerial imagery these days.",
+                            "\"If you are reading this, it is very likely that Macalester has not survived the robot revolt. ",
+                            "The technology you will be using is very dangerous, and it should not fall into the wrong hands.",
+                            "You must prove yourself to be a true Macalester Scot.\"",
                             "When was Macalester founded?"
                 },
 
@@ -97,7 +100,8 @@ public class QuestionText {
             new MultipleChoice(
                 new String[]{"A man is standing at the front gate... he is unharmed!",
                         "\"Who are you? Why are you here? Why aren't you being attacked by the robots?\"",
-                        "\"I have been waiting for you. I have an important clue for you. But to test your determination to save this campus, you must find three clues hidden under three \"Macalester\" signs. Come back to me after you have the answer.\"",
+                        "\"I have been waiting for you. I have an important clue for you.",
+                        "But to test your determination to save this campus, you must find three clues hidden under three \"Macalester\" signs. Come back to me after you have the answer.\"",
                         "\"Wait... but who are you?\""
                 },
                 new Answer("OK", new String[]{"(No Response...) Please go to the sign on Grand Avenue first."}, true)
@@ -109,7 +113,7 @@ public class QuestionText {
             new MultipleChoice(
                 new String[]{"Great to see you here."},
                 new Answer("OK", new String[]{"If you break a mirror, how many years of bad luck might you get? Remember this number!",
-                        "Please go to the next sign on St. Clair Avenue."}, true)
+                        "Please go to the next sign on Macalester Street and St. Clair Avenue."}, true)
             )
         );
 
@@ -174,7 +178,7 @@ public class QuestionText {
                         "self-consciousness if the robot is exposed to truly exceptional music pieces. He created me, and placed me in Olin Rice 254.\"",
                 " \"I'm of a much older model, and I'm not connected to Professor Paul Cantrell's central control.\""
                 },
-                new Answer("OK",new String[]{"\"What? That's against federal law. Richard can be jailed for doing this.\"",
+                new Answer("OK", new String[]{"\"What? That's against federal law. Richard can be jailed for doing this.\"",
                         "\"And yet, he chose to take the risk. And you, you must not fail him. You have to go back in time and prevent their project from happening. You need to convince the administrators, computer scientists and musicians not to go through with their project.\"",
                         "\"administrators, computer scientists and musicians... OK! I will do it!\"",
                         "\"Unfortunately the time machine is too old. It is broken now. I could only make it work for 5 minutes. After that, my energy will run out and I will be destructed. And you,\"",

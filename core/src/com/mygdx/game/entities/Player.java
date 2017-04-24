@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class Player extends Sprite {
 
-    public static final float SPEED = 10f;
+    public static final float SPEED = 20f;
     public static int health = 30;
     public static final int TOTALHEALTH = 30;
 
@@ -124,7 +124,7 @@ public class Player extends Sprite {
             int i = 0;
             if (questionDialog instanceof TextDialog) {
                 CustomDialog customDialog = questionDialog;
-                while (customDialog instanceof TextDialog && i < 7) { //TODO: change parameter. 7: number of nested dialogs
+                while (customDialog instanceof TextDialog && i < 20) { //TODO: change parameter. 7: number of nested dialogs
                     customDialog = customDialog.getResponseDialog(); //@nullable if the whole chain is TextDialog
                     i++;
                 }
@@ -165,9 +165,10 @@ public class Player extends Sprite {
         Rectangle newDoor = nextDoor(existingDoors);
         // Visiting answered questions
         for (Rectangle rect : existingDoors) {
-            //If it's the 5th door, skip.
+            //If it's the 5th or 9th door at Olin Rice, or 3rd door at Art, skip.
             if ((existingDoors.size >= 6 && rect == existingDoors.get(4))
-                    ||(existingDoors.size >= 10 && rect == existingDoors.get(8))) continue;
+                    ||(existingDoors.size >= 10 && rect == existingDoors.get(8))
+                    || (existingDoors.size >= 10 && rect == existingDoors.get(2))) continue;
             if (isOverlapped(rect)) {
                 Play.hitCorrectDoor.play();
                 resetDirection();
