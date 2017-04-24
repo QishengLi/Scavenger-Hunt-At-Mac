@@ -128,7 +128,7 @@ public class Play implements Screen, InputProcessor {
         questions = player.generateQuestions(skin);
 
         enemies = new Array<>();
-        initializeEnemies(enemies, 10);
+        initializeEnemies(enemies, 20);
         punch = Gdx.audio.newSound(Gdx.files.internal("punch.wav"));
         hitCorrectDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorOpen.mp3"));
         hitWrongDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorPunch.mp3"));
