@@ -157,7 +157,7 @@ public class Player extends Sprite {
         return (doorRects.get(existingDoors.size));
     }
 
-    private boolean isFinished(Array<Rectangle> existingDoors) {
+    public boolean isFinished(Array<Rectangle> existingDoors) {
         return (existingDoors.size == doorRects.size);
     }
 

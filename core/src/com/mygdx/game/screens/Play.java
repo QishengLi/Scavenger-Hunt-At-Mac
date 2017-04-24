@@ -247,6 +247,9 @@ public class Play implements Screen, InputProcessor {
         if(!player.isAlive(Player.health) || timeLeft < 0) { // time > 5s
             ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight));
         }
+        if (player.isFinished(player.getExistingDoors())) {
+            Gdx.app.exit();
+        }
 
         camera.position.set(player.getX(),player.getY(),0); // let the camera follow the player
         mac.adjustBoundary(camera);
