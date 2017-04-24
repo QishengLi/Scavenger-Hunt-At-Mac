@@ -259,17 +259,17 @@ public class Play implements Screen, InputProcessor {
         sb.end();
 
         //不要删
-        //clueBox.setItems(sampleSelectBox);
+       // clueBox.setItems(sampleSelectBox);
 
         stage.act();
         stage.draw();
     }
 
-//    不要删
-//    public void setCurClue(String[] clue) {
-//        this.clue = clue;
-//
-//    }
+    //不要删
+    public void setCurClue(String[] clue) {
+        this.clue = clue;
+
+    }
 
     @Override
     public void resize(int width, int height) {
