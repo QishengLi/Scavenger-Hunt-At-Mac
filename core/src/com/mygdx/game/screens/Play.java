@@ -68,7 +68,7 @@ public class Play implements Screen, InputProcessor {
 
     private HealthBar barGroup;
     private Label lifeLabel;
-    private TimeLabel timeLabel;
+    private Label timeLabel;
 
     //不要删
     public String clue;
@@ -153,7 +153,7 @@ public class Play implements Screen, InputProcessor {
         barGroup = new HealthBar(bar, healthBar, lifeLabel, mac);
         barGroup.initBar();
 
-        timeLabel = new TimeLabel("Time:" + timeLeft, skin);
+        timeLabel = new Label("Time:" + timeLeft, skin);
 
         player.setCollisionRects(collisionRects);
         player.setDoorRects(doors);
@@ -261,8 +261,11 @@ public class Play implements Screen, InputProcessor {
         drawExplosion(delta);
 
         if (timeLimitStart != 0) {
-            timeLabel.update(player, camera);
-            timeLabel.draw(sb, 1);
+            barGroup.initTimeLabel(timeLabel);
+        }
+
+        if (barGroup.isTimeLabelSet()) {
+            barGroup.updateTimeLabel();
         }
 
         barGroup.updateBar(player, camera);
