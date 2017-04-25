@@ -84,7 +84,6 @@ public class QuestionText {
             new MultipleChoice(
                 new String[]{"A robot jumps out of the grass.",
                             "\"I do not mean to hurt you!\"",
-                            "You received food. (Life +3)",
                             "You received a black box...",
                              "\"Wait, what is this for? Why did you give me this box?\"",
                             "The robot self-destructed.",
@@ -158,7 +157,7 @@ public class QuestionText {
         //Door 10 at CC.
         Qs.add(
             new MultipleChoice(
-                new String[]{"A backpack! (Life +5)",
+                new String[]{
                 "Wait, is that an old man is sitting in Cafe Mac? What's he doing?",
                 "\"Young man, show me your box.\"",
                 "Box? Oh right, the one given to me from the robot by the wind turbine.",
