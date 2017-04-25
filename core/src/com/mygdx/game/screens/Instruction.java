@@ -78,7 +78,7 @@ public class Instruction implements Screen {
         imageDoor.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("map/door3.png")))));
 
         Image imageEnemy = new Image();
-        imageEnemy.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("goblinsword.png")))));
+        imageEnemy.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("sprite/robot.png")))));
 
         Label heading = new Label("Instructions", skin, "default");
         heading.setFontScale(2);

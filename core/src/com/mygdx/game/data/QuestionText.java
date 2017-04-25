@@ -32,7 +32,8 @@ public class QuestionText {
                 new Answer("1916", new String[]{"Ugh! You are wrong. Hit the door to answer the question again.\n" +
                         "Keep an eye on your life bar. Each wrong answer will cost you a life. "},false),
                 new Answer("1874", new String[]{"Great!",
-                        "The first experiment was conducted somewhere on Macalester Street. Find it! (Hint: it’s 2037. How long has it been since Mac’s founding?)"},true)
+                        "The first experiment was conducted somewhere on Macalester Street. Find it!",
+                        "Hint: It has been 163 years since Mac was founded. Art Building is situated at 130 Macalester St."},true)
             )
         );
 
@@ -92,8 +93,8 @@ public class QuestionText {
                 new Answer("Environmental Protection", new String[]{"Yes!",
                         "Why are robots near the wind turbine friendly to me? Hmm... ",
                         "In the development of robots, environmentalists in our team deal with environmental-friendliness. Maybe there are clues in their places."},true),
-                new Answer("Campus Icon",new String[]{"Not correct. Please try again."},false),
-                new Answer("Decoration",new String[]{"Not correct. Please try again."}, false)
+                new Answer("Campus Icon",new String[]{"Ouch! An electric shock! I think the answer was wrong. (Hit the door to answer the question again)\n"},false),
+                new Answer("Decoration",new String[]{"Ouch! An electric shock! I think the answer was wrong. (Hit the door to answer the question again)\n"}, false)
             )
         );
 
@@ -211,7 +212,8 @@ public class QuestionText {
                         "I look at the time machine.",
                         "20 seconds left",
                         "I sighed.",
-                        "I entered the years \"1874\", and pushed the button on the time machine again.",},
+                        "I entered the years \"1874\", and pushed the button on the time machine again.",
+                        "Congratulations. You win the game!"},
                         new Answer("OK", new String[]{"Congratulations. You win the game!"}, true)
                 )
         );

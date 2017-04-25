@@ -66,7 +66,7 @@ public class Play implements Screen, InputProcessor {
     private Texture healthBar;
     private Texture bar;
 
-    private HealthBar barGroup;
+    private GameStats barGroup;
     private Label lifeLabel;
     private Label timeLabel;
 
@@ -150,7 +150,7 @@ public class Play implements Screen, InputProcessor {
         bar = new Texture(Gdx.files.internal("bar.png"));
 
         lifeLabel = new Label("Life: "+ Player.health, skin);
-        barGroup = new HealthBar(bar, healthBar, lifeLabel, mac);
+        barGroup = new GameStats(bar, healthBar, lifeLabel, mac);
         barGroup.initBar();
 
         timeLabel = new Label("Time:" + timeLeft, skin);
@@ -221,7 +221,7 @@ public class Play implements Screen, InputProcessor {
         startTime = TimeUtils.millis();
         elapseTime = 0;
         timeLimitStart = 0;
-        timeLeft = 5000; //5s
+        timeLeft = 300000; //5 min
         timeHasStarted = false;
     }
 
@@ -235,8 +235,8 @@ public class Play implements Screen, InputProcessor {
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
 
         setTimeStart(player);
-        if (timeLimitStart != 0) {
-            timeLeft = 1000000 - TimeUtils.timeSinceMillis(timeLimitStart);
+        if (timeLimitStart != 0 && !(barGroup.isFreezed())) {
+            timeLeft -= 1000 * Gdx.graphics.getDeltaTime();
             //System.out.println("Time Left:" + timeLeft);
         }
 
@@ -244,7 +244,7 @@ public class Play implements Screen, InputProcessor {
         elapseTime = TimeUtils.timeSinceMillis(startTime);
         ememyMoves(enemies);
         player.hitEnemy(enemies);
-        HealthBar.remainingFlashingTime -= Gdx.graphics.getDeltaTime();
+        GameStats.remainingFlashingTime -= Gdx.graphics.getDeltaTime();
         if(!player.isAlive(Player.health) || timeLeft < 0) { // time > 5s
             ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight));
         }
@@ -261,8 +261,11 @@ public class Play implements Screen, InputProcessor {
         drawExplosion(delta);
 
         if (timeLimitStart != 0) {
-            updateTimeLabel(player, camera);
-            timeLabel.draw(sb, 1);
+            barGroup.initTimeLabel(timeLabel);
+        }
+
+        if (barGroup.isTimeLabelSet()) {
+            barGroup.updateTimeLabel();
         }
 
         barGroup.updateBar(player, camera);
@@ -330,6 +333,10 @@ public class Play implements Screen, InputProcessor {
         }
     }
 
+    public GameStats getBarGroup() {
+        return barGroup;
+    }
+
     public void drawEnemies(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             enemy.draw(sb);
@@ -356,17 +363,10 @@ public class Play implements Screen, InputProcessor {
 
     public void setTimeStart(Player player) {
         //Qisheng: it should be 10 if it is still CC.
-        if (!(timeHasStarted) && player.getExistingDoors().size >= 10) { //TODO: change parameter: the door that triggers time limit
+        if (!(timeHasStarted) && player.getExistingDoors().size >= 10) { //TODO: change parameter: the door that triggers time limit: correct: 10
             timeLimitStart = TimeUtils.millis();
             timeHasStarted = true;
         }
-    }
-
-    public void updateTimeLabel(Player player, OrthographicCamera camera) {
-        timeLabel.setFontScale(3);
-        timeLabel.setText("Time Left: "+ Play.timeLeft);
-        timeLabel.setPosition(player.getX()+camera.viewportWidth/2-400,
-                player.getY()-camera.viewportHeight/2+10);
     }
 
     // Called when a key was pressed
