@@ -1,5 +1,7 @@
 package com.mygdx.game.data;
 
+import com.mygdx.game.screens.Play;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +64,7 @@ public class QuestionText {
                             "some Mac musicians collaborated with computer science students in an attempt to use robots to recognize different genres of music. " +
                             "These musicians wanted new inspirations for music composition.",
                         "One of these musicians was Shelley Hanson. " +
-                                "She was a key member of the team that eventually created the robot that had the capability to recognize music. " +
+                                "She was a key member of the team that eventually created the robot that had the capability of recognizing music. " +
                                 "It was a huge technical breakthrough.",
                         "With the help of the robot, Shelley created her masterpiece, " +
                                 "a new composition that won her numerous awards. She became the director of a Mac ensemble.",
@@ -140,16 +142,9 @@ public class QuestionText {
             new MultipleChoice(
                 new String[]{"\"Hey, I'm back with the clues you asked for. Could you tell me who you are now?\"",
                         "\"What are the three numbers?\""},
-                new Answer("9, 1, 7", new String[]{"\"No, it's not right.\", ",
-                    "\"How is it possible? I solved all the clues! These are the right answers!\"",
-                    "Wait, his smiles look weird...",
-                    "Robots! They are coming from all directions! It's a trap!",
-                    "There are fewer of them around the campus center. I should go there!"}, true),
-                new Answer("6, 1, 2", new String[]{"\"No, it's not right.\", ",
-                    "\"How is it possible? I solved all the clues! These are the right answers!\"",
-                    "Wait, his smiles look weird...",
-                    "Robots! They are coming from all directions! It's a trap!",
-                    "There are fewer of them around the campus center. I should go there!"}, true),
+                new Answer("9, 1, 7", new String[]{"Not correct. Please try again."}, false),
+                new Answer("7, 0, 9", new String[]{"Not correct. Please try again."}, false),
+                new Answer("9, 0, 7", new String[]{"Not correct. Please try again."}, false),
                 new Answer("7, 1, 9", new String[]{"\"No, it's not right.\", ",
                     "\"How is it possible? I solved all the clues! These are the right answers!\"",
                     "Wait, his smile looks weird...",
@@ -166,8 +161,7 @@ public class QuestionText {
                 "Wait, is that an old man is sitting in Cafe Mac? What's he doing?",
                 "\"Young man, show me your box.\"",
                 "Box? Oh right, the one given to me from the robot by the wind turbine.",
-                "\"This... this really is it!\"",
-                "\"Young man, this is an old time machine that can send you back to 2017, I've been waiting for you for a long time!\"",
+                "\"This... this really is it! I've been waiting for the person with this old time machine for long!\"",
                 "\"When the group of Mac faculties created the robot that can recognize music, they left the robot in Olin Rice 254, for students to play with it freely. " +
                         "One day, someone played Shelley's award-winning music composition, the robot gained self-consciousness in the midst of recognizing that musical piece.\"",
                 " \"That was the first robot that became self-conscious. It broke into Professor Paul Cantrell's office and stole the master code for all robots. And then, the robot revolt happened.\"",
@@ -179,7 +173,8 @@ public class QuestionText {
                 " \"I'm of a much older model, and I'm not connected to Professor Paul Cantrell's central control.\"", "\"What? That's against federal law. Richard can be jailed for doing this.\""
                 },
                 new Answer("OK", new String[]{
-                        "\"And yet, he chose to take the risk. And you, you must not fail him. You have to go back in time and prevent their project from happening. You need to convince the administrators, computer scientists and musicians not to go through with their project.\"",
+                        "\"And yet, he chose to take the risk. And you, you must not fail him. You have to go back in time and prevent their project from happening. " +
+                                "You need to convince the administrators, computer scientists and musicians not to finish their project.\"",
                         "\"administrators, computer scientists and musicians... OK! I will do it!\"",
                         "\"Unfortunately the time machine is too old. It is broken now. I could only make it work for 5 minutes. After that, my energy will run out and I will be destructed. And you,\"",
                         "\"You will be stuck in 2017 forever.\""}, true)
@@ -213,12 +208,13 @@ public class QuestionText {
                         "......",
                         "\"I don't believe you.\"",
                         "\"...alright.\"",
-                        "I raised my gun.",
-                        "\"Goodbye Shelley.\""},
+                        "I look at the time machine.",
+                        "20 seconds left",
+                        "I sighed.",
+                        "I entered the years \"1874\", and pushed the button on the time machine again.",},
                         new Answer("OK", new String[]{"Congratulations. You win the game!"}, true)
                 )
         );
-
     }
 
     public List<Object> getQs(){
