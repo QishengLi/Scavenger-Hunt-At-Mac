@@ -40,7 +40,7 @@ public final class MultipleChoice {
         if (choices.size() != 0) {
             for (Answer answer : choices) {
                 if (answer.isCorrect()) {
-                    result = ("" + Arrays.asList(answer.getResponse())).replaceAll("(^.|.$)", "").replace(", ", " " );
+                    result = ("" + Arrays.asList(answer.getResponse())).replaceAll("(^.|.$)", "").replace(", ", "  " );
                 }
             }
         }
