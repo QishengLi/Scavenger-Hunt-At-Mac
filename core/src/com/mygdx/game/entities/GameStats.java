@@ -12,7 +12,7 @@ import com.mygdx.game.screens.Play;
 /**
  * Created by Zhaoqi on 2017/4/3.
  */
-public class HealthBar extends Group {
+public class GameStats extends Group {
 
     private Image barImg;
     private Image healthBarImg;
@@ -24,7 +24,7 @@ public class HealthBar extends Group {
     public static float remainingFlashingTime = 0f;
     private boolean timeLabelSet = false;
 
-    public HealthBar(Texture bar, Texture healthBar, Label lifeLabel, CampusMap map) {
+    public GameStats(Texture bar, Texture healthBar, Label lifeLabel, CampusMap map) {
         this.barImg = new Image(bar);
         this.healthBarImg = new Image(healthBar);
         this.lifeLabel = lifeLabel;

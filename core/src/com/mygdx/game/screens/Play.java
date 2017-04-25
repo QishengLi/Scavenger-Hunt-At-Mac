@@ -66,7 +66,7 @@ public class Play implements Screen, InputProcessor {
     private Texture healthBar;
     private Texture bar;
 
-    private HealthBar barGroup;
+    private GameStats barGroup;
     private Label lifeLabel;
     private Label timeLabel;
 
@@ -150,7 +150,7 @@ public class Play implements Screen, InputProcessor {
         bar = new Texture(Gdx.files.internal("bar.png"));
 
         lifeLabel = new Label("Life: "+ Player.health, skin);
-        barGroup = new HealthBar(bar, healthBar, lifeLabel, mac);
+        barGroup = new GameStats(bar, healthBar, lifeLabel, mac);
         barGroup.initBar();
 
         timeLabel = new Label("Time:" + timeLeft, skin);
@@ -244,7 +244,7 @@ public class Play implements Screen, InputProcessor {
         elapseTime = TimeUtils.timeSinceMillis(startTime);
         ememyMoves(enemies);
         player.hitEnemy(enemies);
-        HealthBar.remainingFlashingTime -= Gdx.graphics.getDeltaTime();
+        GameStats.remainingFlashingTime -= Gdx.graphics.getDeltaTime();
         if(!player.isAlive(Player.health) || timeLeft < 0) { // time > 5s
             ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight));
         }

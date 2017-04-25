@@ -281,7 +281,7 @@ public class Player extends Sprite {
         for (Enemy enemy : enemies) {
             if(isOverlapped(enemy.getBoundingRectangle())) {
                 health--;
-                HealthBar.remainingFlashingTime = 2.0f;
+                GameStats.remainingFlashingTime = 2.0f;
                 enemies.removeValue(enemy, true);
                 explosions.add(new Explosion(enemy.getX(), enemy.getY()));
                 Play.punch.play();

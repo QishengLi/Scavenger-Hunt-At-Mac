@@ -3,7 +3,7 @@ package com.mygdx.game.utils;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.data.Answer;
 import com.mygdx.game.data.MultipleChoice;
-import com.mygdx.game.entities.HealthBar;
+import com.mygdx.game.entities.GameStats;
 import com.mygdx.game.entities.Player;
 
 /**
@@ -44,7 +44,7 @@ public class QuestionDialog extends CustomDialog {
             }
             else {
                 Player.health--;
-                HealthBar.remainingFlashingTime = 2.0f;
+                GameStats.remainingFlashingTime = 2.0f;
             }
             super.result(answer.getResponse());
         }
