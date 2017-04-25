@@ -236,7 +236,7 @@ public class Play implements Screen, InputProcessor {
 
         setTimeStart(player);
         if (timeLimitStart != 0) {
-            timeLeft = 100000 - TimeUtils.timeSinceMillis(timeLimitStart);
+            timeLeft = 1000000 - TimeUtils.timeSinceMillis(timeLimitStart);
             //System.out.println("Time Left:" + timeLeft);
         }
 
@@ -244,6 +244,7 @@ public class Play implements Screen, InputProcessor {
         elapseTime = TimeUtils.timeSinceMillis(startTime);
         ememyMoves(enemies);
         player.hitEnemy(enemies);
+        HealthBar.remainingFlashingTime -= Gdx.graphics.getDeltaTime();
         if(!player.isAlive(Player.health) || timeLeft < 0) { // time > 5s
             ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight));
         }

@@ -2,6 +2,7 @@ package com.mygdx.game.entities;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -18,6 +19,7 @@ public class HealthBar extends Group {
     private CampusMap map;
     private final float HORIZONTAL_MARGIN = 250;
     private final float VERTICAL_MARGIN = 70;
+    public static float remainingFlashingTime = 0f;
 
     public HealthBar(Texture bar, Texture healthBar, Label lifeLabel, CampusMap map) {
         this.barImg = new Image(bar);
@@ -85,33 +87,13 @@ public class HealthBar extends Group {
                     player.getY()+camera.viewportHeight/2-VERTICAL_MARGIN);
         }
     }
-}
 
-//    public void adjustBoundary(OrthographicCamera cam) {
-//
-//        float mapLeft = 0;
-//        float mapBottom = 0;
-//
-//        // The camera dimensions, halved
-//        float cameraHalfWidth = cam.viewportWidth * .5f;
-//        float cameraHalfHeight = cam.viewportHeight * .5f;
-//
-//        float cameraLeft = cam.position.x - cameraHalfWidth;
-//        float cameraRight = cam.position.x + cameraHalfWidth;
-//        float cameraBottom = cam.position.y - cameraHalfHeight;
-//        float cameraTop = cam.position.y + cameraHalfHeight;
-//
-//        if(cameraLeft + Player.SPEED <= mapLeft) {
-//            cam.position.x = mapLeft + cameraHalfWidth;
-//        }
-//        else if(cameraRight - Player.SPEED >= mapWidth) {
-//            cam.position.x = mapWidth - cameraHalfWidth;
-//        }
-//
-//        if(cameraBottom + Player.SPEED <= mapBottom) {
-//            cam.position.y = mapBottom + cameraHalfHeight;
-//        }
-//        else if(cameraTop - Player.SPEED >= mapHeight) {
-//            cam.position.y = mapHeight - cameraHalfHeight;
-//        }
-//}
+    @Override public void draw(Batch sb, float parentAlpha) {
+        if (remainingFlashingTime > 0 && System.currentTimeMillis() % 400 < 150){
+            return;
+        }
+        if (isTransform()) applyTransform(sb, computeTransform());
+        drawChildren(sb, parentAlpha);
+        if (isTransform()) resetTransform(sb);
+    }
+}
