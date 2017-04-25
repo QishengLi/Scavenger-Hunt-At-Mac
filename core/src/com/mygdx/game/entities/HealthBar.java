@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.mygdx.game.screens.Play;
 
 
 /**
@@ -16,6 +17,7 @@ public class HealthBar extends Group {
     private Image barImg;
     private Image healthBarImg;
     private Label lifeLabel;
+    //private Label timeLabel;
     private CampusMap map;
     private final float HORIZONTAL_MARGIN = 250;
     private final float VERTICAL_MARGIN = 70;
@@ -25,6 +27,7 @@ public class HealthBar extends Group {
         this.barImg = new Image(bar);
         this.healthBarImg = new Image(healthBar);
         this.lifeLabel = lifeLabel;
+        //this.timeLabel = timeLabel;
         this.map = map;
     }
 
@@ -33,13 +36,16 @@ public class HealthBar extends Group {
         barImg.setPosition(0, 0);
         healthBarImg.setPosition(19, 6);
         lifeLabel.setPosition(50, -15);
+        //timeLabel.setPosition(-1000,-10);
         this.addActor(lifeLabel);
+        //this.addActor(timeLabel);
         this.addActor(barImg);
         this.addActor(healthBarImg);
     }
 
     public void updateBar(Player player, OrthographicCamera camera) {
         lifeLabel.setText("Life: "+Player.health);
+        //timeLabel.setText("Time Left: "+ Play.timeLeft / 60000 + " : " + (Play.timeLeft / 1000) % 60);
         healthBarImg.setWidth(177*Player.health/Player.TOTALHEALTH);
         healthBarImg.setHeight(21);
         this.setPosition(player.getX()+camera.viewportWidth/2-HORIZONTAL_MARGIN,

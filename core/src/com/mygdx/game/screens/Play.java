@@ -68,7 +68,7 @@ public class Play implements Screen, InputProcessor {
 
     private HealthBar barGroup;
     private Label lifeLabel;
-    private Label timeLabel;
+    private TimeLabel timeLabel;
 
     //不要删
     public String clue;
@@ -153,7 +153,7 @@ public class Play implements Screen, InputProcessor {
         barGroup = new HealthBar(bar, healthBar, lifeLabel, mac);
         barGroup.initBar();
 
-        timeLabel = new Label("Time:" + timeLeft, skin);
+        timeLabel = new TimeLabel("Time:" + timeLeft, skin);
 
         player.setCollisionRects(collisionRects);
         player.setDoorRects(doors);
@@ -261,7 +261,7 @@ public class Play implements Screen, InputProcessor {
         drawExplosion(delta);
 
         if (timeLimitStart != 0) {
-            updateTimeLabel(player, camera);
+            timeLabel.update(player, camera);
             timeLabel.draw(sb, 1);
         }
 
@@ -356,17 +356,10 @@ public class Play implements Screen, InputProcessor {
 
     public void setTimeStart(Player player) {
         //Qisheng: it should be 10 if it is still CC.
-        if (!(timeHasStarted) && player.getExistingDoors().size >= 10) { //TODO: change parameter: the door that triggers time limit
+        if (!(timeHasStarted) && player.getExistingDoors().size >= 1) { //TODO: change parameter: the door that triggers time limit: correct: 10
             timeLimitStart = TimeUtils.millis();
             timeHasStarted = true;
         }
-    }
-
-    public void updateTimeLabel(Player player, OrthographicCamera camera) {
-        timeLabel.setFontScale(3);
-        timeLabel.setText("Time Left: "+ Play.timeLeft);
-        timeLabel.setPosition(player.getX()+camera.viewportWidth/2-400,
-                player.getY()-camera.viewportHeight/2+10);
     }
 
     // Called when a key was pressed
