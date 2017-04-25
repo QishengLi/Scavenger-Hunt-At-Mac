@@ -212,7 +212,8 @@ public class QuestionText {
                         "I look at the time machine.",
                         "20 seconds left",
                         "I sighed.",
-                        "I entered the years \"1874\", and pushed the button on the time machine again.",},
+                        "I entered the years \"1874\", and pushed the button on the time machine again.",
+                        "Congratulations. You win the game!"},
                         new Answer("OK", new String[]{"Congratulations. You win the game!"}, true)
                 )
         );

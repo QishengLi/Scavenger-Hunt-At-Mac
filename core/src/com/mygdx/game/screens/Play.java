@@ -221,7 +221,7 @@ public class Play implements Screen, InputProcessor {
         startTime = TimeUtils.millis();
         elapseTime = 0;
         timeLimitStart = 0;
-        timeLeft = 5000; //5s
+        timeLeft = 300000; //5 min
         timeHasStarted = false;
     }
 
@@ -235,8 +235,8 @@ public class Play implements Screen, InputProcessor {
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
 
         setTimeStart(player);
-        if (timeLimitStart != 0) {
-            timeLeft = 1000000 - TimeUtils.timeSinceMillis(timeLimitStart);
+        if (timeLimitStart != 0 && !(barGroup.isFreezed())) {
+            timeLeft -= 1000 * Gdx.graphics.getDeltaTime();
             //System.out.println("Time Left:" + timeLeft);
         }
 
@@ -331,6 +331,10 @@ public class Play implements Screen, InputProcessor {
             elapseTime = 0;
             startTime = TimeUtils.millis();
         }
+    }
+
+    public GameStats getBarGroup() {
+        return barGroup;
     }
 
     public void drawEnemies(Array<Enemy> enemies) {

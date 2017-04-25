@@ -63,14 +63,14 @@ public abstract class CustomDialog extends Dialog {
     @Override public Dialog show(Stage stage) {
         // Set input processor to dialog
         Gdx.input.setInputProcessor(stage);
-        setEnemiesFreeze(true);
+        setTimeFreeze(true);
         return super.show(stage);
     }
 
     @Override protected void result(Object object) {
         // Reset input processor to screen
         Gdx.input.setInputProcessor(this.ip);
-        setEnemiesFreeze(false);
+        setTimeFreeze(false);
         if (this.responseDialog != null) {
             if (object instanceof MultipleChoice) {
                 responseDialog.renderContent(object);
@@ -101,12 +101,13 @@ public abstract class CustomDialog extends Dialog {
         return this.playScreen != null;
     }
 
-    private void setEnemiesFreeze(boolean freeze) {
+    private void setTimeFreeze(boolean freeze) {
         if (!checkScreen()) return;
         Array<Enemy> enemies = this.playScreen.getEnemies();
         for (Enemy e : enemies) {
             e.setFreeze(freeze);
         }
+        this.playScreen.getBarGroup().setFreezed(freeze);
     }
 
     @Override

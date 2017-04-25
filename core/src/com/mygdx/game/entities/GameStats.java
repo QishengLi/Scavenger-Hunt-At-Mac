@@ -22,13 +22,16 @@ public class GameStats extends Group {
     private final float HORIZONTAL_MARGIN = 250;
     private final float VERTICAL_MARGIN = 70;
     public static float remainingFlashingTime = 0f;
-    private boolean timeLabelSet = false;
+    private boolean timeLabelSet;
+    private boolean freezed;
 
     public GameStats(Texture bar, Texture healthBar, Label lifeLabel, CampusMap map) {
         this.barImg = new Image(bar);
         this.healthBarImg = new Image(healthBar);
         this.lifeLabel = lifeLabel;
         this.map = map;
+        this.timeLabelSet = false;
+        this.freezed = false;
     }
 
     public void initBar() {
@@ -116,5 +119,13 @@ public class GameStats extends Group {
         if (isTransform()) applyTransform(sb, computeTransform());
         drawChildren(sb, parentAlpha);
         if (isTransform()) resetTransform(sb);
+    }
+
+    public boolean isFreezed() {
+        return freezed;
+    }
+
+    public void setFreezed(boolean freezed) {
+        this.freezed = freezed;
     }
 }
