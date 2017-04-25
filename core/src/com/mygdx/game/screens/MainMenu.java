@@ -74,7 +74,7 @@ public class MainMenu implements Screen{
         Label heading = new Label(MainGame.TITLE, skin, "default");
         heading.setFontScale(2);
 
-        // creating buttons
+        // creating play buttons
         TextButton buttonPlay = new TextButton("PLAY", skin, "default");
         buttonPlay.addListener(new ClickListener() {
 
@@ -91,6 +91,7 @@ public class MainMenu implements Screen{
         });
         buttonPlay.pad(15);
 
+        // creating instruction button
         TextButton buttonInstruction = new TextButton("Instructions", skin, "default");
         buttonInstruction.addListener(new ClickListener() {
 

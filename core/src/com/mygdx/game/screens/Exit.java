@@ -86,9 +86,28 @@ public class Exit implements Screen{
         });
         buttonExit.pad(15);
 
+        // creating play again buttons
+//        TextButton buttonPlay = new TextButton("Play again", skin, "default");
+//        buttonPlay.addListener(new ClickListener() {
+//
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                stage.addAction(sequence(moveTo(0, -stage.getHeight(), .5f), run(new Runnable() {
+//
+//                    @Override
+//                    public void run() {
+//                        ((Game) Gdx.app.getApplicationListener()).setScreen(new Play(initialWidth, initialHeight));
+//                    }
+//                })));
+//            }
+//        });
+//        buttonPlay.pad(15);
+
         // putting stuff together
         table.add(heading).spaceBottom(100).row();
         table.add(buttonExit);
+//        table.add(buttonExit).spaceBottom(20).row();
+//        table.add(buttonPlay).spaceBottom(15).row();
 
         stage.addActor(table);
     }
