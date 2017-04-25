@@ -1,12 +1,10 @@
 package com.mygdx.game.utils;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.data.Answer;
 import com.mygdx.game.data.MultipleChoice;
+import com.mygdx.game.entities.HealthBar;
 import com.mygdx.game.entities.Player;
-import javafx.util.Pair;
 
 /**
  * Created by Shuni on 3/12/17.
@@ -46,6 +44,7 @@ public class QuestionDialog extends CustomDialog {
             }
             else {
                 Player.health--;
+                HealthBar.remainingFlashingTime = 2.0f;
             }
             super.result(answer.getResponse());
         }

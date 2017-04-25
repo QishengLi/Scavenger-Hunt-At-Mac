@@ -28,9 +28,9 @@ import java.util.Map;
  */
 public class Player extends Sprite {
 
-    public static final float SPEED = 20f;
-    public static int health = 30;
-    public static final int TOTALHEALTH = 30;
+    public static final float SPEED = 12f;
+    public static int health = 20;
+    public static final int TOTALHEALTH = 20;
 
     private List<Direction> movingDirs;
 
@@ -157,7 +157,7 @@ public class Player extends Sprite {
         return (doorRects.get(existingDoors.size));
     }
 
-    private boolean isFinished(Array<Rectangle> existingDoors) {
+    public boolean isFinished(Array<Rectangle> existingDoors) {
         return (existingDoors.size == doorRects.size);
     }
 
@@ -281,6 +281,7 @@ public class Player extends Sprite {
         for (Enemy enemy : enemies) {
             if(isOverlapped(enemy.getBoundingRectangle())) {
                 health--;
+                HealthBar.remainingFlashingTime = 2.0f;
                 enemies.removeValue(enemy, true);
                 explosions.add(new Explosion(enemy.getX(), enemy.getY()));
                 Play.punch.play();

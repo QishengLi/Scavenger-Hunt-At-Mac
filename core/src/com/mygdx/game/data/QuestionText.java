@@ -176,9 +176,9 @@ public class QuestionText {
                 "No! That sent a chill down my spine. I jumped back away from the robot.",
                 "\"Richard was in the team that created the robot that could recognize music. He was always aware of the danger that the capability to recognize music could turn into " +
                         "self-consciousness if the robot is exposed to truly exceptional music pieces. He created me, and placed me in Olin Rice 254.\"",
-                " \"I'm of a much older model, and I'm not connected to Professor Paul Cantrell's central control.\""
+                " \"I'm of a much older model, and I'm not connected to Professor Paul Cantrell's central control.\"", "\"What? That's against federal law. Richard can be jailed for doing this.\""
                 },
-                new Answer("OK", new String[]{"\"What? That's against federal law. Richard can be jailed for doing this.\"",
+                new Answer("OK", new String[]{
                         "\"And yet, he chose to take the risk. And you, you must not fail him. You have to go back in time and prevent their project from happening. You need to convince the administrators, computer scientists and musicians not to go through with their project.\"",
                         "\"administrators, computer scientists and musicians... OK! I will do it!\"",
                         "\"Unfortunately the time machine is too old. It is broken now. I could only make it work for 5 minutes. After that, my energy will run out and I will be destructed. And you,\"",
