@@ -21,6 +21,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.utils.CustomDialog;
@@ -117,7 +119,12 @@ public class Play implements Screen, InputProcessor {
         collisionRects = mac.getCollisionBoxes();
         doors = mac.getDoors();
 
-        stage = new Stage();
+        OrthographicCamera stageCam = new OrthographicCamera();
+        stageCam.setToOrtho(false, w, h);
+        stageCam.zoom -= 0.5;
+        stageCam.update();
+        Viewport v = new FitViewport(this.initialWidth, this.initialHeight, stageCam);
+        stage = new Stage(v);
         skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
         // Add background music
@@ -209,6 +216,7 @@ public class Play implements Screen, InputProcessor {
         curClue.pad(10);
 
         Table table2 = new Table();
+       
         table2.setFillParent(true);
         table2.bottom();
         table2.left();
