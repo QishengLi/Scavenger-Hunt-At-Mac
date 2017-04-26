@@ -21,7 +21,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Tutorial from https://www.youtube.com/watch?v=CNjkPPveqG8
  * https://bitbucket.org/dermetfan/blackpoint2/downloads/
  */
-public class Exit implements Screen{
+public class GameOver implements Screen{
 
     private Stage stage;
     private Skin skin;
@@ -30,12 +30,12 @@ public class Exit implements Screen{
     private int initialWidth;
     private int initialHeight;
 
-    public Exit() {
+    public GameOver() {
         initialWidth = 0;
         initialHeight = 0;
     }
 
-    public Exit(int w, int h) {
+    public GameOver(int w, int h) {
         initialWidth = w;
         initialHeight = h;
     }
