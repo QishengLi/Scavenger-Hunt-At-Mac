@@ -177,11 +177,17 @@ public class Player extends Sprite {
             if (isOverlapped(rect)) {
                 Play.hitCorrectDoor.play();
                 resetDirection();
-                CustomDialog dialogBox = spots.get(rect);
-                while (dialogBox instanceof TextDialog) {
-                    dialogBox = dialogBox.getResponseDialog();
-                }
-                dialogBox.getResponseDialog().show(this.stage);
+//                CustomDialog dialogBox = spots.get(rect);
+//                while (dialogBox instanceof TextDialog) {
+//                    dialogBox = dialogBox.getResponseDialog();
+//                }
+//                dialogBox.getResponseDialog().show(this.stage);
+                Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
+                Play play = (Play) curScreen;
+                CustomDialog curClueDialog = new TextDialog("Clue", play.getSkin(), null);
+                curClueDialog.renderContent(new String[]{play.getCurClue()});
+                curClueDialog.show(this.stage);
+
             }
         }
 

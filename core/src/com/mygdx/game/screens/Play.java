@@ -216,7 +216,7 @@ public class Play implements Screen, InputProcessor {
         curClue.pad(10);
 
         Table table2 = new Table();
-       
+        table2.pad(250, 330, 250, 330);
         table2.setFillParent(true);
         table2.bottom();
         table2.left();
@@ -296,6 +296,15 @@ public class Play implements Screen, InputProcessor {
         this.clue = clue;
 
     }
+
+    public String getCurClue() {
+        return this.clue;
+    }
+
+    public Skin getSkin() {
+        return this.skin;
+    }
+
 
     @Override
     public void resize(int width, int height) {
