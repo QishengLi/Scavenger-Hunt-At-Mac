@@ -246,10 +246,12 @@ public class Play implements Screen, InputProcessor {
         player.hitEnemy(enemies);
         GameStats.remainingFlashingTime -= Gdx.graphics.getDeltaTime();
         if(!player.isAlive(Player.health) || timeLeft < 0) { // time > 5s
+            bgm.stop();
             ((Game) Gdx.app.getApplicationListener()).setScreen(new GameOver(initialWidth,initialHeight));
         }
         if (player.isFinished(player.getExistingDoors())) {
             //Gdx.app.exit();
+            bgm.stop();
             ((Game) Gdx.app.getApplicationListener()).setScreen(new GameWon(initialWidth,initialHeight));
         }
 
