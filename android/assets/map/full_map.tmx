@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="190" height="222" tilewidth="32" tileheight="32" nextobjectid="110">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="190" height="222" tilewidth="32" tileheight="32" nextobjectid="114">
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="256" columns="16">
   <image source="tileset.png" width="512" height="512"/>
  </tileset>
@@ -127,6 +127,10 @@
   <object id="107" name="Weyerhaeuser" x="2355.3" y="843.918" width="46.5377" height="360.735"/>
   <object id="108" name="Weyerhaeuser" x="2353.87" y="362.49" width="46.5377" height="360.735"/>
   <object id="109" name="Weyerhaeuser" x="2355.3" y="1303.92" width="46.5377" height="360.735"/>
+  <object id="110" name="library" x="4189.53" y="2146.41" width="27.7116" height="255.985"/>
+  <object id="111" name="CC" x="5440.89" y="655.395" width="100" height="43"/>
+  <object id="112" name="CC" x="5400.39" y="589.895" width="178" height="65"/>
+  <object id="113" name="CC" x="5364.89" y="551.895" width="277" height="36"/>
  </objectgroup>
  <objectgroup name="Doors">
   <object id="29" name="door1" x="4836.79" y="3263.59" width="26.16" height="161.162"/>
@@ -142,9 +146,5 @@
   <object id="90" name="door11" x="2402" y="898" width="26" height="160"/>
   <object id="91" name="door12" x="2329" y="5440" width="183" height="42"/>
   <object id="92" name="door13" x="1696" y="4461" width="30" height="144"/>
-  <object id="99" name="CC" x="4767" y="1449" width="277" height="36"/>
-  <object id="100" name="CC" x="4802.5" y="1487" width="178" height="65"/>
-  <object id="101" name="CC" x="4843" y="1552.5" width="100" height="43"/>
-  <object id="102" name="library" x="3591.64" y="3043.51" width="27.7116" height="255.985"/>
  </objectgroup>
 </map>
