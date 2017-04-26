@@ -98,7 +98,8 @@ public class QuestionText {
         //Door 5 at Olin Rice
         Qs.add(
             new MultipleChoice(
-                new String[]{"A man is standing at the front gate... he is unharmed!",
+                new String[]{"You got extra life. (Life +3)",
+                        "A man is standing at the front gate... he is unharmed!",
                         "\"Who are you? Why are you here? Why aren't you being attacked by the robots?\"",
                         "\"I have been waiting for you. I have an important clue for you.",
                         "But to test your determination to save this campus, you must find three clues hidden under three \"Macalester\" signs. Come back to me after you have the answer.\"",
@@ -155,7 +156,7 @@ public class QuestionText {
         //Door 10 at CC.
         Qs.add(
             new MultipleChoice(
-                new String[]{
+                new String[]{"You got extra life. (Life+3)",
                 "Wait, is that an old man is sitting in Cafe Mac? What's he doing?",
                 "\"Young man, show me your box.\"",
                 "Box? Oh right, the one given to me from the robot by the wind turbine.",

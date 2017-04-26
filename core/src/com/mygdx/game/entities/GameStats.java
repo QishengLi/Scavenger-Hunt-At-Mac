@@ -112,7 +112,8 @@ public class GameStats extends Group {
         return timeLabelSet;
     }
 
-    @Override public void draw(Batch sb, float parentAlpha) {
+    @Override
+    public void draw(Batch sb, float parentAlpha) {
         if (remainingFlashingTime > 0 && System.currentTimeMillis() % 400 < 150){
             return;
         }
