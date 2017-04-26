@@ -21,7 +21,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Tutorial from https://www.youtube.com/watch?v=CNjkPPveqG8
  * https://bitbucket.org/dermetfan/blackpoint2/downloads/
  */
-public class GameOver implements Screen{
+public class Exit implements Screen{
 
     private Stage stage;
     private Skin skin;
@@ -29,16 +29,17 @@ public class GameOver implements Screen{
 
     private int initialWidth;
     private int initialHeight;
-    private boolean gameStatus;
+    private boolean gameWon;
 
-    public GameOver() {
+    public Exit() {
         initialWidth = 0;
         initialHeight = 0;
     }
 
-    public GameOver(int w, int h) {
+    public Exit(int w, int h, boolean gameWon) {
         initialWidth = w;
         initialHeight = h;
+        this.gameWon = gameWon;
     }
 
     @Override
@@ -73,8 +74,7 @@ public class GameOver implements Screen{
         table.setFillParent(true);
 
         // creating heading
-        Label heading = new Label("Game Over", skin, "default");
-        heading.setFontScale(2);
+        Label heading = showHeading(gameWon);
 
         // creating buttons
         TextButton buttonExit = new TextButton("EXIT", skin, "default");
@@ -87,22 +87,6 @@ public class GameOver implements Screen{
         });
         buttonExit.pad(15);
 
-        // creating play again buttons
-//        TextButton buttonPlay = new TextButton("Play again", skin, "default");
-//        buttonPlay.addListener(new ClickListener() {
-//
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                stage.addAction(sequence(moveTo(0, -stage.getHeight(), .5f), run(new Runnable() {
-//
-//                    @Override
-//                    public void run() {
-//                        ((Game) Gdx.app.getApplicationListener()).setScreen(new Play(initialWidth, initialHeight));
-//                    }
-//                })));
-//            }
-//        });
-//        buttonPlay.pad(15);
 
         // putting stuff together
         table.add(heading).spaceBottom(100).row();
@@ -111,6 +95,21 @@ public class GameOver implements Screen{
 //        table.add(buttonPlay).spaceBottom(15).row();
 
         stage.addActor(table);
+    }
+
+
+    public Label showHeading(boolean gameWon){
+        if (gameWon){
+            Label heading = new Label("Congrats, you win!", skin, "default");
+            heading.setFontScale(2);
+            return heading;
+        }
+        else{
+            Label heading = new Label("Game over", skin, "default");
+            heading.setFontScale(2);
+            return heading;
+        }
+
     }
 
     @Override

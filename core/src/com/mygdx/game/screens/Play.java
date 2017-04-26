@@ -255,12 +255,12 @@ public class Play implements Screen, InputProcessor {
         GameStats.remainingFlashingTime -= Gdx.graphics.getDeltaTime();
         if(!player.isAlive(Player.health) || timeLeft < 0) { // time > 5s
             bgm.stop();
-            ((Game) Gdx.app.getApplicationListener()).setScreen(new GameOver(initialWidth,initialHeight));
+            ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight, false));
         }
         if (player.isFinished(player.getExistingDoors())) {
             //Gdx.app.exit();
             bgm.stop();
-            ((Game) Gdx.app.getApplicationListener()).setScreen(new GameWon(initialWidth,initialHeight));
+            ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight, true));
         }
 
         camera.position.set(player.getX(),player.getY(),0); // let the camera follow the player
