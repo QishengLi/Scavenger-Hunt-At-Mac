@@ -284,7 +284,7 @@ public class Player extends Sprite {
                 GameStats.remainingFlashingTime = 2.0f;
                 enemies.removeValue(enemy, true);
                 explosions.add(new Explosion(enemy.getX(), enemy.getY()));
-                Play.punch.play();
+                Play.enemyHit.play();
             }
         }
     }
