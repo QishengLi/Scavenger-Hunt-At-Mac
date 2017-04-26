@@ -11,6 +11,7 @@ import java.util.Arrays;
  */
 public class TextDialog extends CustomDialog {
     private Skin skin;
+    private Object content;
 
     public TextDialog(String title, Skin skin, CustomDialog responseDialog) {
         super(title, skin, responseDialog);
@@ -18,6 +19,7 @@ public class TextDialog extends CustomDialog {
     }
 
     public void renderContent(Object object) {
+        content = object;
         if (object instanceof MultipleChoice) {
             MultipleChoice problem = (MultipleChoice) object;
             String[] strs = problem.getQuestion();
@@ -47,5 +49,9 @@ public class TextDialog extends CustomDialog {
 //                getResponseDialog().show(getStage());
 //            }
 //        }
+    }
+
+    public Object getContent() {
+        return this.content;
     }
 }
