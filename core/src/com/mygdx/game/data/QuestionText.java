@@ -30,7 +30,8 @@ public class QuestionText {
                 new Answer("1916", new String[]{"Ugh! You are wrong. Hit the door to answer the question again.\n" +
                         "Keep an eye on your life bar. Each wrong answer will cost you a life. "},false),
                 new Answer("1874", new String[]{"Great!",
-                        "The first experiment was conducted somewhere on Macalester Street. Find it! (Hint: it’s 2037. How long has it been since Mac’s founding?)"},true)
+                        "The first experiment was conducted somewhere on Macalester Street. Find it!",
+                        "Hint: It has been 163 years since Mac was founded. Art Building is situated at 130 Macalester St."},true)
             )
         );
 
@@ -62,7 +63,7 @@ public class QuestionText {
                             "some Mac musicians collaborated with computer science students in an attempt to use robots to recognize different genres of music. " +
                             "These musicians wanted new inspirations for music composition.",
                         "One of these musicians was Shelley Hanson. " +
-                                "She was a key member of the team that eventually created the robot that had the capability to recognize music. " +
+                                "She was a key member of the team that eventually created the robot that had the capability of recognizing music. " +
                                 "It was a huge technical breakthrough.",
                         "With the help of the robot, Shelley created her masterpiece, " +
                                 "a new composition that won her numerous awards. She became the director of a Mac ensemble.",
@@ -81,7 +82,6 @@ public class QuestionText {
             new MultipleChoice(
                 new String[]{"A robot jumps out of the grass.",
                             "\"I do not mean to hurt you!\"",
-                            "You received food. (Life +3)",
                             "You received a black box...",
                              "\"Wait, what is this for? Why did you give me this box?\"",
                             "The robot self-destructed.",
@@ -90,8 +90,8 @@ public class QuestionText {
                 new Answer("Environmental Protection", new String[]{"Yes!",
                         "Why are robots near the wind turbine friendly to me? Hmm... ",
                         "In the development of robots, environmentalists in our team deal with environmental-friendliness. Maybe there are clues in their places."},true),
-                new Answer("Campus Icon",new String[]{"Not correct. Please try again."},false),
-                new Answer("Decoration",new String[]{"Not correct. Please try again."}, false)
+                new Answer("Campus Icon",new String[]{"Ouch! An electric shock! I think the answer was wrong. (Hit the door to answer the question again)\n"},false),
+                new Answer("Decoration",new String[]{"Ouch! An electric shock! I think the answer was wrong. (Hit the door to answer the question again)\n"}, false)
             )
         );
 
@@ -140,16 +140,9 @@ public class QuestionText {
             new MultipleChoice(
                 new String[]{"\"Hey, I'm back with the clues you asked for. Could you tell me who you are now?\"",
                         "\"What are the three numbers?\""},
-                new Answer("9, 1, 7", new String[]{"\"No, it's not right.\", ",
-                    "\"How is it possible? I solved all the clues! These are the right answers!\"",
-                    "Wait, his smiles look weird...",
-                    "Robots! They are coming from all directions! It's a trap!",
-                    "There are fewer of them around the campus center. I should go there!"}, true),
-                new Answer("6, 1, 2", new String[]{"\"No, it's not right.\", ",
-                    "\"How is it possible? I solved all the clues! These are the right answers!\"",
-                    "Wait, his smiles look weird...",
-                    "Robots! They are coming from all directions! It's a trap!",
-                    "There are fewer of them around the campus center. I should go there!"}, true),
+                new Answer("9, 1, 7", new String[]{"Not correct. Please try again."}, false),
+                new Answer("7, 0, 9", new String[]{"Not correct. Please try again."}, false),
+                new Answer("9, 0, 7", new String[]{"Not correct. Please try again."}, false),
                 new Answer("7, 1, 9", new String[]{"\"No, it's not right.\", ",
                     "\"How is it possible? I solved all the clues! These are the right answers!\"",
                     "Wait, his smile looks weird...",
@@ -162,25 +155,27 @@ public class QuestionText {
         //Door 10 at CC.
         Qs.add(
             new MultipleChoice(
-                new String[]{"A backpack! (Life +5)",
+                new String[]{
                 "Wait, is that an old man is sitting in Cafe Mac? What's he doing?",
                 "\"Young man, show me your box.\"",
                 "Box? Oh right, the one given to me from the robot by the wind turbine.",
-                "\"This... this really is it!\"",
-                "\"Young man, this is an old time machine that can send you back to 2017, I've been waiting for you for a long time!\"",
-                "\"When the group of Mac faculties created the robot that can recognize music, they left the robot in Olin Rice 254, for students to play with it freely. " +
-                        "One day, someone played Shelley's award-winning music composition, the robot gained self-consciousness in the midst of recognizing that musical piece.\"",
+                "\"This... this really is it! I've been waiting for the person with this old time machine for long!\"",
+                "\"When the group of Mac faculties created the robot that can recognize music, they left the robot in Olin Rice 254, for students to play with it freely.\" ",
+                        "\"One day, someone played Shelley's award-winning music composition, the robot gained self-consciousness in the midst of recognizing that musical piece.\"",
                 " \"That was the first robot that became self-conscious. It broke into Professor Paul Cantrell's office and stole the master code for all robots. And then, the robot revolt happened.\"",
                 "\"But how do you know all this? Who are you?\"",
                 "\"I'm a robot, too.\"",
                 "No! That sent a chill down my spine. I jumped back away from the robot.",
                 "\"Richard was in the team that created the robot that could recognize music. He was always aware of the danger that the capability to recognize music could turn into " +
-                        "self-consciousness if the robot is exposed to truly exceptional music pieces. He created me, and placed me in Olin Rice 254.\"",
-                " \"I'm of a much older model, and I'm not connected to Professor Paul Cantrell's central control.\"", "\"What? That's against federal law. Richard can be jailed for doing this.\""
+                        "self-consciousness if the robot is exposed to truly exceptional music pieces.\"",
+                "\"He created me, and placed me in Olin Rice 254.\"",
+                " \"I'm of a much older model, and I'm not connected to Professor Paul Cantrell's central control.\"",
+                "\"What? That's against federal law. Richard can be jailed for doing this.\""
                 },
                 new Answer("OK", new String[]{
-                        "\"And yet, he chose to take the risk. And you, you must not fail him. You have to go back in time and prevent their project from happening. You need to convince the administrators, computer scientists and musicians not to go through with their project.\"",
-                        "\"administrators, computer scientists and musicians... OK! I will do it!\"",
+                        "\"And yet, he chose to take the risk. And you, you must not fail him. You have to go back in time and prevent their project from happening. \"",
+                        "\"You need to convince the administrators, computer scientists and musicians not to finish their project.\"",
+                        "\"Administrators, computer scientists and musicians... OK! I will do it!\"",
                         "\"Unfortunately the time machine is too old. It is broken now. I could only make it work for 5 minutes. After that, my energy will run out and I will be destructed. And you,\"",
                         "\"You will be stuck in 2017 forever.\""}, true)
             )
@@ -213,12 +208,13 @@ public class QuestionText {
                         "......",
                         "\"I don't believe you.\"",
                         "\"...alright.\"",
-                        "I raised my gun.",
-                        "\"Goodbye Shelley.\""},
+                        "I look at the time machine.",
+                        "20 seconds left",
+                        "I sighed.",
+                        "I entered the years \"1874\", and pushed the button on the time machine again."},
                         new Answer("OK", new String[]{"Congratulations. You win the game!"}, true)
                 )
         );
-
     }
 
     public List<Object> getQs(){

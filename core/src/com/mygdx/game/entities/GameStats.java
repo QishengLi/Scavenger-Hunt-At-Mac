@@ -6,26 +6,32 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.mygdx.game.screens.Play;
 
 
 /**
  * Created by Zhaoqi on 2017/4/3.
  */
-public class HealthBar extends Group {
+public class GameStats extends Group {
 
     private Image barImg;
     private Image healthBarImg;
     private Label lifeLabel;
+    private Label timeLabel;
     private CampusMap map;
     private final float HORIZONTAL_MARGIN = 250;
     private final float VERTICAL_MARGIN = 70;
     public static float remainingFlashingTime = 0f;
+    private boolean timeLabelSet;
+    private boolean freezed;
 
-    public HealthBar(Texture bar, Texture healthBar, Label lifeLabel, CampusMap map) {
+    public GameStats(Texture bar, Texture healthBar, Label lifeLabel, CampusMap map) {
         this.barImg = new Image(bar);
         this.healthBarImg = new Image(healthBar);
         this.lifeLabel = lifeLabel;
         this.map = map;
+        this.timeLabelSet = false;
+        this.freezed = false;
     }
 
     public void initBar() {
@@ -45,6 +51,12 @@ public class HealthBar extends Group {
         this.setPosition(player.getX()+camera.viewportWidth/2-HORIZONTAL_MARGIN,
                 player.getY()+camera.viewportHeight/2-VERTICAL_MARGIN);
         this.setOrigin(barImg.getWidth()/2,barImg.getHeight()/2);
+    }
+
+    public void updateTimeLabel() {
+        if (timeLabel != null) {
+            timeLabel.setText("Time Left: "+ Play.timeLeft / 60000 + " : " + (Play.timeLeft / 1000) % 60);
+        }
     }
 
     //TODO: Refactor
@@ -88,6 +100,18 @@ public class HealthBar extends Group {
         }
     }
 
+    public void initTimeLabel(Label timeLabel) {
+        this.timeLabel = timeLabel;
+        this.timeLabel.setFontScale(4);
+        this.timeLabel.setPosition(-1200,0);
+        this.addActor(this.timeLabel);
+        timeLabelSet = true;
+    }
+
+    public boolean isTimeLabelSet() {
+        return timeLabelSet;
+    }
+
     @Override public void draw(Batch sb, float parentAlpha) {
         if (remainingFlashingTime > 0 && System.currentTimeMillis() % 400 < 150){
             return;
@@ -95,5 +119,13 @@ public class HealthBar extends Group {
         if (isTransform()) applyTransform(sb, computeTransform());
         drawChildren(sb, parentAlpha);
         if (isTransform()) resetTransform(sb);
+    }
+
+    public boolean isFreezed() {
+        return freezed;
+    }
+
+    public void setFreezed(boolean freezed) {
+        this.freezed = freezed;
     }
 }
