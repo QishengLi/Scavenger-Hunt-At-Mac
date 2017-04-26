@@ -59,7 +59,7 @@ public class Play implements Screen, InputProcessor {
     private Map<Rectangle, CustomDialog> spots;
 
     private Music bgm;
-    public static Sound punch;
+    public static Sound enemyHit;
     public static Sound hitCorrectDoor;
     public static Sound hitWrongDoor;
 
@@ -144,7 +144,7 @@ public class Play implements Screen, InputProcessor {
 
         enemies = new Array<>();
         initializeEnemies(enemies, 20);
-        punch = Gdx.audio.newSound(Gdx.files.internal("punch.wav"));
+        enemyHit = Gdx.audio.newSound(Gdx.files.internal("soundEffects/enemyHit.wav"));
         hitCorrectDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorOpen.mp3"));
         hitWrongDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorPunch.mp3"));
 
@@ -153,8 +153,8 @@ public class Play implements Screen, InputProcessor {
         chapters.initSpots(doors, questions);
         spots = chapters.getSpots();
 
-        healthBar = new Texture(Gdx.files.internal("healthbar.png"));
-        bar = new Texture(Gdx.files.internal("bar.png"));
+        healthBar = new Texture(Gdx.files.internal("interfaceComponents/healthbar.png"));
+        bar = new Texture(Gdx.files.internal("interfaceComponents/bar.png"));
 
         lifeLabel = new Label("Life: "+ Player.health, skin);
         barGroup = new GameStats(bar, healthBar, lifeLabel, mac);

@@ -22,6 +22,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.Math.min;
+
 /**
  * Created by Shuni on 2/25/17.
  *
@@ -124,6 +126,7 @@ public class Player extends Sprite {
     }
 
     public Array<Rectangle> getExistingDoors() {
+        //TODO: Refactor this part. Confusing.
         Array<Rectangle> existingDoors = new Array<>();
         for (CustomDialog questionDialog : questions) {
             int i = 0;
@@ -201,7 +204,13 @@ public class Player extends Sprite {
             }
             else {
                 dialogBox.show(this.stage);
+                // +3 life at door 5 and door 10.
+                if (existingDoors.size == 4 || existingDoors.size == 9){
+                    health = min(health + 3, TOTALHEALTH);
+                    GameStats.remainingFlashingTime = 4.0f;
+                }
             }
+
 
 
             //不要删，list of clues
@@ -290,7 +299,7 @@ public class Player extends Sprite {
                 GameStats.remainingFlashingTime = 2.0f;
                 enemies.removeValue(enemy, true);
                 explosions.add(new Explosion(enemy.getX(), enemy.getY()));
-                Play.punch.play();
+                Play.enemyHit.play();
             }
         }
     }
