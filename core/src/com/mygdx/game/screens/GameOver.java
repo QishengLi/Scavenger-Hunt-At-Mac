@@ -29,6 +29,7 @@ public class GameOver implements Screen{
 
     private int initialWidth;
     private int initialHeight;
+    private boolean gameStatus;
 
     public GameOver() {
         initialWidth = 0;

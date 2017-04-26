@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="190" height="222" tilewidth="32" tileheight="32" nextobjectid="114">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="190" height="222" tilewidth="32" tileheight="32" nextobjectid="117">
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="256" columns="16">
   <image source="tileset.png" width="512" height="512"/>
  </tileset>
@@ -80,24 +80,24 @@
   <object id="11" name="Kirk" x="4673.45" y="2504.98" width="162.888" height="508.601"/>
   <object id="12" name="Kirk" x="5097.03" y="2250.27" width="108.585" height="240.817"/>
   <object id="13" name="Kirk" x="4671.03" y="3120.59" width="166.817" height="386.341"/>
-  <object id="14" name="Kirk" x="4673.36" y="3494.31" width="289.722" height="254.758"/>
+  <object id="14" name="Kirk" x="4669.36" y="3494.31" width="289.722" height="254.758"/>
   <object id="15" name="Kirk" x="5096.09" y="3489.78" width="292.265" height="254.526"/>
   <object id="16" name="Kirk" x="5211.8" y="2231.81" width="176.686" height="1271.22"/>
-  <object id="21" name="Library" x="3623.55" y="2461.43" width="664.857" height="1184.35"/>
+  <object id="21" name="Library" x="3623.55" y="2629.43" width="664.857" height="1016.35"/>
   <object id="22" name="library" x="3557.46" y="3304.79" width="64.7116" height="338.985"/>
-  <object id="24" name="library" x="3556.09" y="2409.8" width="66.0884" height="480.939"/>
+  <object id="24" name="library" x="3742.09" y="2509.8" width="542.088" height="120.939"/>
   <object id="42" name="Cargenie" x="1925.45" y="2201.64" width="406.061" height="775.758"/>
-  <object id="44" name="Art" x="1416.36" y="3492.03" width="984.848" height="709.091"/>
+  <object id="44" name="Art" x="1486.36" y="3492.03" width="914.848" height="709.091"/>
   <object id="45" name="Art" x="1419.39" y="3395.61" width="442.424" height="92.8571"/>
   <object id="47" name="CC" x="4668.36" y="61.4845" width="667.76" height="1383.82"/>
   <object id="48" name="Olin Rice" x="2763.06" y="5488.6" width="978.364" height="789.455"/>
   <object id="49" name="Olin Rice" x="1865.79" y="5485.69" width="776.061" height="947.394"/>
   <object id="50" name="Olin Rice" x="2648.94" y="5467.51" width="199.091" height="869.576"/>
-  <object id="51" name="Olin Rice" x="1606.76" y="5139.15" width="255.939" height="1198.24"/>
-  <object id="52" name="Olin Rice" x="1812.76" y="5139.15" width="451.939" height="386.364"/>
+  <object id="51" name="Olin Rice" x="1606.76" y="5123.15" width="255.939" height="1214.24"/>
+  <object id="52" name="Olin Rice" x="1812.76" y="5125.15" width="451.939" height="400.364"/>
   <object id="54" name="Theater" x="319.757" y="4776.21" width="833.333" height="820.476"/>
   <object id="55" name="Weyerhaeuser" x="2038.96" y="364.325" width="316.537" height="1295.02"/>
-  <object id="58" name="Olin Rice" x="2850.48" y="6285.66" width="769.091" height="157.576"/>
+  <object id="58" name="Olin Rice" x="2850.48" y="6285.66" width="769.091" height="149.576"/>
   <object id="63" name="music" x="1708.46" y="4224.74" width="88" height="228"/>
   <object id="64" name="music" x="1704.46" y="4614.45" width="92" height="308"/>
   <object id="65" name="music" x="1117.03" y="4682.45" width="580" height="250"/>
@@ -107,7 +107,7 @@
   <object id="71" name="boundary" x="5.06061" y="-10.5758" width="6079" height="4"/>
   <object id="73" name="boundary" x="3.5303" y="7098.45" width="6079" height="4"/>
   <object id="74" name="boundary" x="3.0303" y="3.54545" width="16" height="7110.91"/>
-  <object id="75" name="boundary" x="6060.03" y="-3.48485" width="16" height="7113.94"/>
+  <object id="75" name="boundary" x="6066.03" y="-3.48485" width="10" height="7113.94"/>
   <object id="76" name="CC" x="4519.03" y="640.455" width="146" height="370"/>
   <object id="78" name="CC" x="5341.03" y="1083.45" width="132" height="367"/>
   <object id="79" name="CC" x="5341.03" y="225.455" width="126" height="356"/>
@@ -127,10 +127,12 @@
   <object id="107" name="Weyerhaeuser" x="2355.3" y="843.918" width="46.5377" height="360.735"/>
   <object id="108" name="Weyerhaeuser" x="2353.87" y="362.49" width="46.5377" height="360.735"/>
   <object id="109" name="Weyerhaeuser" x="2355.3" y="1303.92" width="46.5377" height="360.735"/>
-  <object id="110" name="library" x="4189.53" y="2146.41" width="27.7116" height="255.985"/>
-  <object id="111" name="CC" x="5440.89" y="655.395" width="100" height="43"/>
-  <object id="112" name="CC" x="5400.39" y="589.895" width="178" height="65"/>
-  <object id="113" name="CC" x="5364.89" y="551.895" width="277" height="36"/>
+  <object id="111" name="CC" x="4842.89" y="1553.4" width="100" height="43"/>
+  <object id="112" name="CC" x="4798.39" y="1485.9" width="178" height="65"/>
+  <object id="113" name="CC" x="4766.89" y="1449.9" width="277" height="36"/>
+  <object id="114" name="Art" x="1414.79" y="3359.57" width="62.424" height="392.857"/>
+  <object id="115" name="library" x="3842.96" y="2451.53" width="442.088" height="58.939"/>
+  <object id="116" name="library" x="3926.96" y="2410.53" width="158.088" height="46.939"/>
  </objectgroup>
  <objectgroup name="Doors">
   <object id="29" name="door1" x="4836.79" y="3263.59" width="26.16" height="161.162"/>
