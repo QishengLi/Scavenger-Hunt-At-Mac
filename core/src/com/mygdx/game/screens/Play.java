@@ -316,6 +316,9 @@ public class Play implements Screen, InputProcessor {
         for (int i = 1; i <= ct; i++) {
             Enemy enemy = new Enemy(enemyImg, stage);
             enemy.setCenter(rd.nextInt(mac.mapWidth), rd.nextInt(mac.mapHeight));
+            while (enemy.isOverlappedArray(collisionRects)) {
+                enemy.setCenter(rd.nextInt(mac.mapWidth), rd.nextInt(mac.mapHeight));
+            }
             enemies.add(enemy);
         }
     }
