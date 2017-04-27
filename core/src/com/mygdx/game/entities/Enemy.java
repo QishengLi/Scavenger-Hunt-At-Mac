@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.screens.Play;
 
@@ -16,12 +17,15 @@ public class Enemy extends Player {
 
     private Random rd = new Random();
     private boolean shouldFreeze;
-    private Direction nextDir = Direction.IDLE;
+    private Direction prevDir;
+    private Direction nextDir;
     private final float SCALE = 0.2f;
 
     public Enemy (Texture texture, Stage stage) {
-    super(texture, stage);
-    this.shouldFreeze = false;
+        super(texture, stage);
+        this.shouldFreeze = false;
+        prevDir = Direction.IDLE;
+        nextDir = Direction.IDLE;
     }
 
     public void makeEnemyMove(Player player, Array<Rectangle> collisionRects){
@@ -34,11 +38,13 @@ public class Enemy extends Player {
         chasePlayer(player, SCALE);
 
         if (Play.elapseTime > Play.SECOND) {
+            prevDir = nextDir;
             int next = rd.nextInt(4);
             setDirection(next);
         }
 
-        this.makeMove(this.nextDir, (float) Math.sqrt(1 - SCALE * SCALE));
+        this.makeMove(this.prevDir, (1 - SCALE) * Math.max((1000-Play.elapseTime)/1000.0f, 0));
+        this.makeMove(this.nextDir, (1 - SCALE) * Math.min((Play.elapseTime)/1000.0f, 1));
 
         float newX = getX();
         float newY = getY();
