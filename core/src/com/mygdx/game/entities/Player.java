@@ -29,8 +29,8 @@ import java.util.Map;
 public class Player extends Sprite {
 
     public static final float SPEED = 12f;
-    public static int health = 20;
-    public static final int TOTALHEALTH = 20;
+    public static int health = 10;
+    public static final int TOTALHEALTH = 10;
 
     private List<Direction> movingDirs;
 
@@ -61,7 +61,7 @@ public class Player extends Sprite {
         this.movingDirs.remove(dir);
     }
 
-    private void resetDirection() {
+    public void resetDirection() {
         this.movingDirs.clear();
     }
 

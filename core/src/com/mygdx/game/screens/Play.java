@@ -323,6 +323,11 @@ public class Play implements Screen, InputProcessor {
     public Array<Enemy> getEnemies() {
         return this.enemies;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
     public void ememyMoves(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             enemy.makeEnemyMove(player, collisionRects);
