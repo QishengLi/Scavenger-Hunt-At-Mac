@@ -29,15 +29,17 @@ public class Exit implements Screen{
 
     private int initialWidth;
     private int initialHeight;
+    private boolean gameWon;
 
     public Exit() {
         initialWidth = 0;
         initialHeight = 0;
     }
 
-    public Exit(int w, int h) {
+    public Exit(int w, int h, boolean gameWon) {
         initialWidth = w;
         initialHeight = h;
+        this.gameWon = gameWon;
     }
 
     @Override
@@ -72,8 +74,7 @@ public class Exit implements Screen{
         table.setFillParent(true);
 
         // creating heading
-        Label heading = new Label("Game Over", skin, "default");
-        heading.setFontScale(2);
+        Label heading = showHeading(gameWon);
 
         // creating buttons
         TextButton buttonExit = new TextButton("EXIT", skin, "default");
@@ -86,11 +87,29 @@ public class Exit implements Screen{
         });
         buttonExit.pad(15);
 
+
         // putting stuff together
         table.add(heading).spaceBottom(100).row();
         table.add(buttonExit);
+//        table.add(buttonExit).spaceBottom(20).row();
+//        table.add(buttonPlay).spaceBottom(15).row();
 
         stage.addActor(table);
+    }
+
+
+    public Label showHeading(boolean gameWon){
+        if (gameWon){
+            Label heading = new Label("Congrats, you win!", skin, "default");
+            heading.setFontScale(2);
+            return heading;
+        }
+        else{
+            Label heading = new Label("Game over", skin, "default");
+            heading.setFontScale(2);
+            return heading;
+        }
+
     }
 
     @Override

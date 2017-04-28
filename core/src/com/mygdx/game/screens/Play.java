@@ -21,6 +21,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.utils.CustomDialog;
@@ -57,7 +59,7 @@ public class Play implements Screen, InputProcessor {
     private Map<Rectangle, CustomDialog> spots;
 
     private Music bgm;
-    public static Sound punch;
+    public static Sound enemyHit;
     public static Sound hitCorrectDoor;
     public static Sound hitWrongDoor;
 
@@ -117,7 +119,12 @@ public class Play implements Screen, InputProcessor {
         collisionRects = mac.getCollisionBoxes();
         doors = mac.getDoors();
 
-        stage = new Stage();
+        OrthographicCamera stageCam = new OrthographicCamera();
+        stageCam.setToOrtho(false, w, h);
+        stageCam.zoom -= 0.5;
+        stageCam.update();
+        Viewport v = new FitViewport(this.initialWidth, this.initialHeight, stageCam);
+        stage = new Stage(v);
         skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
         // Add background music
@@ -137,7 +144,7 @@ public class Play implements Screen, InputProcessor {
 
         enemies = new Array<>();
         initializeEnemies(enemies, 20);
-        punch = Gdx.audio.newSound(Gdx.files.internal("punch.wav"));
+        enemyHit = Gdx.audio.newSound(Gdx.files.internal("soundEffects/enemyHit.wav"));
         hitCorrectDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorOpen.mp3"));
         hitWrongDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorPunch.mp3"));
 
@@ -146,8 +153,8 @@ public class Play implements Screen, InputProcessor {
         chapters.initSpots(doors, questions);
         spots = chapters.getSpots();
 
-        healthBar = new Texture(Gdx.files.internal("healthbar.png"));
-        bar = new Texture(Gdx.files.internal("bar.png"));
+        healthBar = new Texture(Gdx.files.internal("interfaceComponents/healthbar.png"));
+        bar = new Texture(Gdx.files.internal("interfaceComponents/bar.png"));
 
         lifeLabel = new Label("Life: "+ Player.health, skin);
         barGroup = new GameStats(bar, healthBar, lifeLabel, mac);
@@ -209,6 +216,7 @@ public class Play implements Screen, InputProcessor {
         curClue.pad(10);
 
         Table table2 = new Table();
+        table2.pad(250, 330, 250, 330);
         table2.setFillParent(true);
         table2.bottom();
         table2.left();
@@ -246,10 +254,13 @@ public class Play implements Screen, InputProcessor {
         player.hitEnemy(enemies);
         GameStats.remainingFlashingTime -= Gdx.graphics.getDeltaTime();
         if(!player.isAlive(Player.health) || timeLeft < 0) { // time > 5s
-            ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight));
+            bgm.stop();
+            ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight, false));
         }
         if (player.isFinished(player.getExistingDoors())) {
-            Gdx.app.exit();
+            //Gdx.app.exit();
+            bgm.stop();
+            ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight, true));
         }
 
         camera.position.set(player.getX(),player.getY(),0); // let the camera follow the player
@@ -285,6 +296,15 @@ public class Play implements Screen, InputProcessor {
         this.clue = clue;
 
     }
+
+    public String getCurClue() {
+        return this.clue;
+    }
+
+    public Skin getSkin() {
+        return this.skin;
+    }
+
 
     @Override
     public void resize(int width, int height) {

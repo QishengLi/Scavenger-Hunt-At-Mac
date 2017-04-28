@@ -22,6 +22,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.Math.min;
+
 /**
  * Created by Shuni on 2/25/17.
  *
@@ -124,6 +126,7 @@ public class Player extends Sprite {
     }
 
     public Array<Rectangle> getExistingDoors() {
+        //TODO: Refactor this part. Confusing.
         Array<Rectangle> existingDoors = new Array<>();
         for (CustomDialog questionDialog : questions) {
             int i = 0;
@@ -135,14 +138,14 @@ public class Player extends Sprite {
                 }
                 if (customDialog instanceof QuestionDialog) {
                     QuestionDialog question = (QuestionDialog) customDialog;
-                    if (question.isAnswered()) {
+                    if (question.isCorrect()) {
                         existingDoors.add(Chapter.getKeyByValue(spots, questionDialog));
                     }
                 }
             }
             if (questionDialog instanceof QuestionDialog) {
                 QuestionDialog question = (QuestionDialog) questionDialog;
-                if (question.isAnswered()) {
+                if (question.isCorrect()) {
                     existingDoors.add(Chapter.getKeyByValue(spots, question));
                 }
             }
@@ -163,11 +166,16 @@ public class Player extends Sprite {
 
     // TODO：factor out sound playing and update current clue
     private void popUpMessage() {
+
         if (doorRects.random() == null || questions.random() == null) { // check if the array is empty
             return;
         }
         Array<Rectangle> existingDoors = getExistingDoors();
         Rectangle newDoor = nextDoor(existingDoors);
+
+        Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
+        final Play play = (Play) curScreen;
+
         // Visiting answered questions
         for (Rectangle rect : existingDoors) {
             //If it's the 5th or 9th door at Olin Rice, or 3rd door at Art, skip.
@@ -177,11 +185,15 @@ public class Player extends Sprite {
             if (isOverlapped(rect)) {
                 Play.hitCorrectDoor.play();
                 resetDirection();
-                CustomDialog dialogBox = spots.get(rect);
-                while (dialogBox instanceof TextDialog) {
-                    dialogBox = dialogBox.getResponseDialog();
-                }
-                dialogBox.getResponseDialog().show(this.stage);
+//                CustomDialog dialogBox = spots.get(rect);
+//                while (dialogBox instanceof TextDialog) {
+//                    dialogBox = dialogBox.getResponseDialog();
+//                }
+//                dialogBox.getResponseDialog().show(this.stage);
+                CustomDialog curClueDialog = new TextDialog("Clue", play.getSkin(), null);
+                curClueDialog.renderContent(new String[]{play.getCurClue()});
+                curClueDialog.show(this.stage);
+
             }
         }
 
@@ -189,24 +201,67 @@ public class Player extends Sprite {
         if (isOverlapped(newDoor)) {
             Play.hitCorrectDoor.play();
             resetDirection();
-            CustomDialog dialogBox = spots.get(newDoor);
+            final CustomDialog dialogBox = spots.get(newDoor);
             if (isFinished(existingDoors)) {
                 dialogBox.getResponseDialog().show(this.stage);
             }
             else {
                 dialogBox.show(this.stage);
+                // +3 life at door 5 and door 10.
+                if (existingDoors.size == 4 || existingDoors.size == 9){
+                    health = min(health + 3, TOTALHEALTH);
+                    GameStats.remainingFlashingTime = 4.0f;
+                }
+                return;
+            }
+
+            CustomDialog tmpDialog = dialogBox;
+            while (tmpDialog != null && tmpDialog instanceof TextDialog) {
+                tmpDialog = tmpDialog.getResponseDialog();
+            }
+            final QuestionDialog mcDialog = (QuestionDialog) tmpDialog;
+            if (mcDialog != null && mcDialog.isAnswered()) {
+                CustomDialog introDialog = new CustomDialog("QUESTION", play.getSkin(), null) {
+                    @Override
+                    public void renderContent(Object object) {
+                        addLabel("Which path do you want to go?", play.getSkin());
+                        button("Next", dialogBox);
+                        button("Skip", mcDialog);
+                    }
+
+                    @Override
+                    public Object getContent() { return null; }
+
+//                    @Override
+//                    public Dialog button (Button button, Object object) {
+//                        return super.button(button, object);
+//                    }
+
+                    @Override
+                    protected void result(Object object) {
+                        if (object instanceof TextDialog) {
+                            setResponseDialog(dialogBox);
+                            super.result(((TextDialog) object).getContent());
+                        } else if (object instanceof QuestionDialog){
+                            setResponseDialog(mcDialog);
+                            super.result(((QuestionDialog) object).getContent());
+                        }
+                    }
+                };
+                introDialog.renderContent(null);
+                introDialog.show(this.stage);
+            } else {
+                dialogBox.show(this.stage);
             }
 
 
-            //不要删，list of clues
-            Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
-            if (curScreen instanceof Play) {
-                Play play = (Play) curScreen;
 
-                if ((qt.getQs().get(existingDoors.size)) instanceof MultipleChoice) {
-                    MultipleChoice mc = (MultipleChoice) qt.getQs().get(existingDoors.size);
-                    play.setCurClue(mc.getCorretResponse());
-                }
+            //不要删，list of clues
+
+            if ((qt.getQs().get(existingDoors.size)) instanceof MultipleChoice) {
+                MultipleChoice mc = (MultipleChoice) qt.getQs().get(existingDoors.size);
+                play.setCurClue(mc.getCorretResponse());
+            }
 
                 //Object[] old = play.sampleSelectBox;
                 //play.sampleSelectBox = new Object[old.length + 1];
@@ -215,7 +270,7 @@ public class Player extends Sprite {
                 //}
                 //play.sampleSelectBox[old.length] = "update";
             }
-        }
+
 
         for (Rectangle rect : doorRects) {
             if (isOverlapped(rect) && !existingDoors.contains(rect, true)) {
@@ -284,7 +339,7 @@ public class Player extends Sprite {
                 GameStats.remainingFlashingTime = 2.0f;
                 enemies.removeValue(enemy, true);
                 explosions.add(new Explosion(enemy.getX(), enemy.getY()));
-                Play.punch.play();
+                Play.enemyHit.play();
             }
         }
     }

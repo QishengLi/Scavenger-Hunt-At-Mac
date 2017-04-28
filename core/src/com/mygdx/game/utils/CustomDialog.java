@@ -89,6 +89,8 @@ public abstract class CustomDialog extends Dialog {
         remove();
     }
 
+    public abstract Object getContent();
+
     protected void addLabel(String str, Skin skin) {
         Label label = new Label(str, skin);
         label.setWrap(true); // wrapping text to multiple lines

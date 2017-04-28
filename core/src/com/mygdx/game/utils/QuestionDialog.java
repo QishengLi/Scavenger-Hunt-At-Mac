@@ -11,19 +11,26 @@ import com.mygdx.game.entities.Player;
  */
 public class QuestionDialog extends CustomDialog {
 
-    private boolean answered = false;
+    private boolean isAnswered;
+    private boolean isCorrect;
+    private Object content;
     private Skin skin;
 
     public QuestionDialog(String title, Skin skin, CustomDialog responseDialog) {
         super(title, skin, responseDialog);
         this.skin = skin;
+        this.isAnswered = false;
+        this.isCorrect = false;
     }
 
     public boolean isAnswered() {
-        return this.answered;
+        return this.isAnswered;
     }
 
+    public boolean isCorrect() { return this.isCorrect; }
+
     public void renderContent(Object object) {
+        content = object;
         if (object instanceof MultipleChoice) {
             MultipleChoice question = (MultipleChoice) object;
             addLabel(question.getQuestion()[question.getQuestion().length-1],skin);
@@ -33,14 +40,18 @@ public class QuestionDialog extends CustomDialog {
         }
     }
 
+    public Object getContent() {
+        return this.content;
+    }
     // Called when clicking on button
     @Override
     protected void result(final Object object) {
         if (object instanceof Answer) {
+            this.isAnswered = true;
             Answer answer = (Answer) object;
 
             if (answer.isCorrect()) {
-                answered = true;
+                this.isCorrect = true;
             }
             else {
                 Player.health--;

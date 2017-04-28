@@ -43,8 +43,8 @@ public class Enemy extends Player {
             setDirection(next);
         }
 
-        this.makeMove(this.prevDir, (1 - SCALE) * Math.max((1000-Play.elapseTime)/1000.0f, 0));
-        this.makeMove(this.nextDir, (1 - SCALE) * Math.min((Play.elapseTime)/1000.0f, 1));
+        this.makeMove(this.prevDir, (1 - SCALE) * Math.max((Play.SECOND-Play.elapseTime)/(float) Play.SECOND, 0));
+        this.makeMove(this.nextDir, (1 - SCALE) * Math.min((Play.elapseTime)/(float) Play.SECOND, 1));
 
         float newX = getX();
         float newY = getY();

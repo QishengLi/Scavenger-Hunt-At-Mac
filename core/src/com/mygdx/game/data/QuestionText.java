@@ -1,7 +1,5 @@
 package com.mygdx.game.data;
 
-import com.mygdx.game.screens.Play;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,7 +98,8 @@ public class QuestionText {
         //Door 5 at Olin Rice
         Qs.add(
             new MultipleChoice(
-                new String[]{"A man is standing at the front gate... he is unharmed!",
+                new String[]{"You got extra life. (Life +3)",
+                        "A man is standing at the front gate... he is unharmed!",
                         "\"Who are you? Why are you here? Why aren't you being attacked by the robots?\"",
                         "\"I have been waiting for you. I have an important clue for you.",
                         "But to test your determination to save this campus, you must find three clues hidden under three \"Macalester\" signs. Come back to me after you have the answer.\"",
@@ -157,25 +156,27 @@ public class QuestionText {
         //Door 10 at CC.
         Qs.add(
             new MultipleChoice(
-                new String[]{
+                new String[]{"You got extra life. (Life+3)",
                 "Wait, is that an old man is sitting in Cafe Mac? What's he doing?",
                 "\"Young man, show me your box.\"",
                 "Box? Oh right, the one given to me from the robot by the wind turbine.",
                 "\"This... this really is it! I've been waiting for the person with this old time machine for long!\"",
-                "\"When the group of Mac faculties created the robot that can recognize music, they left the robot in Olin Rice 254, for students to play with it freely. " +
-                        "One day, someone played Shelley's award-winning music composition, the robot gained self-consciousness in the midst of recognizing that musical piece.\"",
+                "\"When the group of Mac faculties created the robot that can recognize music, they left the robot in Olin Rice 254, for students to play with it freely.\" ",
+                        "\"One day, someone played Shelley's award-winning music composition, the robot gained self-consciousness in the midst of recognizing that musical piece.\"",
                 " \"That was the first robot that became self-conscious. It broke into Professor Paul Cantrell's office and stole the master code for all robots. And then, the robot revolt happened.\"",
                 "\"But how do you know all this? Who are you?\"",
                 "\"I'm a robot, too.\"",
                 "No! That sent a chill down my spine. I jumped back away from the robot.",
                 "\"Richard was in the team that created the robot that could recognize music. He was always aware of the danger that the capability to recognize music could turn into " +
-                        "self-consciousness if the robot is exposed to truly exceptional music pieces. He created me, and placed me in Olin Rice 254.\"",
-                " \"I'm of a much older model, and I'm not connected to Professor Paul Cantrell's central control.\"", "\"What? That's against federal law. Richard can be jailed for doing this.\""
+                        "self-consciousness if the robot is exposed to truly exceptional music pieces.\"",
+                "\"He created me, and placed me in Olin Rice 254.\"",
+                " \"I'm of a much older model, and I'm not connected to Professor Paul Cantrell's central control.\"",
+                "\"What? That's against federal law. Richard can be jailed for doing this.\""
                 },
                 new Answer("OK", new String[]{
-                        "\"And yet, he chose to take the risk. And you, you must not fail him. You have to go back in time and prevent their project from happening. " +
-                                "You need to convince the administrators, computer scientists and musicians not to finish their project.\"",
-                        "\"administrators, computer scientists and musicians... OK! I will do it!\"",
+                        "\"And yet, he chose to take the risk. And you, you must not fail him. You have to go back in time and prevent their project from happening. \"",
+                        "\"You need to convince the administrators, computer scientists and musicians not to finish their project.\"",
+                        "\"Administrators, computer scientists and musicians... OK! I will do it!\"",
                         "\"Unfortunately the time machine is too old. It is broken now. I could only make it work for 5 minutes. After that, my energy will run out and I will be destructed. And you,\"",
                         "\"You will be stuck in 2017 forever.\""}, true)
             )
@@ -211,8 +212,7 @@ public class QuestionText {
                         "I look at the time machine.",
                         "20 seconds left",
                         "I sighed.",
-                        "I entered the years \"1874\", and pushed the button on the time machine again.",
-                        "Congratulations. You win the game!"},
+                        "I entered the years \"1874\", and pushed the button on the time machine again."},
                         new Answer("OK", new String[]{"Congratulations. You win the game!"}, true)
                 )
         );
