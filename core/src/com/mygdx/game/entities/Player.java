@@ -31,8 +31,8 @@ import static java.lang.Math.min;
 public class Player extends Sprite {
 
     public static final float SPEED = 12f;
-    public static int health = 10;
-    public static final int TOTALHEALTH = 10;
+    public static int health = 20;
+    public static final int TOTALHEALTH = 20;
 
     private List<Direction> movingDirs;
 
@@ -190,8 +190,14 @@ public class Player extends Sprite {
 //                    dialogBox = dialogBox.getResponseDialog();
 //                }
 //                dialogBox.getResponseDialog().show(this.stage);
+                CustomDialog tmpDialog = spots.get(rect);
+                while (tmpDialog != null && tmpDialog instanceof TextDialog) {
+                    tmpDialog = tmpDialog.getResponseDialog();
+                }
+                QuestionDialog mcDialog = (QuestionDialog) tmpDialog;
+                MultipleChoice mc = (MultipleChoice) mcDialog.getContent();
                 CustomDialog curClueDialog = new TextDialog("Clue", play.getSkin(), null);
-                curClueDialog.renderContent(new String[]{play.getCurClue()});
+                curClueDialog.renderContent(new String[]{mc.getCorretResponse()});
                 curClueDialog.show(this.stage);
 
             }
@@ -204,14 +210,6 @@ public class Player extends Sprite {
             final CustomDialog dialogBox = spots.get(newDoor);
             if (isFinished(existingDoors)) {
                 dialogBox.getResponseDialog().show(this.stage);
-            }
-            else {
-                dialogBox.show(this.stage);
-                // +3 life at door 5 and door 10.
-                if (existingDoors.size == 4 || existingDoors.size == 9){
-                    health = min(health + 3, TOTALHEALTH);
-                    GameStats.remainingFlashingTime = 4.0f;
-                }
                 return;
             }
 
@@ -252,16 +250,21 @@ public class Player extends Sprite {
                 introDialog.show(this.stage);
             } else {
                 dialogBox.show(this.stage);
+                // +3 life at door 5 and door 10.
+                if (existingDoors.size == 4 || existingDoors.size == 9){
+                    health = min(health + 3, TOTALHEALTH);
+                    GameStats.remainingFlashingTime = 4.0f;
+                }
             }
 
 
 
             //不要删，list of clues
 
-            if ((qt.getQs().get(existingDoors.size)) instanceof MultipleChoice) {
-                MultipleChoice mc = (MultipleChoice) qt.getQs().get(existingDoors.size);
-                play.setCurClue(mc.getCorretResponse());
-            }
+//            if ((qt.getQs().get(existingDoors.size)) instanceof MultipleChoice) {
+//                MultipleChoice mc = (MultipleChoice) qt.getQs().get(existingDoors.size);
+//                play.setCurClue(mc.getCorretResponse());
+//            }
 
                 //Object[] old = play.sampleSelectBox;
                 //play.sampleSelectBox = new Object[old.length + 1];
