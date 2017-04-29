@@ -125,7 +125,8 @@ public class Play implements Screen, InputProcessor {
         stageCam.update();
         Viewport v = new FitViewport(this.initialWidth, this.initialHeight, stageCam);
         stage = new Stage(v);
-        skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
+        //skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
+        skin = new Skin(Gdx.files.internal("ui/skin/uiskin-edit.json"));
 
         // Add background music
         bgm = Gdx.audio.newMusic(Gdx.files.internal("soundEffects/bgm.mp3"));

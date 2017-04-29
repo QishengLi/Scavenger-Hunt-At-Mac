@@ -65,14 +65,15 @@ public class MainMenu implements Screen{
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        skin = new Skin(Gdx.files.internal("ui/menuSkin.json"), new TextureAtlas("ui/atlas.pack"));
+        //skin = new Skin(Gdx.files.internal("ui/menuSkin.json"), new TextureAtlas("ui/atlas.pack"));
+        skin = new Skin(Gdx.files.internal("ui/skin/uiskin-edit.json"), new TextureAtlas("ui/skin/uiskin-edit.atlas"));
 
         table = new Table(skin);
         table.setFillParent(true);
 
         // creating heading
-        Label heading = new Label(MainGame.TITLE, skin, "default");
-        heading.setFontScale(2);
+        Label heading = new Label(MainGame.TITLE, skin, "title");
+        //heading.setFontScale(2);
 
         // creating play buttons
         TextButton buttonPlay = new TextButton("PLAY", skin, "default");

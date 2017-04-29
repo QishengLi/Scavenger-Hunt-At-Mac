@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -69,7 +68,7 @@ public class Instruction implements Screen {
         stage = new Stage(viewport);
 
         Gdx.input.setInputProcessor(stage);
-        skin = new Skin(Gdx.files.internal("ui/menuSkin.json"), new TextureAtlas("ui/atlas.pack"));
+        skin = new Skin(Gdx.files.internal("ui/skin/uiskin-edit.json"), new TextureAtlas("ui/skin/uiskin-edit.atlas"));
 
         Image imageKeys = new Image();
         imageKeys.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("interfaceComponents/keys.png")))));
@@ -80,8 +79,8 @@ public class Instruction implements Screen {
         Image imageEnemy = new Image();
         imageEnemy.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("sprite/robot.png")))));
 
-        Label heading = new Label("Instructions", skin, "default");
-        heading.setFontScale(2);
+        Label heading = new Label("Instructions", skin, "title");
+        heading.setFontScale(1);
 
         Label arrowKeysInstr = new Label("Navigate", skin, "default");
         arrowKeysInstr.setFontScale(1);
@@ -145,7 +144,7 @@ public class Instruction implements Screen {
         table.add(enemyInstr).spaceBottom(15);
         table.row();
 
-        table.add(buttonBack).spaceBottom(15).align(Align.right);;
+        table.add(buttonBack).spaceBottom(15);
         table.add(buttonPlay).spaceBottom(15);
         table.row();
 

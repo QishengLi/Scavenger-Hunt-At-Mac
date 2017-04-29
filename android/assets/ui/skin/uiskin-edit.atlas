@@ -1,0 +1,83 @@
+
+uiskin-edit.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+white64_0
+  rotate: false
+  xy: 1, 231
+  size: 512, 600
+  orig: 512, 600
+  offset: 0, 0
+  index: -1
+button
+  rotate: false
+  xy: 110, 198
+  size: 61, 31
+  split: 3, 3, 3, 3
+  pad: 4, 4, 4, 4
+  orig: 61, 31
+  offset: 0, 0
+  index: -1
+button-down
+  rotate: false
+  xy: 515, 756
+  size: 61, 31
+  split: 3, 3, 3, 3
+  pad: 4, 4, 4, 4
+  orig: 61, 31
+  offset: 0, 0
+  index: -1
+font-export
+  rotate: false
+  xy: 1, 121
+  size: 107, 108
+  orig: 107, 108
+  offset: 0, 0
+  index: -1
+round-button
+  rotate: false
+  xy: 515, 789
+  size: 84, 42
+  split: 29, 26, 21, 20
+  pad: 17, 19, 4, 3
+  orig: 84, 42
+  offset: 0, 0
+  index: -1
+round-button-down
+  rotate: false
+  xy: 1, 77
+  size: 84, 42
+  split: 29, 26, 21, 20
+  pad: 17, 19, 4, 3
+  orig: 84, 42
+  offset: 0, 0
+  index: -1
+select-box-down
+  rotate: false
+  xy: 601, 794
+  size: 56, 37
+  split: 9, 32, 7, 6
+  pad: 6, 34, 5, 4
+  orig: 56, 37
+  offset: 0, 0
+  index: -1
+textfield
+  rotate: false
+  xy: 87, 104
+  size: 14, 15
+  split: 6, 7, 7, 7
+  pad: 3, 3, 2, 2
+  orig: 14, 15
+  offset: 0, 0
+  index: -1
+window
+  rotate: false
+  xy: 1, 1
+  size: 60, 74
+  split: 30, 29, 42, 31
+  pad: 19, 19, 33, 23
+  orig: 60, 74
+  offset: 0, 0
+  index: -1
