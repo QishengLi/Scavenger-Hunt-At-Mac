@@ -337,6 +337,9 @@ public class Play implements Screen, InputProcessor {
         for (int i = 1; i <= ct; i++) {
             Enemy enemy = new Enemy(enemyImg, stage);
             enemy.setCenter(rd.nextInt(mac.mapWidth), rd.nextInt(mac.mapHeight));
+            while (enemy.isOverlappedArray(collisionRects)) {
+                enemy.setCenter(rd.nextInt(mac.mapWidth), rd.nextInt(mac.mapHeight));
+            }
             enemies.add(enemy);
         }
     }
@@ -344,6 +347,11 @@ public class Play implements Screen, InputProcessor {
     public Array<Enemy> getEnemies() {
         return this.enemies;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
     public void ememyMoves(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             enemy.makeEnemyMove(player, collisionRects);

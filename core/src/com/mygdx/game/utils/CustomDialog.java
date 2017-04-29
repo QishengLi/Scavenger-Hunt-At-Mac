@@ -62,6 +62,7 @@ public abstract class CustomDialog extends Dialog {
 
     @Override public Dialog show(Stage stage) {
         // Set input processor to dialog
+        playScreen.getPlayer().resetDirection();
         Gdx.input.setInputProcessor(stage);
         setTimeFreeze(true);
         return super.show(stage);
