@@ -111,9 +111,9 @@
   <object id="67" name="music" x="314.546" y="3434.33" width="767.576" height="343.697"/>
   <object id="68" name="wind turbine" x="4223.03" y="6317.12" width="56" height="310"/>
   <object id="71" name="boundary" x="5.06061" y="-10.5758" width="6079" height="4"/>
-  <object id="73" name="boundary" x="-2.4697" y="7672.45" width="6079" height="4"/>
-  <object id="74" name="boundary" x="3.0303" y="3.54545" width="8" height="7470.91"/>
-  <object id="75" name="boundary" x="6066.03" y="-3.48485" width="10" height="7113.94"/>
+  <object id="73" name="boundary" x="-2.4697" y="7670.45" width="6079" height="4"/>
+  <object id="74" name="boundary" x="3.0303" y="3.54545" width="8" height="7666.91"/>
+  <object id="75" name="boundary" x="6066.03" y="-3.48485" width="10" height="7673.94"/>
   <object id="76" name="CC" x="4519.03" y="640.455" width="146" height="370"/>
   <object id="78" name="CC" x="5341.03" y="1083.45" width="132" height="367"/>
   <object id="79" name="CC" x="5341.03" y="225.455" width="126" height="356"/>
