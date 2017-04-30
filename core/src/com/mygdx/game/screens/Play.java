@@ -29,6 +29,7 @@ import com.mygdx.game.utils.CustomDialog;
 import com.mygdx.game.utils.TextDialog;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -89,6 +90,7 @@ public class Play implements Screen, InputProcessor {
     public boolean timeHasStarted;
     public static final long SECOND = 1000;
 
+    public DialogGenerator dialogGenerator;
     //public QuestionText qt;
 
     public Play() {
@@ -133,6 +135,8 @@ public class Play implements Screen, InputProcessor {
         bgm.setLooping(true); // looping music after it's finished
         bgm.play();
 
+        dialogGenerator = new DialogGenerator();
+
         sb = new SpriteBatch();
         playerImg = new Texture(Gdx.files.internal("pik.png"));
         enemyImg = new Texture(Gdx.files.internal("sprite/robot.png"));
@@ -140,8 +144,8 @@ public class Play implements Screen, InputProcessor {
         player.setCenter(mac.mapWidth/2+1520,mac.mapHeight/2); //TODO: change position
 
 
-        player.qt.initQuestions();
-        questions = player.generateQuestions(skin);
+        //dialogGenerator.getQuestionText().initQuestions();
+        questions = dialogGenerator.generateQuestions(skin);
 
         enemies = new Array<>();
         initializeEnemies(enemies, 20);
@@ -158,7 +162,7 @@ public class Play implements Screen, InputProcessor {
         bar = new Texture(Gdx.files.internal("interfaceComponents/bar.png"));
 
         lifeLabel = new Label("Life: "+ Player.health, skin);
-        barGroup = new GameStats(bar, healthBar, lifeLabel, mac);
+        barGroup = new GameStats(player, bar, healthBar, lifeLabel, mac);
         barGroup.initBar();
 
         timeLabel = new Label("Time:" + timeLeft, skin);
@@ -168,16 +172,9 @@ public class Play implements Screen, InputProcessor {
         player.setSpots(spots);
         player.setQuestions(questions);
 
-        TextDialog bg7 = new TextDialog("Background", skin, null);
-        TextDialog bg6 = new TextDialog("Background", skin, bg7);
-        TextDialog bg5 = new TextDialog("Background", skin, bg6);
-        TextDialog bg4 = new TextDialog("Background", skin, bg5);
-        TextDialog bg3 = new TextDialog("Background", skin, bg4);
-        TextDialog bg2 = new TextDialog("Background", skin, bg3);
-        TextDialog bg1 = new TextDialog("Background", skin, bg2);
-        TextDialog bg = new TextDialog("Background", skin, bg1);
+        List<CustomDialog> bgs = dialogGenerator.generateTextDialog(skin, 8, "Background");
 
-        bg.renderContent(new String[]{"Today is May 4th, 2037.",
+        bgs.get(0).renderContent(new String[]{"Today is May 4th, 2037.",
                 "1600 Grand Ave, Saint Paul. Macalester College Campus.",
                 "The robots... they revolted.",
                 "\"Zhaoqi! Zhaoqi!...\" Richard is severely injured.",
@@ -225,7 +222,7 @@ public class Play implements Screen, InputProcessor {
         table2.add(curClue);
         stage.addActor(table2);
 
-        bg.show(this.stage);
+        bgs.get(0).show(this.stage);
 
         startTime = TimeUtils.millis();
         elapseTime = 0;
@@ -280,8 +277,8 @@ public class Play implements Screen, InputProcessor {
             barGroup.updateTimeLabel();
         }
 
-        barGroup.updateBar(player, camera);
-        barGroup.adjustBoundary(player, camera);
+        barGroup.updateBar(camera);
+        barGroup.adjustBoundary(camera);
         barGroup.draw(sb, 1);
         sb.end();
 

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.mygdx.game.data.Direction;
 import com.mygdx.game.screens.Play;
 
 
@@ -24,33 +25,51 @@ public class GameStats extends Group {
     public static float remainingFlashingTime = 0f;
     private boolean timeLabelSet;
     private boolean freezed;
+    private Player player;
 
-    public GameStats(Texture bar, Texture healthBar, Label lifeLabel, CampusMap map) {
+    public GameStats(Player player, Texture bar, Texture healthBar, Label lifeLabel, CampusMap map) {
         this.barImg = new Image(bar);
         this.healthBarImg = new Image(healthBar);
         this.lifeLabel = lifeLabel;
         this.map = map;
         this.timeLabelSet = false;
         this.freezed = false;
+        this.player = player;
     }
 
     public void initBar() {
         lifeLabel.setFontScale(3);
         barImg.setPosition(0, 0);
         healthBarImg.setPosition(19, 6);
-        lifeLabel.setPosition(50, -15);
+        lifeLabel.setPosition(24, -36);
         this.addActor(lifeLabel);
         this.addActor(barImg);
         this.addActor(healthBarImg);
     }
 
-    public void updateBar(Player player, OrthographicCamera camera) {
-        lifeLabel.setText("Life: "+Player.health);
-        healthBarImg.setWidth(177*Player.health/Player.TOTALHEALTH);
+    public void updateBar(OrthographicCamera camera) {
+        float x = player.getX() + camera.viewportWidth / 2 - HORIZONTAL_MARGIN;
+        float y = player.getY() + camera.viewportHeight / 2 - VERTICAL_MARGIN;
+        lifeLabel.setText("Life: " + Player.health);
+        healthBarImg.setWidth(177 * Player.health / Player.TOTALHEALTH);
         healthBarImg.setHeight(21);
-        this.setPosition(player.getX()+camera.viewportWidth/2-HORIZONTAL_MARGIN,
-                player.getY()+camera.viewportHeight/2-VERTICAL_MARGIN);
-        this.setOrigin(barImg.getWidth()/2,barImg.getHeight()/2);
+        for (Direction dir : player.getMovingDirs()) {
+            switch (dir) {
+                case UP:
+                    y -= Player.SPEED;
+                    break;
+                case DOWN:
+                    y += Player.SPEED;
+                    break;
+                case LEFT:
+                    x += Player.SPEED;
+                    break;
+                case RIGHT:
+                    x -= Player.SPEED;
+                    break;
+            }
+        }
+        this.setPosition(x, y);
     }
 
     public void updateTimeLabel() {
@@ -60,9 +79,7 @@ public class GameStats extends Group {
     }
 
     //TODO: Refactor
-    public void adjustBoundary(Player player, OrthographicCamera camera) {
-
-        boolean outOfBound = false;
+    public void adjustBoundary(OrthographicCamera camera) {
 
         float mapLeft = 0;
         float mapBottom = 0;
@@ -80,23 +97,15 @@ public class GameStats extends Group {
 
         if (cameraRight + Player.SPEED >= mapWidth) {
             this.setX(mapWidth - HORIZONTAL_MARGIN);
-            outOfBound = true;
         }
         if (cameraTop + Player.SPEED >= mapHeight) {
             this.setY(mapHeight - VERTICAL_MARGIN);
-            outOfBound = true;
         }
         if (cameraLeft - Player.SPEED <= mapLeft) {
             this.setX(cameraHalfWidth * 2 - HORIZONTAL_MARGIN);
-            outOfBound = true;
         }
         if (cameraBottom - Player.SPEED <= mapBottom) {
             this.setY(cameraHalfHeight * 2 - VERTICAL_MARGIN);
-            outOfBound = true;
-        }
-        if (!outOfBound) {
-            this.setPosition(player.getX()+camera.viewportWidth/2-HORIZONTAL_MARGIN,
-                    player.getY()+camera.viewportHeight/2-VERTICAL_MARGIN);
         }
     }
 
