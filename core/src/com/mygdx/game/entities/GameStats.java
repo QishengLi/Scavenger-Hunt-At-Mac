@@ -41,7 +41,7 @@ public class GameStats extends Group {
         lifeLabel.setFontScale(3);
         barImg.setPosition(0, 0);
         healthBarImg.setPosition(19, 6);
-        lifeLabel.setPosition(50, -15);
+        lifeLabel.setPosition(24, -36);
         this.addActor(lifeLabel);
         this.addActor(barImg);
         this.addActor(healthBarImg);
