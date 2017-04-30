@@ -19,19 +19,20 @@ public class QuestionText {
             new MultipleChoice(
                 new String[]{"An LCD screen.",
                             "I don't think I have seen this since 2018. It's all aerial imagery these days.",
-                            "\"If you are reading this, it is very likely that Macalester has not survived the robot revolt. ",
-                            "The technology you will be using is very dangerous, and it should not fall into the wrong hands.",
-                            "You must prove yourself to be a true Macalester Scot.\"",
-                            "When was Macalester founded?"
+                            "\"If you are reading this, it is very likely that Macalester has not survived the robot revolt.\" ",
+                            "\"The technology you will be using is very dangerous, and it should not fall into the wrong hands.\"",
+                            "\"You must prove yourself to be a true Macalester Scot.\"",
+                            "Which building has been changed name in the past 10 years?"
                 },
 
-                new Answer("1770", new String[]{"Ouch! An electric shock! I think the answer was wrong. Hit the door to answer the question again.\n" +
+                new Answer("Old Main Building", new String[]{"Ouch! An electric shock! I think the answer was wrong. Hit the door to answer the question again.\n" +
                         "Keep an eye on your life bar. Each wrong answer will cost you a life. "},false),
-                new Answer("1916", new String[]{"Ugh! You are wrong. Hit the door to answer the question again.\n" +
+                new Answer("Dewitt Wallace Library", new String[]{"Ugh! You are wrong. Hit the door to answer the question again.\n" +
                         "Keep an eye on your life bar. Each wrong answer will cost you a life. "},false),
-                new Answer("1874", new String[]{"Great!",
-                        "The first experiment was conducted somewhere on Macalester Street. Find it!",
-                        "Hint: It has been 163 years since Mac was founded. Art Building is situated at 130 Macalester St."},true)
+                new Answer("Neill Hall", new String[]{"Great!",
+                        "Actually, Macalester College has renamed its \"Humanities Building\" Neill Hall after Edward Duffield Neill (1823 -1893), " +
+                                "founder and first president of the college, in 2013.",
+                        "You might find something helpful there!"},true)
             )
         );
 
@@ -45,12 +46,12 @@ public class QuestionText {
             new MultipleChoice(
                 new String[]{"What a familiar place... ",
                         "It is winter here more than half of the year. The first robot we developed helped the school build tunnels between buildings, while people could hide indoors and avoid the cold.",
-                        "Which building was connected to Theater in 2017?"
+                        "Which building is connected to Neill Hall on the first floor?"
                 },
                 new Answer("Olin Rice Science Building", new String[]{"Ouch! An electric shock! I think the answer was wrong. (Hit the door to answer the question again)\n"},false),
-                new Answer("Janet Wallace Art Building", new String[]{"Yes! After the tunnel was built, the Janet Wallace building became a center for experiments with robots.",
-                        "You might find something helpful there."},true),
-                    new Answer("Old Main Humanity Building", new String[]{"Ouch! An electric shock! I think the answer was wrong. (Hit the door to answer the question again)\n"},false)
+                new Answer("Janet Wallace Fine Arts Center", new String[]{"Yes! After the tunnel was built, the Janet Wallace building became a center for experiments with robots.",
+                        "Will there be clues over there?"},true),
+                    new Answer("Joan Adams Mondale Hall of Studio Art", new String[]{"Ouch! An electric shock! I think the answer was wrong. (Hit the door to answer the question again)\n"},false)
                     )
         );
 
@@ -58,15 +59,15 @@ public class QuestionText {
         Qs.add(
             new MultipleChoice(
                 new String[]{"Another LCD screen.",
-                        "I'm glad you found this place. ",
-                        "Somewhere in the middle of the 2020s, " +
+                        "\"I'm glad you found this place.\"",
+                        "\"Somewhere in the middle of the 2020s, " +
                             "some Mac musicians collaborated with computer science students in an attempt to use robots to recognize different genres of music. " +
-                            "These musicians wanted new inspirations for music composition.",
-                        "One of these musicians was Shelley Hanson. " +
+                            "These musicians wanted new inspirations for music composition.\"",
+                        "\"One of these musicians was Shelley Hanson. " +
                                 "She was a key member of the team that eventually created the robot that had the capability of recognizing music. " +
-                                "It was a huge technical breakthrough.",
-                        "With the help of the robot, Shelley created her masterpiece, " +
-                                "a new composition that won her numerous awards. She became the director of a Mac ensemble.",
+                                "It was a huge technical breakthrough.\"",
+                        "\"With the help of the robot, Shelley created her masterpiece, " +
+                                "a new composition that won her numerous awards. She became the director of a Mac ensemble.\"",
                         "Which ensemble is it?"},
 
                 new Answer("African Music Ensemble", new String[]{"Don't give up. People are counting on you! Try again."},false),
