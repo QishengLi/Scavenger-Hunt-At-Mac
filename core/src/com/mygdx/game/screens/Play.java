@@ -138,7 +138,7 @@ public class Play implements Screen, InputProcessor {
         dialogGenerator = new DialogGenerator();
 
         sb = new SpriteBatch();
-        playerImg = new Texture(Gdx.files.internal("pik.png"));
+        playerImg = new Texture(Gdx.files.internal("sprite/scot_small.png"));
         enemyImg = new Texture(Gdx.files.internal("sprite/robot.png"));
         player = new Player(playerImg, stage);
         player.setCenter(mac.mapWidth/2+1520,mac.mapHeight/2); //TODO: change position
