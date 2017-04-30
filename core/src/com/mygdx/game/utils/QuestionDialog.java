@@ -1,10 +1,14 @@
 package com.mygdx.game.utils;
 
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.data.Answer;
 import com.mygdx.game.data.MultipleChoice;
 import com.mygdx.game.entities.GameStats;
 import com.mygdx.game.entities.Player;
+import com.mygdx.game.screens.Play;
 
 /**
  * Created by Shuni on 3/12/17.
@@ -52,6 +56,10 @@ public class QuestionDialog extends CustomDialog {
 
             if (answer.isCorrect()) {
                 this.isCorrect = true;
+                Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
+                Play play = (Play) curScreen;
+                MultipleChoice mc = (MultipleChoice) this.getContent();
+                play.setCurClue(mc.getCorretResponse());
             }
             else {
                 Player.health--;
