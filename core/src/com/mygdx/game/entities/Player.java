@@ -296,6 +296,10 @@ public class Player extends Sprite {
         return (health > 0);
     }
 
+    public List<Direction> getMovingDirs() {
+        return movingDirs;
+    }
+
     public void setCollisionRects(Array<Rectangle> collisionRects) {
         this.collisionRects = collisionRects;
     }

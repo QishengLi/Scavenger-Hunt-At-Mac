@@ -161,7 +161,7 @@ public class Play implements Screen, InputProcessor {
         bar = new Texture(Gdx.files.internal("interfaceComponents/bar.png"));
 
         lifeLabel = new Label("Life: "+ Player.health, skin);
-        barGroup = new GameStats(bar, healthBar, lifeLabel, mac);
+        barGroup = new GameStats(player, bar, healthBar, lifeLabel, mac);
         barGroup.initBar();
 
         timeLabel = new Label("Time:" + timeLeft, skin);
@@ -276,8 +276,8 @@ public class Play implements Screen, InputProcessor {
             barGroup.updateTimeLabel();
         }
 
-        barGroup.updateBar(player, camera);
-        barGroup.adjustBoundary(player, camera);
+        barGroup.updateBar(camera);
+        barGroup.adjustBoundary(camera);
         barGroup.draw(sb, 1);
         sb.end();
 
