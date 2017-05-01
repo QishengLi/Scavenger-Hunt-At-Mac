@@ -54,12 +54,13 @@ public class QuestionDialog extends CustomDialog {
             this.isAnswered = true;
             Answer answer = (Answer) object;
 
+            // Zhaoqi: This part is for setClues
             if (answer.isCorrect()) {
                 this.isCorrect = true;
                 Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
                 Play play = (Play) curScreen;
-                MultipleChoice mc = (MultipleChoice) this.getContent();
-                play.setCurClue(mc.getCorrectResponse());
+                //MultipleChoice mc = (MultipleChoice) this.getContent();
+                play.setCurClue(play.clueText.getNextClue(play.getCurClue()));
             }
             else {
                 Player.health--;

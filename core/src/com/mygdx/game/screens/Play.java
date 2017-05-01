@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.data.ClueText;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.utils.CustomDialog;
@@ -79,6 +80,7 @@ public class Play implements Screen, InputProcessor {
     public TextDialog curClueDialog;
     //private SelectBox<Object> clueBox;
     //private Table table;
+    public ClueText clueText;
 
     private int initialWidth;
     private int initialHeight;
@@ -144,6 +146,9 @@ public class Play implements Screen, InputProcessor {
 
         questions = dialogGenerator.generateQuestions(skin);
 
+        clueText = new ClueText();
+        clueText.initClues();
+
         enemies = new Array<>();
         initializeEnemies(enemies, 20);
         enemyHit = Gdx.audio.newSound(Gdx.files.internal("soundEffects/enemyHit.wav"));
@@ -195,14 +200,14 @@ public class Play implements Screen, InputProcessor {
 //        stage.addActor(table1);
 
 
-        curClueDialog = new TextDialog("Current Clue",skin, null);
+        curClueDialog = new TextDialog("Current Clue", skin, null);
         clue = "You could click the button to show the current clue.";
 
         TextButton curClue = new TextButton("Current Clue", skin, "default");
         curClue.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                curClueDialog.renderContent(new String[]{clue});
+                curClueDialog.renderContent(new String[]{clue}); // Zhaoqi: change this if needs changing clues
                     //System.out.println("show message begins");
                 curClueDialog.show(stage);
                     //System.out.println("show message ends");
