@@ -31,8 +31,8 @@ import static java.lang.Math.min;
 public class Player extends Sprite {
 
     public static final float SPEED = 12f;
-    public static int health = 20;
-    public static final int TOTALHEALTH = 20;
+    public static int health = 12;
+    public static final int TOTALHEALTH = 12;
 
     private List<Direction> movingDirs;
 
