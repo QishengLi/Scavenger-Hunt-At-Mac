@@ -121,6 +121,10 @@ public class GameStats extends Group {
         return timeLabelSet;
     }
 
+    /**
+     * This method makes the player flash for some amount of seconds.
+     */
+
     @Override
     public void draw(Batch sb, float parentAlpha) {
         if (remainingFlashingTime > 0 && System.currentTimeMillis() % 400 < 150){

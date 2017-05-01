@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.data.MultipleChoice;
@@ -18,7 +17,6 @@ import com.mygdx.game.utils.QuestionDialog;
 import com.mygdx.game.utils.TextDialog;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -197,7 +195,7 @@ public class Player extends Sprite {
                 QuestionDialog mcDialog = (QuestionDialog) tmpDialog;
                 MultipleChoice mc = (MultipleChoice) mcDialog.getContent();
                 CustomDialog curClueDialog = new TextDialog("Clue", play.getSkin(), null);
-                curClueDialog.renderContent(new String[]{mc.getCorretResponse()});
+                curClueDialog.renderContent(new String[]{mc.getCorrectResponse()});
                 curClueDialog.show(this.stage);
 
             }
@@ -263,7 +261,7 @@ public class Player extends Sprite {
 
 //            if ((qt.getQs().get(existingDoors.size)) instanceof MultipleChoice) {
 //                MultipleChoice mc = (MultipleChoice) qt.getQs().get(existingDoors.size);
-//                play.setCurClue(mc.getCorretResponse());
+//                play.setCurClue(mc.getCorrectResponse());
 //            }
 
                 //Object[] old = play.sampleSelectBox;
@@ -299,7 +297,7 @@ public class Player extends Sprite {
         return (health > 0);
     }
 
-    public List<Direction> getMovingDirs() {
+    List<Direction> getMovingDirs() {
         return movingDirs;
     }
 
