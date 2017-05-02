@@ -30,16 +30,11 @@ public class QuestionText {
                 new Answer("Dewitt Wallace Library", new String[]{"Ugh! You are wrong. Hit the door to answer the question again.\n" +
                         "Keep an eye on your life bar. Each wrong answer will cost you a life. "},false),
                 new Answer("Neill Hall", new String[]{"Great!",
-                        "Actually, Macalester College has renamed its \"Humanities Building\" Neill Hall after Edward Duffield Neill (1823 -1893), " +
+                        "Actually, Macalester College has renamed its \"Humanities Building\" NEILL HALL after Edward Duffield Neill (1823 -1893), " +
                                 "founder and first president of the college, in 2013.",
                         "You might find something helpful there!"},true)
             )
         );
-
-//        Qs.add(
-//                "hello world"
-//        );
-
 
         //Door 2 at Theater.
         Qs.add(
@@ -49,8 +44,7 @@ public class QuestionText {
                         "Which building is connected to Neill Hall on the first floor?"
                 },
                 new Answer("Olin Rice Science Building", new String[]{"Ouch! An electric shock! I think the answer was wrong. (Hit the door to answer the question again)\n"},false),
-                new Answer("Janet Wallace Fine Arts Center", new String[]{"Yes! After the tunnel was built, the Janet Wallace building became a center for experiments with robots.",
-                        "Will there be clues over there?"},true),
+                new Answer("Janet Wallace Fine Arts Center", new String[]{"Yes! After the tunnel was built, the JANET WALLACE BUILDING became a center for experiments with robots."},true),
                     new Answer("Joan Adams Mondale Hall of Studio Art", new String[]{"Ouch! An electric shock! I think the answer was wrong. (Hit the door to answer the question again)\n"},false)
                     )
         );
@@ -187,7 +181,8 @@ public class QuestionText {
         Qs.add(
             new MultipleChoice(
                 new String[]{"\"Please do not do this project! It will hurt people!\""},
-                new Answer("OK", new String[]{"Somehow, they are convinced."}, true)
+                new Answer("OK", new String[]{"\"I've given the computer scientists and musicians permission. You need to " +
+                        "convince them first.\""}, true)
             )
         );
 
@@ -195,7 +190,7 @@ public class QuestionText {
         Qs.add(
             new MultipleChoice(
                 new String[]{"\"Please do not do this project! It will hurt people!\""},
-                new Answer("OK", new String[]{"Somehow, they are convinced."}, true)
+                new Answer("OK", new String[]{"\"We're not doing it right now. Shelley's testing the robot. Go and find her.\""}, true)
             )
         );
 
@@ -233,17 +228,3 @@ public class QuestionText {
         return Qs.size();
     }
 }
-
-
-/*
-[
-    {
-        "question": "When was Macalester founded?",
-        "answers": [
-            { "choice": "1874", "response": "You are correct! Go to the other door of Old Main" },
-            { "choice": "1974", "response": "You are wrong!" },
-            { "choice": "2074", "response": "You are wrong!" }
-        ]
-    }
-]
- */

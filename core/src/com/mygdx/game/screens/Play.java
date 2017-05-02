@@ -127,7 +127,6 @@ public class Play implements Screen, InputProcessor {
         stageCam.update();
         Viewport v = new FitViewport(this.initialWidth, this.initialHeight, stageCam);
         stage = new Stage(v);
-        //skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
         skin = new Skin(Gdx.files.internal("ui/skin/uiskin-edit.json"));
 
         // Add background music
@@ -143,8 +142,6 @@ public class Play implements Screen, InputProcessor {
         player = new Player(playerImg, stage);
         player.setCenter(mac.mapWidth/2+1520,mac.mapHeight/2); //TODO: change position
 
-
-        //dialogGenerator.getQuestionText().initQuestions();
         questions = dialogGenerator.generateQuestions(skin);
 
         enemies = new Array<>();
@@ -227,7 +224,7 @@ public class Play implements Screen, InputProcessor {
         startTime = TimeUtils.millis();
         elapseTime = 0;
         timeLimitStart = 0;
-        timeLeft = 300000; //5 min
+        timeLeft = 150000; //2 min 30s
         timeHasStarted = false;
     }
 
@@ -243,7 +240,6 @@ public class Play implements Screen, InputProcessor {
         setTimeStart(player);
         if (timeLimitStart != 0 && !(barGroup.isFreezed())) {
             timeLeft -= 1000 * Gdx.graphics.getDeltaTime();
-            //System.out.println("Time Left:" + timeLeft);
         }
 
         player.makePlayerMove();
@@ -256,7 +252,6 @@ public class Play implements Screen, InputProcessor {
             ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight, false));
         }
         if (player.isFinished(player.getExistingDoors())) {
-            //Gdx.app.exit();
             bgm.stop();
             ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight, true));
         }

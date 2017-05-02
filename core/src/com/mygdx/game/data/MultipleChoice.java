@@ -34,7 +34,7 @@ public final class MultipleChoice {
 //        return clue;
 //    }
 
-    public String getCorretResponse() {
+    public String getCorrectResponse() {
 
         String result = "";
         if (choices.size() != 0) {
