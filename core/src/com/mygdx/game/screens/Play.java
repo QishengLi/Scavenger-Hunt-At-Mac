@@ -182,7 +182,7 @@ public class Play implements Screen, InputProcessor {
                 "\"Zhaoqi! Zhaoqi!...\" Richard is severely injured.",
                 "\"There's something I haven't told you. I have designed, a way, to turn the clock back...\"",
                 "Turn the clock back? Wait! -- \"Richard! You mean, we could go back to, to 20 years ago?\"",
-                "Richard: \"I, I don’t have much time left. Go... Go to Kirk Section 9!\"",
+                "Richard: \"I, I don't have much time left. Go... Go to Kirk Section 9!\"",
                 "Richard drew his last breath."
         });
 
@@ -201,7 +201,7 @@ public class Play implements Screen, InputProcessor {
 
 
         curClueDialog = new TextDialog("Current Clue", skin, null);
-        clue = "You could click the button to show the current clue.";
+        clue = "You could click the button to show the current clue. Go to Kirk Section 9 for your first clue.";
 
         TextButton curClue = new TextButton("Current Clue", skin, "default");
         curClue.addListener(new ClickListener() {
@@ -253,11 +253,11 @@ public class Play implements Screen, InputProcessor {
         player.hitEnemy(enemies);
         GameStats.remainingFlashingTime -= Gdx.graphics.getDeltaTime();
         if(!player.isAlive(Player.health) || timeLeft < 0) { // time > 5s
-            bgm.stop();
+            //bgm.stop();
             ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight, false));
         }
         if (player.isFinished(player.getExistingDoors())) {
-            bgm.stop();
+            //bgm.stop();
             ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight, true));
         }
 

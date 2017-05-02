@@ -36,7 +36,7 @@ public class QuestionText {
             )
         );
 
-        //Door 2 at Theater.
+        //Door 2 at Neill
         Qs.add(
             new MultipleChoice(
                 new String[]{"What a familiar place... ",
@@ -49,7 +49,7 @@ public class QuestionText {
                     )
         );
 
-        //Door 3 at Music.
+        //Door 3 at J-Wall
         Qs.add(
             new MultipleChoice(
                 new String[]{"Another LCD screen.",
@@ -172,7 +172,7 @@ public class QuestionText {
                         "\"And yet, he chose to take the risk. And you, you must not fail him. You have to go back in time and prevent their project from happening. \"",
                         "\"You need to convince the administrators, computer scientists and musicians not to finish their project.\"",
                         "\"Administrators, computer scientists and musicians... OK! I will do it!\"",
-                        "\"Unfortunately the time machine is too old. It is broken now. I could only make it work for 5 minutes. After that, my energy will run out and I will be destructed. And you,\"",
+                        "\"Unfortunately the time machine is too old. It is broken now. I could only make it work for 2'30\". After that, my energy will run out and I will be destructed. And you,\"",
                         "\"You will be stuck in 2017 forever.\""}, true)
             )
         );
@@ -189,26 +189,37 @@ public class QuestionText {
         //Door 12 at Olin Rice again
         Qs.add(
             new MultipleChoice(
+                new String[]{"You can not go into the building by the front door here. It is guarded by the robots."},
+                new Answer("OK", new String[]{"Try the other door of the building."}, true)
+            )
+        );
+
+        //Door 13 at Olin Rice
+        Qs.add(
+            new MultipleChoice(
                 new String[]{"\"Please do not do this project! It will hurt people!\""},
                 new Answer("OK", new String[]{"\"We're not doing it right now. Shelley's testing the robot. Go and find her.\""}, true)
             )
         );
 
-        //Door 13 at Art
+        //Door 14 at Art
         Qs.add(
                 new MultipleChoice(
                         new String[]{"\"Please do not do this project! It will hurt people!\"",
                         "\"But I need this robot! I need it to create my dream music piece. I cannot do it without a robot " +
-                                "that can recognize and analyze music. I don’t want to give up at this stage.\"",
+                                "that can recognize and analyze music. I don't want to give up at this stage.\"",
                         "\"Artificial Intelligence may help people, but if we develop robots without any caution, they will destroy everything! " +
                                 "I've seen them do it. Please stop!\" I showed Shelley the time machine.",
                         "......",
                         "\"I don't believe you.\"",
                         "\"...alright.\"",
                         "I look at the time machine.",
-                        "20 seconds left",
+                        "30 seconds left",
                         "I sighed.",
-                        "I entered the years \"1874\", and pushed the button on the time machine again."},
+                        "I entered the years \"1874\", and pushed the button on the time machine again.",
+                        "Hopefully I can go back and talk to President Neill, " +
+                                "and convince him to set the rules about the research of Artificial Intelligence.",
+                        "\"Goodbye, 2017!\""},
                         new Answer("OK", new String[]{"Congratulations. You win the game!"}, true)
                 )
         );
