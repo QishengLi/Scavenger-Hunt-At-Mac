@@ -104,8 +104,8 @@
   <object id="52" name="Olin Rice" x="1945.61" y="5764.42" width="451.939" height="400.364"/>
   <object id="58" name="Olin Rice" x="2939.03" y="6924.93" width="813.394" height="149.576"/>
   <object id="54" name="Theater" x="450.06" y="4612.57" width="833.333" height="828.476"/>
-  <object id="63" name="music" x="1738.76" y="4030.8" width="88" height="228"/>
-  <object id="64" name="music" x="1734.76" y="4420.51" width="92" height="308"/>
+  <object id="63" name="music" x="1738.76" y="4030.8" width="88" height="206"/>
+  <object id="64" name="music" x="1734.76" y="4448.51" width="92" height="280"/>
   <object id="65" name="music" x="1147.33" y="4488.51" width="580" height="250"/>
   <object id="66" name="music" x="425.333" y="4034.51" width="1302" height="448"/>
   <object id="67" name="music" x="314.546" y="3434.33" width="767.576" height="343.697"/>
@@ -168,7 +168,7 @@
   <object id="145" name="CC" x="4800" y="102" width="196" height="68"/>
   <object id="147" name="CC" x="4585" y="581" width="104" height="106"/>
  </objectgroup>
- <objectgroup name="Doors" visible="0">
+ <objectgroup name="Doors">
   <object id="29" name="door1" x="4836.79" y="3263.59" width="26.16" height="161.162"/>
   <object id="59" name="door2" x="2018.92" y="4615.04" width="155.725" height="20.9279"/>
   <object id="60" name="door3" x="1735.33" y="4262.97" width="18.3939" height="154.121"/>

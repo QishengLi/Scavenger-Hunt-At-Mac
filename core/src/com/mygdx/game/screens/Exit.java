@@ -91,8 +91,6 @@ public class Exit implements Screen{
         // putting stuff together
         table.add(heading).spaceBottom(100).row();
         table.add(buttonExit);
-//        table.add(buttonExit).spaceBottom(20).row();
-//        table.add(buttonPlay).spaceBottom(15).row();
 
         stage.addActor(table);
     }
@@ -100,13 +98,11 @@ public class Exit implements Screen{
 
     public Label showHeading(boolean gameWon){
         if (gameWon){
-            Label heading = new Label("Congrats, you win!", skin, "default");
-            heading.setFontScale(2);
+            Label heading = new Label("Congrats, you win!", skin, "title");
             return heading;
         }
         else{
-            Label heading = new Label("Game over", skin, "default");
-            heading.setFontScale(2);
+            Label heading = new Label("Game over", skin, "title");
             return heading;
         }
 
