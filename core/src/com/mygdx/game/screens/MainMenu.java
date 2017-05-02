@@ -40,8 +40,8 @@ public class MainMenu implements Screen{
     }
 
     public MainMenu(int w, int h) {
-        initialWidth = w * 2;
-        initialHeight = h * 2;
+        initialWidth = w;
+        initialHeight = h;
     }
 
     @Override
@@ -63,14 +63,14 @@ public class MainMenu implements Screen{
     @Override
     public void show() {
 
-        float w = ((this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth);
-        float h = ((this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight);
+        float w = ((this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth) * 2;
+        float h = ((this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight) * 2 ;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, w, h);
         camera.zoom -= 0.5;
         camera.update();
-        Viewport v = new FitViewport(this.initialWidth , this.initialHeight, camera);
+        Viewport v = new FitViewport(w, h, camera);
         stage = new Stage(v);
 
         Gdx.input.setInputProcessor(stage);

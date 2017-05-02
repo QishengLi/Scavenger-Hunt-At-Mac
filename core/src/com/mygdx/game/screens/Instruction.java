@@ -27,6 +27,7 @@ public class Instruction implements Screen {
     private Stage stage;
     private Skin skin;
     private Table table;
+    private OrthographicCamera camera;
 
     private int initialWidth;
     private int initialHeight;
@@ -46,7 +47,7 @@ public class Instruction implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-       // stage.setDebugAll(true);
+        //stage.setDebugAll(true);
         stage.act(delta);
         stage.draw();
 
@@ -61,11 +62,15 @@ public class Instruction implements Screen {
     @Override
     public void show() {
 
-        float w = (this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth;
-        float h = (this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight;
+        float w = ((this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth) * 2;
+        float h = ((this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight) * 2;
 
-        Viewport viewport = new FitViewport(w, h, new OrthographicCamera());
-        stage = new Stage(viewport);
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, w, h);
+        camera.zoom -= 0.33;
+        camera.update();
+        Viewport v = new FitViewport(w, h, camera);
+        stage = new Stage(v);
 
         Gdx.input.setInputProcessor(stage);
         skin = new Skin(Gdx.files.internal("ui/skin/uiskin-edit.json"), new TextureAtlas("ui/skin/uiskin-edit.atlas"));
@@ -80,21 +85,20 @@ public class Instruction implements Screen {
         imageEnemy.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("sprite/robot.png")))));
 
         Label heading = new Label("Instructions", skin, "title");
-        heading.setFontScale(1);
+        heading.setFontScale((float)0.8);
 
         Label arrowKeysInstr = new Label("Navigate", skin, "default");
-        arrowKeysInstr.setFontScale(1);
+        arrowKeysInstr.setFontScale((float) 1.5);
 
         Label doorsInstr = new Label("Hit doors for clues", skin, "default");
-        doorsInstr.setFontScale(1);
+        doorsInstr.setFontScale((float) 1.5);
 
         Label enemyInstr = new Label("Avoid enemies", skin, "default");
-        enemyInstr.setFontScale(1);
+        enemyInstr.setFontScale((float) 1.5);
 
         table = new Table(skin);
         table.setFillParent(true);
 
-        // creating buttons
         TextButton buttonPlay = new TextButton("Play", skin, "default");
         buttonPlay.addListener(new ClickListener() {
 
@@ -109,7 +113,7 @@ public class Instruction implements Screen {
                 })));
             }
         });
-        buttonPlay.pad(15);
+        buttonPlay.pad(10);
 
         TextButton buttonBack = new TextButton("Back", skin, "default");
         buttonBack.addListener(new ClickListener() {
@@ -125,11 +129,10 @@ public class Instruction implements Screen {
                 })));
             }
         });
-        buttonBack.pad(15);
+        buttonBack.pad(10);
 
-        table.add(heading).spaceBottom(10).colspan(2).center();
-        table.row();
-        imageKeys.setScaling(Scaling.fit);
+        table.add(heading).spaceBottom(10).colspan(2).center().row();
+        imageKeys.setScaling(Scaling.fill);
         table.add(imageKeys).spaceBottom(15);
         table.add(arrowKeysInstr).spaceBottom(15);
         table.row();
@@ -146,17 +149,13 @@ public class Instruction implements Screen {
 
         table.add(buttonBack).spaceBottom(15);
         table.add(buttonPlay).spaceBottom(15);
-        table.row();
 
         //table.debug();
         stage.addActor(table);
     }
 
-
     @Override
-    public void pause() {
-
-    }
+    public void pause() { }
 
     @Override
     public void resume() {
@@ -164,9 +163,7 @@ public class Instruction implements Screen {
     }
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() { }
 
     @Override
     public void dispose() {
