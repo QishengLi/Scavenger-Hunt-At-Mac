@@ -183,20 +183,23 @@ public class Player extends Sprite {
             if (isOverlapped(rect)) {
                 Play.hitCorrectDoor.play();
                 resetDirection();
-//                CustomDialog dialogBox = spots.get(rect);
-//                while (dialogBox instanceof TextDialog) {
-//                    dialogBox = dialogBox.getResponseDialog();
-//                }
-//                dialogBox.getResponseDialog().show(this.stage);
-                CustomDialog tmpDialog = spots.get(rect);
-                while (tmpDialog != null && tmpDialog instanceof TextDialog) {
-                    tmpDialog = tmpDialog.getResponseDialog();
+                CustomDialog dialogBox = spots.get(rect);
+                while (dialogBox instanceof TextDialog) {
+                    dialogBox = dialogBox.getResponseDialog();
                 }
-                QuestionDialog mcDialog = (QuestionDialog) tmpDialog;
-                MultipleChoice mc = (MultipleChoice) mcDialog.getContent();
-                CustomDialog curClueDialog = new TextDialog("Clue", play.getSkin(), null);
-                curClueDialog.renderContent(new String[]{mc.getCorrectResponse()});
-                curClueDialog.show(this.stage);
+                dialogBox.getResponseDialog().show(this.stage);
+                //Zhaoqi: I changed back here since I think this makes more sense when rehitting doors. Easy switch by just uncommenting
+                // the lines below.
+
+//                CustomDialog tmpDialog = spots.get(rect);
+//                while (tmpDialog != null && tmpDialog instanceof TextDialog) {
+//                    tmpDialog = tmpDialog.getResponseDialog();
+//                }
+//                QuestionDialog mcDialog = (QuestionDialog) tmpDialog;
+//                MultipleChoice mc = (MultipleChoice) mcDialog.getContent();
+//                CustomDialog curClueDialog = new TextDialog("Clue", play.getSkin(), null);
+//                curClueDialog.renderContent(new String[]{mc.getCorrectResponse()});
+//                curClueDialog.show(this.stage);
 
             }
         }
