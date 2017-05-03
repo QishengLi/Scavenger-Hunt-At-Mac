@@ -206,10 +206,8 @@ public class Play implements Screen, InputProcessor {
         curClue.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                curClueDialog.renderContent(new String[]{clue}); // Zhaoqi: change this if needs changing clues
-                    //System.out.println("show message begins");
+                curClueDialog.renderContent(new String[]{clue});
                 curClueDialog.show(stage);
-                    //System.out.println("show message ends");
             }
         });
         curClue.pad(10);
@@ -287,10 +285,8 @@ public class Play implements Screen, InputProcessor {
         stage.draw();
     }
 
-    //不要删
     public void setCurClue(String clue) {
         this.clue = clue;
-
     }
 
     public String getCurClue() {
@@ -300,7 +296,6 @@ public class Play implements Screen, InputProcessor {
     public Skin getSkin() {
         return this.skin;
     }
-
 
     @Override
     public void resize(int width, int height) {
@@ -348,7 +343,7 @@ public class Play implements Screen, InputProcessor {
         return player;
     }
 
-    // Makes move for each enemy, and change direction for each second
+    // Makes move for each enemy, and loops over timer for each second
     public void ememyMoves(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             enemy.makeEnemyMove(player, collisionRects);
@@ -387,9 +382,9 @@ public class Play implements Screen, InputProcessor {
         }
     }
 
+    // triggers the start of time limit when player hits the door of CC
     public void setTimeStart(Player player) {
-        //Qisheng: it should be 10 if it is still CC.
-        if (timeLimitStart == 0 && player.getExistingDoors().size >= 10) { //TODO: change parameter: the door that triggers time limit: correct: 10
+        if (timeLimitStart == 0 && player.getExistingDoors().size >= 10) {
             timeLimitStart = TimeUtils.millis();
         }
     }

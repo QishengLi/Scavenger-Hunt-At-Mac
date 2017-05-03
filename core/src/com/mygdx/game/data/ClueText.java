@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* Created by hys1435 on 5/1/17.
+* Created by Zhaoqi on 5/1/17.
 */
 public class ClueText {
 
@@ -66,16 +66,8 @@ public class ClueText {
 
     }
 
-    public List<String> getClues(){
-        return this.clues;
-    }
-
     public String getNextClue(String curClue) {
         return clues.get(clues.indexOf(curClue) + 1);
-    }
-    //Get total number of clues.
-    public int getNumClues(){
-        return clues.size();
     }
 }
 
