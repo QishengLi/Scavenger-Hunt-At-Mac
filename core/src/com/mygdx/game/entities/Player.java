@@ -124,12 +124,10 @@ public class Player extends Sprite {
         //TODO: Refactor this part. Confusing.
         Array<Rectangle> existingDoors = new Array<>();
         for (CustomDialog questionDialog : questions) {
-            int i = 0;
             if (questionDialog instanceof TextDialog) {
                 CustomDialog customDialog = questionDialog;
-                while (customDialog instanceof TextDialog && i < 20) {
+                while (customDialog instanceof TextDialog) {
                     customDialog = customDialog.getResponseDialog();
-                    i++;
                 }
                 if (customDialog instanceof QuestionDialog) {
                     QuestionDialog question = (QuestionDialog) customDialog;

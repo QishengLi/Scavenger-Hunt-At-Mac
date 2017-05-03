@@ -58,7 +58,13 @@ public class DialogGenerator {
         return questions;
     }
 
-    // Generate num of TextDialogs in a list
+    /**
+     * Generate num of empty TextDialogs in a list.
+     * @param skin skin
+     * @param num Number of text dialogs
+     * @param title the title of text dialog
+     * @return a list of num empty text dialogs
+     */
     public List<CustomDialog> generateTextDialog(Skin skin, int num, String title) {
         List<CustomDialog> responseDialogs = new ArrayList<>();
         for (int i = 0; i < num; i++) {
