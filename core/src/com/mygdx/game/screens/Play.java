@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.data.ClueText;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.utils.CustomDialog;
@@ -79,6 +80,7 @@ public class Play implements Screen, InputProcessor {
     public TextDialog curClueDialog;
     //private SelectBox<Object> clueBox;
     //private Table table;
+    public ClueText clueText;
 
     private int initialWidth;
     private int initialHeight;
@@ -87,7 +89,6 @@ public class Play implements Screen, InputProcessor {
     public static long elapseTime;
     public long timeLimitStart;
     public static long timeLeft;
-    public boolean timeHasStarted;
     public static final long SECOND = 1000;
 
     public DialogGenerator dialogGenerator;
@@ -150,6 +151,9 @@ public class Play implements Screen, InputProcessor {
 
         questions = dialogGenerator.generateQuestions(skin);
 
+        clueText = new ClueText();
+        clueText.initClues();
+
         enemies = new Array<>();
         initializeEnemies(enemies, 20);
         enemyHit = Gdx.audio.newSound(Gdx.files.internal("soundEffects/enemyHit.wav"));
@@ -157,9 +161,9 @@ public class Play implements Screen, InputProcessor {
         hitWrongDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorPunch.mp3"));
 
 
-        Chapter chapters = new Chapter();
-        chapters.initSpots(doors, questions);
-        spots = chapters.getSpots();
+        SpotCollection spotCollection = new SpotCollection();
+        spotCollection.initSpots(doors, questions);
+        spots = spotCollection.getSpots();
 
         healthBar = new Texture(Gdx.files.internal("interfaceComponents/healthbar.png"));
         bar = new Texture(Gdx.files.internal("interfaceComponents/bar.png"));
@@ -183,7 +187,7 @@ public class Play implements Screen, InputProcessor {
                 "\"Zhaoqi! Zhaoqi!...\" Richard is severely injured.",
                 "\"There's something I haven't told you. I have designed, a way, to turn the clock back...\"",
                 "Turn the clock back? Wait! -- \"Richard! You mean, we could go back to, to 20 years ago?\"",
-                "Richard: \"I, I don’t have much time left. Go... Go to Kirk Section 9!\"",
+                "Richard: \"I, I don't have much time left. Go... Go to Kirk Section 9!\"",
                 "Richard drew his last breath."
         });
 
@@ -201,17 +205,15 @@ public class Play implements Screen, InputProcessor {
 //        stage.addActor(table1);
 
 
-        curClueDialog = new TextDialog("Current Clue",skin, null);
-        clue = "You could click the button to show the current clue.";
+        curClueDialog = new TextDialog("Current Clue", skin, null);
+        clue = "You could click the button to show the current clue. Go to Kirk Section 9 for your first clue.";
 
         TextButton curClue = new TextButton("Current Clue", skin, "default");
         curClue.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 curClueDialog.renderContent(new String[]{clue});
-                    //System.out.println("show message begins");
                 curClueDialog.show(stage);
-                    //System.out.println("show message ends");
             }
         });
         curClue.pad(10);
@@ -231,7 +233,6 @@ public class Play implements Screen, InputProcessor {
         elapseTime = 0;
         timeLimitStart = 0;
         timeLeft = 150000; //2 min 30s
-        timeHasStarted = false;
     }
 
     @Override public void render (float delta) {
@@ -254,12 +255,12 @@ public class Play implements Screen, InputProcessor {
         player.hitEnemy(enemies);
         GameStats.remainingFlashingTime -= Gdx.graphics.getDeltaTime();
         if(!player.isAlive(Player.health) || timeLeft < 0) { // time > 5s
-            bgm.stop();
-            ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth / 2,initialHeight / 2, false));
+            //bgm.stop();
+            ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight, false));
         }
         if (player.isFinished(player.getExistingDoors())) {
-            bgm.stop();
-            ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth / 2,initialHeight / 2, true));
+            //bgm.stop();
+            ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight, true));
         }
 
         camera.position.set(player.getX(),player.getY(),0); // let the camera follow the player
@@ -290,10 +291,8 @@ public class Play implements Screen, InputProcessor {
         stage.draw();
     }
 
-    //不要删
     public void setCurClue(String clue) {
         this.clue = clue;
-
     }
 
     public String getCurClue() {
@@ -303,7 +302,6 @@ public class Play implements Screen, InputProcessor {
     public Skin getSkin() {
         return this.skin;
     }
-
 
     @Override
     public void resize(int width, int height) {
@@ -331,6 +329,7 @@ public class Play implements Screen, InputProcessor {
 
     }
 
+    // Initialize ct number of enemies in an array of enemies
     public void initializeEnemies(Array<Enemy> enemies, int ct) {
         for (int i = 1; i <= ct; i++) {
             Enemy enemy = new Enemy(enemyImg, stage);
@@ -350,6 +349,7 @@ public class Play implements Screen, InputProcessor {
         return player;
     }
 
+    // Makes move for each enemy, and loops over timer for each second
     public void ememyMoves(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             enemy.makeEnemyMove(player, collisionRects);
@@ -388,11 +388,10 @@ public class Play implements Screen, InputProcessor {
         }
     }
 
+    // triggers the start of time limit when player hits the door of CC
     public void setTimeStart(Player player) {
-        //Qisheng: it should be 10 if it is still CC.
-        if (!(timeHasStarted) && player.getExistingDoors().size >= 10) { //TODO: change parameter: the door that triggers time limit: correct: 10
+        if (timeLimitStart == 0 && player.getExistingDoors().size >= 10) {
             timeLimitStart = TimeUtils.millis();
-            timeHasStarted = true;
         }
     }
 

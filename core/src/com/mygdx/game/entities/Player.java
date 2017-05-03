@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.data.Direction;
-import com.mygdx.game.data.MultipleChoice;
 import com.mygdx.game.data.QuestionText;
 import com.mygdx.game.screens.Play;
 import com.mygdx.game.utils.CustomDialog;
@@ -27,10 +26,10 @@ import static java.lang.Math.min;
  *
  */
 public class Player extends Sprite {
-
-    public static final float SPEED = 12f;
-    public static int health = 2;
-    public static final int TOTALHEALTH = 2;
+    
+    static final float SPEED = 12f;
+    public static int health = 12;
+    static final int TOTAL_HEALTH = 12;
 
     private List<Direction> movingDirs;
 
@@ -49,7 +48,6 @@ public class Player extends Sprite {
         super(texture);
         this.movingDirs = new ArrayList<>();
         this.stage = stage;
-        //TODO: Refactor!
         explosions = new ArrayList<>();
     }
 
@@ -65,9 +63,6 @@ public class Player extends Sprite {
         this.movingDirs.clear();
     }
 
-
-
-    //TODO: refactor
     public void makePlayerMove(){
 
         float oldXPos = getX();
@@ -83,7 +78,7 @@ public class Player extends Sprite {
         }
     }
 
-    public void makeMove(Direction direction, float scale) {
+    void makeMove(Direction direction, float scale) {
         switch (direction) {
             case UP:
                 translateY(SPEED * scale);
@@ -100,7 +95,7 @@ public class Player extends Sprite {
         }
     }
 
-
+    // check if an object is overlapped with an array of rectangles
     public boolean isOverlappedArray(Array<Rectangle> rects) {
         for (Rectangle rect : rects) {
             if (isOverlapped(rect)){
@@ -110,7 +105,8 @@ public class Player extends Sprite {
         return false;
     }
 
-    public boolean isOverlapped(Rectangle rec2) {
+    // check if an object is overlapped with a rectangle
+    boolean isOverlapped(Rectangle rec2) {
         float p1x = getX();
         float p1y = getY() + getHeight();
         float p2x = getX() + getWidth();
@@ -123,6 +119,7 @@ public class Player extends Sprite {
         return (!((p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
     }
 
+    // get the array of doors where questions have been answered
     public Array<Rectangle> getExistingDoors() {
         //TODO: Refactor this part. Confusing.
         Array<Rectangle> existingDoors = new Array<>();
@@ -130,27 +127,28 @@ public class Player extends Sprite {
             int i = 0;
             if (questionDialog instanceof TextDialog) {
                 CustomDialog customDialog = questionDialog;
-                while (customDialog instanceof TextDialog && i < 20) { //TODO: change parameter. 7: number of nested dialogs
-                    customDialog = customDialog.getResponseDialog(); //@nullable if the whole chain is TextDialog
+                while (customDialog instanceof TextDialog && i < 20) {
+                    customDialog = customDialog.getResponseDialog();
                     i++;
                 }
                 if (customDialog instanceof QuestionDialog) {
                     QuestionDialog question = (QuestionDialog) customDialog;
                     if (question.isCorrect()) {
-                        existingDoors.add(Chapter.getKeyByValue(spots, questionDialog));
+                        existingDoors.add(SpotCollection.getKeyByValue(spots, questionDialog));
                     }
                 }
             }
             if (questionDialog instanceof QuestionDialog) {
                 QuestionDialog question = (QuestionDialog) questionDialog;
                 if (question.isCorrect()) {
-                    existingDoors.add(Chapter.getKeyByValue(spots, question));
+                    existingDoors.add(SpotCollection.getKeyByValue(spots, question));
                 }
             }
         }
         return existingDoors;
     }
 
+    // get the next door where the player should go
     private Rectangle nextDoor(Array<Rectangle> existingDoors) {
         if (isFinished(existingDoors)) {
             return doorRects.get(existingDoors.size - 1);
@@ -158,6 +156,7 @@ public class Player extends Sprite {
         return (doorRects.get(existingDoors.size));
     }
 
+    // check if the player has finished answering all questions
     public boolean isFinished(Array<Rectangle> existingDoors) {
         return (existingDoors.size == doorRects.size);
     }
@@ -183,20 +182,23 @@ public class Player extends Sprite {
             if (isOverlapped(rect)) {
                 Play.hitCorrectDoor.play();
                 resetDirection();
-//                CustomDialog dialogBox = spots.get(rect);
-//                while (dialogBox instanceof TextDialog) {
-//                    dialogBox = dialogBox.getResponseDialog();
-//                }
-//                dialogBox.getResponseDialog().show(this.stage);
-                CustomDialog tmpDialog = spots.get(rect);
-                while (tmpDialog != null && tmpDialog instanceof TextDialog) {
-                    tmpDialog = tmpDialog.getResponseDialog();
+                CustomDialog dialogBox = spots.get(rect);
+                while (dialogBox instanceof TextDialog) {
+                    dialogBox = dialogBox.getResponseDialog();
                 }
-                QuestionDialog mcDialog = (QuestionDialog) tmpDialog;
-                MultipleChoice mc = (MultipleChoice) mcDialog.getContent();
-                CustomDialog curClueDialog = new TextDialog("Clue", play.getSkin(), null);
-                curClueDialog.renderContent(new String[]{mc.getCorrectResponse()});
-                curClueDialog.show(this.stage);
+                dialogBox.getResponseDialog().show(this.stage);
+                //Zhaoqi: I changed back here since I think this makes more sense when rehitting doors. Easy switch by just uncommenting
+                // the lines below.
+
+//                CustomDialog tmpDialog = spots.get(rect);
+//                while (tmpDialog != null && tmpDialog instanceof TextDialog) {
+//                    tmpDialog = tmpDialog.getResponseDialog();
+//                }
+//                QuestionDialog mcDialog = (QuestionDialog) tmpDialog;
+//                MultipleChoice mc = (MultipleChoice) mcDialog.getContent();
+//                CustomDialog curClueDialog = new TextDialog("Clue", play.getSkin(), null);
+//                curClueDialog.renderContent(new String[]{mc.getCorrectResponse()});
+//                curClueDialog.show(this.stage);
 
             }
         }
@@ -250,7 +252,7 @@ public class Player extends Sprite {
                 dialogBox.show(this.stage);
                 // +3 life at door 5 and door 10.
                 if (existingDoors.size == 4 || existingDoors.size == 9){
-                    health = min(health + 3, TOTALHEALTH);
+                    health = min(health + 3, TOTAL_HEALTH);
                     GameStats.remainingFlashingTime = 4.0f;
                 }
             }
@@ -281,6 +283,7 @@ public class Player extends Sprite {
         }
     }
 
+    // perform the effect of hitting the enemies, including checking if a player hits the enemy, and decreasing life
     public void hitEnemy(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             if(isOverlapped(enemy.getBoundingRectangle())) {
@@ -293,10 +296,12 @@ public class Player extends Sprite {
         }
     }
 
+    // see if the player is alive
     public boolean isAlive(int health) {
         return (health > 0);
     }
 
+    // get the list of directions that are currently being pressed down
     List<Direction> getMovingDirs() {
         return movingDirs;
     }

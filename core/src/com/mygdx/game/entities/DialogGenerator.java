@@ -74,8 +74,4 @@ public class DialogGenerator {
         Collections.reverse(responseDialogs);
         return responseDialogs;
     }
-
-    public QuestionText getQuestionText() {
-        return qt;
-    }
 }

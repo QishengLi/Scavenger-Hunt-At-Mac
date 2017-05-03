@@ -17,11 +17,11 @@ import java.util.Objects;
 /**
  * This class groups doors and questions together.
  */
-public class Chapter {
+public class SpotCollection {
 
     private Map<Rectangle, CustomDialog> spots;
 
-    public Chapter() {}
+    public SpotCollection() {}
 
     public void initSpots(Array<Rectangle> doorRects, Array<CustomDialog> questions) {
         spots = new HashMap<>();
@@ -32,7 +32,7 @@ public class Chapter {
         }
     }
 
-    public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
+    static <T, E> T getKeyByValue(Map<T, E> map, E value) {
         for (Map.Entry<T, E> entry : map.entrySet()) {
             if (Objects.equals(value, entry.getValue())) {
                 return entry.getKey();

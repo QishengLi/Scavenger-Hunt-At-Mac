@@ -19,7 +19,6 @@ public class Enemy extends Player {
     private boolean shouldFreeze;
     private Direction prevDir;
     private Direction nextDir;
-    private final float SCALE = 0.2f;
 
     public Enemy (Texture texture, Stage stage) {
         super(texture, stage);
@@ -35,7 +34,8 @@ public class Enemy extends Player {
         float oldX = getX();
         float oldY = getY();
 
-        chasePlayer(player, SCALE);
+        float scale = 0.2f;
+        chasePlayer(player, scale);
 
         if (Play.elapseTime > Play.SECOND) {
             prevDir = nextDir;
@@ -43,8 +43,8 @@ public class Enemy extends Player {
             setDirection(next);
         }
 
-        this.makeMove(this.prevDir, (1 - SCALE) * Math.max((Play.SECOND-Play.elapseTime)/(float) Play.SECOND, 0));
-        this.makeMove(this.nextDir, (1 - SCALE) * Math.min((Play.elapseTime)/(float) Play.SECOND, 1));
+        this.makeMove(this.prevDir, (1 - scale) * Math.max((Play.SECOND-Play.elapseTime)/(float) Play.SECOND, 0));
+        this.makeMove(this.nextDir, (1 - scale) * Math.min((Play.elapseTime)/(float) Play.SECOND, 1));
 
         float newX = getX();
         float newY = getY();

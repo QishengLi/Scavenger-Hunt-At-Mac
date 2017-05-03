@@ -10,13 +10,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * Help from: https://www.youtube.com/watch?v=jzFZ7N-SKfk
  */
 public class Explosion {
-    public static final float FRAME_LENGTH = 0.1f;
-    public static final int OFFSET = 0;
-    public static final int SIZE = 50;
+    private static final float FRAME_LENGTH = 0.1f;
+    private static final int OFFSET = 0;
+    private static final int SIZE = 50;
 
     private static Animation anim = null;
-    float x,y;
-    float statetime;
+    private float x,y;
+    private float statetime;
 
     public boolean remove = false;
 

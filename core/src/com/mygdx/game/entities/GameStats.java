@@ -13,6 +13,10 @@ import com.mygdx.game.screens.Play;
 /**
  * Created by Zhaoqi on 2017/4/3.
  */
+
+/**
+ * This class groups the labels on the screen together, and set the position of them relative to the player.
+ */
 public class GameStats extends Group {
 
     private Image barImg;
@@ -51,7 +55,7 @@ public class GameStats extends Group {
         float x = player.getX() + camera.viewportWidth / 2 - HORIZONTAL_MARGIN;
         float y = player.getY() + camera.viewportHeight / 2 - VERTICAL_MARGIN;
         lifeLabel.setText("Life: " + Player.health);
-        healthBarImg.setWidth(177 * Player.health / Player.TOTALHEALTH);
+        healthBarImg.setWidth(177 * Player.health / Player.TOTAL_HEALTH);
         healthBarImg.setHeight(21);
         for (Direction dir : player.getMovingDirs()) {
             switch (dir) {
@@ -70,6 +74,14 @@ public class GameStats extends Group {
             }
         }
         this.setPosition(x, y);
+    }
+
+    public void initTimeLabel(Label timeLabel) {
+        this.timeLabel = timeLabel;
+        this.timeLabel.setFontScale(4);
+        this.timeLabel.setPosition(-1200,0);
+        this.addActor(this.timeLabel);
+        timeLabelSet = true;
     }
 
     public void updateTimeLabel() {
@@ -107,14 +119,6 @@ public class GameStats extends Group {
         if (cameraBottom - Player.SPEED <= mapBottom) {
             this.setY(cameraHalfHeight * 2 - VERTICAL_MARGIN);
         }
-    }
-
-    public void initTimeLabel(Label timeLabel) {
-        this.timeLabel = timeLabel;
-        this.timeLabel.setFontScale(4);
-        this.timeLabel.setPosition(-1200,0);
-        this.addActor(this.timeLabel);
-        timeLabelSet = true;
     }
 
     public boolean isTimeLabelSet() {
