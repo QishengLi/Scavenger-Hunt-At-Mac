@@ -100,7 +100,7 @@ public class Player extends Sprite {
         }
     }
 
-
+    // check if an object is overlapped with an array of rectangles
     public boolean isOverlappedArray(Array<Rectangle> rects) {
         for (Rectangle rect : rects) {
             if (isOverlapped(rect)){
@@ -110,6 +110,7 @@ public class Player extends Sprite {
         return false;
     }
 
+    // check if an object is overlapped with a rectangle
     public boolean isOverlapped(Rectangle rec2) {
         float p1x = getX();
         float p1y = getY() + getHeight();
@@ -123,6 +124,7 @@ public class Player extends Sprite {
         return (!((p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
     }
 
+    // get the array of doors where questions have been answered
     public Array<Rectangle> getExistingDoors() {
         //TODO: Refactor this part. Confusing.
         Array<Rectangle> existingDoors = new Array<>();
@@ -151,6 +153,7 @@ public class Player extends Sprite {
         return existingDoors;
     }
 
+    // get the next door where the player should go
     private Rectangle nextDoor(Array<Rectangle> existingDoors) {
         if (isFinished(existingDoors)) {
             return doorRects.get(existingDoors.size - 1);
@@ -158,6 +161,7 @@ public class Player extends Sprite {
         return (doorRects.get(existingDoors.size));
     }
 
+    // check if the player has finished answering all questions
     public boolean isFinished(Array<Rectangle> existingDoors) {
         return (existingDoors.size == doorRects.size);
     }
@@ -284,6 +288,7 @@ public class Player extends Sprite {
         }
     }
 
+    // perform the effect of hitting the enemies, including checking if a player hits the enemy, and decreasing life
     public void hitEnemy(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             if(isOverlapped(enemy.getBoundingRectangle())) {
@@ -296,10 +301,12 @@ public class Player extends Sprite {
         }
     }
 
+    // see if the player is alive
     public boolean isAlive(int health) {
         return (health > 0);
     }
 
+    // get the list of directions that are currently being pressed down
     List<Direction> getMovingDirs() {
         return movingDirs;
     }

@@ -89,7 +89,6 @@ public class Play implements Screen, InputProcessor {
     public static long elapseTime;
     public long timeLimitStart;
     public static long timeLeft;
-    public boolean timeHasStarted;
     public static final long SECOND = 1000;
 
     public DialogGenerator dialogGenerator;
@@ -230,7 +229,6 @@ public class Play implements Screen, InputProcessor {
         elapseTime = 0;
         timeLimitStart = 0;
         timeLeft = 150000; //2 min 30s
-        timeHasStarted = false;
     }
 
     @Override public void render (float delta) {
@@ -330,6 +328,7 @@ public class Play implements Screen, InputProcessor {
 
     }
 
+    // Initialize ct number of enemies in an array of enemies
     public void initializeEnemies(Array<Enemy> enemies, int ct) {
         for (int i = 1; i <= ct; i++) {
             Enemy enemy = new Enemy(enemyImg, stage);
@@ -349,6 +348,7 @@ public class Play implements Screen, InputProcessor {
         return player;
     }
 
+    // Makes move for each enemy, and change direction for each second
     public void ememyMoves(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             enemy.makeEnemyMove(player, collisionRects);
@@ -389,9 +389,8 @@ public class Play implements Screen, InputProcessor {
 
     public void setTimeStart(Player player) {
         //Qisheng: it should be 10 if it is still CC.
-        if (!(timeHasStarted) && player.getExistingDoors().size >= 10) { //TODO: change parameter: the door that triggers time limit: correct: 10
+        if (timeLimitStart == 0 && player.getExistingDoors().size >= 10) { //TODO: change parameter: the door that triggers time limit: correct: 10
             timeLimitStart = TimeUtils.millis();
-            timeHasStarted = true;
         }
     }
 
