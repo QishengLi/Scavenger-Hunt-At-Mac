@@ -55,7 +55,7 @@ public class GameStats extends Group {
         float x = player.getX() + camera.viewportWidth / 2 - HORIZONTAL_MARGIN;
         float y = player.getY() + camera.viewportHeight / 2 - VERTICAL_MARGIN;
         lifeLabel.setText("Life: " + Player.health);
-        healthBarImg.setWidth(177 * Player.health / Player.TOTALHEALTH);
+        healthBarImg.setWidth(177 * Player.health / Player.TOTAL_HEALTH);
         healthBarImg.setHeight(21);
         for (Direction dir : player.getMovingDirs()) {
             switch (dir) {

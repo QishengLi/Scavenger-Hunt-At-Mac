@@ -225,7 +225,7 @@ public class QuestionText {
         );
     }
 
-    public List<Object> getQs(){
+    private List<Object> getQs(){
         return this.Qs;
     }
 

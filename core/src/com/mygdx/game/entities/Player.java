@@ -27,9 +27,9 @@ import static java.lang.Math.min;
  */
 public class Player extends Sprite {
 
-    public static final float SPEED = 12f;
+    static final float SPEED = 12f;
     public static int health = 12;
-    public static final int TOTALHEALTH = 12;
+    static final int TOTAL_HEALTH = 12;
 
     private List<Direction> movingDirs;
 
@@ -78,7 +78,7 @@ public class Player extends Sprite {
         }
     }
 
-    public void makeMove(Direction direction, float scale) {
+    void makeMove(Direction direction, float scale) {
         switch (direction) {
             case UP:
                 translateY(SPEED * scale);
@@ -252,7 +252,7 @@ public class Player extends Sprite {
                 dialogBox.show(this.stage);
                 // +3 life at door 5 and door 10.
                 if (existingDoors.size == 4 || existingDoors.size == 9){
-                    health = min(health + 3, TOTALHEALTH);
+                    health = min(health + 3, TOTAL_HEALTH);
                     GameStats.remainingFlashingTime = 4.0f;
                 }
             }
