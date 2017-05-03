@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.data.Direction;
-import com.mygdx.game.data.MultipleChoice;
 import com.mygdx.game.data.QuestionText;
 import com.mygdx.game.screens.Play;
 import com.mygdx.game.utils.CustomDialog;
@@ -49,7 +48,6 @@ public class Player extends Sprite {
         super(texture);
         this.movingDirs = new ArrayList<>();
         this.stage = stage;
-        //TODO: Refactor!
         explosions = new ArrayList<>();
     }
 
@@ -65,9 +63,6 @@ public class Player extends Sprite {
         this.movingDirs.clear();
     }
 
-
-
-    //TODO: refactor
     public void makePlayerMove(){
 
         float oldXPos = getX();
@@ -111,7 +106,7 @@ public class Player extends Sprite {
     }
 
     // check if an object is overlapped with a rectangle
-    public boolean isOverlapped(Rectangle rec2) {
+    boolean isOverlapped(Rectangle rec2) {
         float p1x = getX();
         float p1y = getY() + getHeight();
         float p2x = getX() + getWidth();
@@ -132,21 +127,21 @@ public class Player extends Sprite {
             int i = 0;
             if (questionDialog instanceof TextDialog) {
                 CustomDialog customDialog = questionDialog;
-                while (customDialog instanceof TextDialog && i < 20) { //TODO: change parameter. 7: number of nested dialogs
-                    customDialog = customDialog.getResponseDialog(); //@nullable if the whole chain is TextDialog
+                while (customDialog instanceof TextDialog && i < 20) {
+                    customDialog = customDialog.getResponseDialog();
                     i++;
                 }
                 if (customDialog instanceof QuestionDialog) {
                     QuestionDialog question = (QuestionDialog) customDialog;
                     if (question.isCorrect()) {
-                        existingDoors.add(Chapter.getKeyByValue(spots, questionDialog));
+                        existingDoors.add(SpotCollection.getKeyByValue(spots, questionDialog));
                     }
                 }
             }
             if (questionDialog instanceof QuestionDialog) {
                 QuestionDialog question = (QuestionDialog) questionDialog;
                 if (question.isCorrect()) {
-                    existingDoors.add(Chapter.getKeyByValue(spots, question));
+                    existingDoors.add(SpotCollection.getKeyByValue(spots, question));
                 }
             }
         }

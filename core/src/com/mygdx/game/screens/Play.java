@@ -155,9 +155,9 @@ public class Play implements Screen, InputProcessor {
         hitWrongDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorPunch.mp3"));
 
 
-        Chapter chapters = new Chapter();
-        chapters.initSpots(doors, questions);
-        spots = chapters.getSpots();
+        SpotCollection spotCollection = new SpotCollection();
+        spotCollection.initSpots(doors, questions);
+        spots = spotCollection.getSpots();
 
         healthBar = new Texture(Gdx.files.internal("interfaceComponents/healthbar.png"));
         bar = new Texture(Gdx.files.internal("interfaceComponents/bar.png"));

@@ -16,17 +16,20 @@ import com.badlogic.gdx.utils.Array;
  */
 public class CampusMap extends TiledMap {
     private final TiledMap map;
-    public MapProperties prop;
     public int mapWidth;
     public int mapHeight;
 
 	public CampusMap(TiledMap map) {
 	    this.map = map;
-	    this.prop = map.getProperties();
+        MapProperties prop = map.getProperties();
 	    this.mapWidth = prop.get("width", Integer.class) * prop.get("tilewidth", Integer.class);
 	    this.mapHeight = prop.get("height", Integer.class) * prop.get("tileheight", Integer.class);
 	}
 
+    /**
+     * This method adjust the camera's position when the player reaches the boundary of the map.
+     * @param cam The camera.
+     */
     public void adjustBoundary(OrthographicCamera cam) {
 
         float mapLeft = 0;
@@ -66,7 +69,7 @@ public class CampusMap extends TiledMap {
         return getRects(layer);
     }
 
-    public Array<Rectangle> getRects(MapLayer layer) {
+    private Array<Rectangle> getRects(MapLayer layer) {
         MapObjects boxes = layer.getObjects();
         Array<Rectangle> rects = new Array<>();
         for (MapObject box : boxes) {

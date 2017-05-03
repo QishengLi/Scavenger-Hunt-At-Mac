@@ -17,11 +17,11 @@ import java.util.Objects;
 /**
  * This class groups doors and questions together.
  */
-public class Chapter {
+public class SpotCollection {
 
     private Map<Rectangle, CustomDialog> spots;
 
-    public Chapter() {}
+    public SpotCollection() {}
 
     public void initSpots(Array<Rectangle> doorRects, Array<CustomDialog> questions) {
         spots = new HashMap<>();

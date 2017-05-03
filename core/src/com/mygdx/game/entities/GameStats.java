@@ -13,6 +13,10 @@ import com.mygdx.game.screens.Play;
 /**
  * Created by Zhaoqi on 2017/4/3.
  */
+
+/**
+ * This class groups the labels on the screen together, and set the position of them relative to the player.
+ */
 public class GameStats extends Group {
 
     private Image barImg;
@@ -72,6 +76,14 @@ public class GameStats extends Group {
         this.setPosition(x, y);
     }
 
+    public void initTimeLabel(Label timeLabel) {
+        this.timeLabel = timeLabel;
+        this.timeLabel.setFontScale(4);
+        this.timeLabel.setPosition(-1200,0);
+        this.addActor(this.timeLabel);
+        timeLabelSet = true;
+    }
+
     public void updateTimeLabel() {
         if (timeLabel != null) {
             timeLabel.setText("Time Left: "+ Play.timeLeft / 60000 + " : " + (Play.timeLeft / 1000) % 60);
@@ -107,14 +119,6 @@ public class GameStats extends Group {
         if (cameraBottom - Player.SPEED <= mapBottom) {
             this.setY(cameraHalfHeight * 2 - VERTICAL_MARGIN);
         }
-    }
-
-    public void initTimeLabel(Label timeLabel) {
-        this.timeLabel = timeLabel;
-        this.timeLabel.setFontScale(4);
-        this.timeLabel.setPosition(-1200,0);
-        this.addActor(this.timeLabel);
-        timeLabelSet = true;
     }
 
     public boolean isTimeLabelSet() {
