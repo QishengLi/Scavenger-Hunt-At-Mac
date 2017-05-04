@@ -7,6 +7,10 @@ import java.util.List;
 /**
  * Created by Shuni on 3/22/17.
  */
+
+/**
+ * An object of a multiple choice question. It has a question and a list of answers.
+ */
 public final class MultipleChoice {
 
     private final String[] question;

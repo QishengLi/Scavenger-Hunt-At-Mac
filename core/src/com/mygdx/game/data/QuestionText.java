@@ -6,6 +6,10 @@ import java.util.List;
 /**
  * Created by Shuni on 3/22/17.
  */
+
+/**
+ * The text of questions.
+ */
 public class QuestionText {
 
     private List<Object> Qs = new ArrayList<>();

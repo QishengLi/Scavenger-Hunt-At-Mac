@@ -15,6 +15,11 @@ import java.util.List;
 /**
  * Created by hys1435 on 4/28/17.
  */
+
+/**
+ * Generates different types of dialogs.
+ */
+
 public class DialogGenerator {
 
     private QuestionText qt = new QuestionText();
@@ -23,6 +28,11 @@ public class DialogGenerator {
         qt.initQuestions();
     }
 
+    /**
+     * Generate the question dialogs for the question text.
+     * @param skin skin of the dialog
+     * @return a libgdx array of question dialogs.
+     */
     public Array<CustomDialog> generateQuestions(Skin skin) {
 
         Array<CustomDialog> questions = new Array<>();
@@ -55,7 +65,7 @@ public class DialogGenerator {
 
     /**
      * Generate num of empty TextDialogs in a list.
-     * @param skin skin
+     * @param skin skin of the dialog
      * @param num Number of text dialogs
      * @param title the title of text dialog
      * @return a list of num empty text dialogs

@@ -6,12 +6,19 @@ import java.util.List;
 /**
 * Created by Zhaoqi on 5/1/17.
 */
+
+/**
+ * The text of clues, used in "current clue" button.
+ */
 public class ClueText {
 
     private List<String> clues = new ArrayList<>();
 
     public ClueText() { }
 
+    /**
+     * Initiate clue texts and put them into clues.
+     */
     public void initClues() {
 
         //Door 1 at Kirk
