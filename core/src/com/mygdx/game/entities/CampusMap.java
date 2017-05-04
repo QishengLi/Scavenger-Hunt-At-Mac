@@ -14,6 +14,10 @@ import com.badlogic.gdx.utils.Array;
 /**
  * Created by Zhaoqi on 2017/3/12.
  */
+
+/**
+ * This class encapsulates properties of the campus map.
+ */
 public class CampusMap extends TiledMap {
     private final TiledMap map;
     public int mapWidth;
@@ -28,6 +32,7 @@ public class CampusMap extends TiledMap {
 
     /**
      * This method adjust the camera's position when the player reaches the boundary of the map.
+     * Get help from: https://gamedev.stackexchange.com/questions/74926/libgdx-keep-camera-within-bounds-of-tiledmap
      * @param cam The camera.
      */
     public void adjustBoundary(OrthographicCamera cam) {

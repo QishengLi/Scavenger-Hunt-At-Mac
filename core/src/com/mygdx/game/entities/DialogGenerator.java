@@ -15,6 +15,11 @@ import java.util.List;
 /**
  * Created by hys1435 on 4/28/17.
  */
+
+/**
+ * Generates different types of dialogs.
+ */
+
 public class DialogGenerator {
 
     private TextGenerator qt = new TextGenerator();
@@ -23,12 +28,16 @@ public class DialogGenerator {
         qt.initQuestions();
     }
 
+    /**
+     * Generate the question dialogs for the question text.
+     * @param skin skin of the dialog
+     * @return a libgdx array of question dialogs.
+     */
     public Array<CustomDialog> generateQuestions(Skin skin) {
 
         Array<CustomDialog> questions = new Array<>();
 
         for (int i = 0; i < qt.getNumQuestions(); i++){
-            CustomDialog td = new TextDialog("TEXT", skin, null);
             List<CustomDialog> responseDialogs = generateTextDialog(skin, 20, "ANSWER");
             CustomDialog responseDialog = responseDialogs.get(0);
             CustomDialog qd = new QuestionDialog("CLUE", skin, responseDialog);
@@ -50,15 +59,17 @@ public class DialogGenerator {
                     questions.add(qd);
                 }
             }
-            else if (ithQuestion instanceof String) {
-                td.renderContent(ithQuestion);
-                questions.add(td);
-            }
         }
         return questions;
     }
 
-    // Generate num of TextDialogs in a list
+    /**
+     * Generate num of empty TextDialogs in a list.
+     * @param skin skin of the dialog
+     * @param num Number of text dialogs
+     * @param title the title of text dialog
+     * @return a list of num empty text dialogs
+     */
     public List<CustomDialog> generateTextDialog(Skin skin, int num, String title) {
         List<CustomDialog> responseDialogs = new ArrayList<>();
         for (int i = 0; i < num; i++) {
