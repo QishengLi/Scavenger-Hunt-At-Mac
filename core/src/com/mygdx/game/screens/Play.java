@@ -38,8 +38,6 @@ import java.util.Random;
 /**
  * Created by Qisheng on 2/9/2017.
  */
-
-
 public class Play implements Screen, InputProcessor {
 
     private TiledMap tiledMap;
@@ -105,23 +103,9 @@ public class Play implements Screen, InputProcessor {
         float w = ((this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth) * 2;
         float h = ((this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight) * 2;
 
-        System.out.println(Gdx.graphics.getWidth());
-        System.out.println(Gdx.graphics.getHeight());
-        System.out.println(initialWidth);
-        System.out.println(initialHeight);
-
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false,w,h);
         camera.update();
-
-        tiledMap = new TmxMapLoader().load("map/full_map.tmx");
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-        Gdx.input.setInputProcessor(this);
-        rd = new Random();
-        mac = new CampusMap(tiledMap);
-        collisionRects = mac.getCollisionBoxes();
-        doors = mac.getDoors();
 
         OrthographicCamera stageCam = new OrthographicCamera();
         stageCam.setToOrtho(false, w, h);
@@ -131,23 +115,29 @@ public class Play implements Screen, InputProcessor {
         stage = new Stage(v);
         skin = new Skin(Gdx.files.internal("ui/skin/uiskin-edit.json"));
 
+        tiledMap = new TmxMapLoader().load("map/full_map.tmx");
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+        Gdx.input.setInputProcessor(this);
+        rd = new Random();
+        mac = new CampusMap(tiledMap);
+        collisionRects = mac.getCollisionBoxes();
+        doors = mac.getDoors();
+
         // Add background music
         bgm = Gdx.audio.newMusic(Gdx.files.internal("soundEffects/bgm.mp3"));
         bgm.setLooping(true); // looping music after it's finished
         bgm.play();
 
+        textGenerator = new TextGenerator();
+        textGenerator.initClues();
         dialogGenerator = new DialogGenerator();
+        questions = dialogGenerator.generateQuestions(skin);
 
         sb = new SpriteBatch();
         playerImg = new Texture(Gdx.files.internal("sprite/scot_small.png"));
         enemyImg = new Texture(Gdx.files.internal("sprite/robot.png"));
         player = new Player(playerImg, stage);
         player.setCenter(mac.mapWidth/2+1520,mac.mapHeight/2); //TODO: change position
-
-        questions = dialogGenerator.generateQuestions(skin);
-
-        textGenerator = new TextGenerator();
-        textGenerator.initClues();
 
         enemies = new Array<>();
         initializeEnemies(enemies, 20);
@@ -198,14 +188,14 @@ public class Play implements Screen, InputProcessor {
         });
         curClue.pad(10);
 
-        Table table2 = new Table();
-        table2.pad(250, 330, 250, 330);
-        table2.setFillParent(true);
-        table2.bottom();
-        table2.left();
+        Table table = new Table();
+        table.pad(250, 330, 250, 330);
+        table.setFillParent(true);
+        table.bottom();
+        table.left();
 
-        table2.add(curClue);
-        stage.addActor(table2);
+        table.add(curClue);
+        stage.addActor(table);
 
         bgs.get(0).show(this.stage);
 

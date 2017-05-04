@@ -27,7 +27,6 @@ public class Instruction implements Screen {
     private Stage stage;
     private Skin skin;
     private Table table;
-    private OrthographicCamera camera;
 
     private int initialWidth;
     private int initialHeight;
@@ -50,7 +49,6 @@ public class Instruction implements Screen {
         //stage.setDebugAll(true);
         stage.act(delta);
         stage.draw();
-
     }
 
     @Override
@@ -62,18 +60,15 @@ public class Instruction implements Screen {
     @Override
     public void show() {
 
-        float w = ((this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth) * 2;
-        float h = ((this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight) * 2;
+        float w = ((this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth);
+        float h = ((this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight);
 
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, w, h);
-        camera.zoom -= 0.33;
-        camera.update();
-        Viewport v = new FitViewport(w, h, camera);
-        stage = new Stage(v);
+        Viewport viewport = new FitViewport(w, h, new OrthographicCamera());
+        stage = new Stage(viewport);
 
         Gdx.input.setInputProcessor(stage);
-        skin = new Skin(Gdx.files.internal("ui/skin/uiskin-edit.json"), new TextureAtlas("ui/skin/uiskin-edit.atlas"));
+        skin = new Skin(Gdx.files.internal("ui/skin/uiskin-edit.json"),
+                        new TextureAtlas("ui/skin/uiskin-edit.atlas"));
 
         Image imageKeys = new Image();
         imageKeys.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("interfaceComponents/keys.png")))));
@@ -132,7 +127,7 @@ public class Instruction implements Screen {
         buttonBack.pad(10);
 
         table.add(heading).spaceBottom(10).colspan(2).center().row();
-        imageKeys.setScaling(Scaling.fill);
+        imageKeys.setScaling(Scaling.fit);
         table.add(imageKeys).spaceBottom(15);
         table.add(arrowKeysInstr).spaceBottom(15);
         table.row();

@@ -29,7 +29,6 @@ public class MainMenu implements Screen{
     private Stage stage;
     private Skin skin;
     private Table table;
-    private OrthographicCamera camera;
 
     private int initialWidth;
     private int initialHeight;
@@ -63,15 +62,11 @@ public class MainMenu implements Screen{
     @Override
     public void show() {
 
-        float w = ((this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth) * 2;
-        float h = ((this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight) * 2 ;
+        float w = ((this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth);
+        float h = ((this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight);
 
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, w, h);
-        camera.zoom -= 0.5;
-        camera.update();
-        Viewport v = new FitViewport(w, h, camera);
-        stage = new Stage(v);
+        Viewport viewport = new FitViewport(w, h, new OrthographicCamera());
+        stage = new Stage(viewport);
 
         Gdx.input.setInputProcessor(stage);
 
@@ -82,7 +77,7 @@ public class MainMenu implements Screen{
         table.setFillParent(true);
 
         Label heading = new Label(MainGame.TITLE, skin, "title");
-        heading.setFontScale((float)0.7);
+        heading.setFontScale((float) 0.6);
 
         TextButton buttonPlay = new TextButton("PLAY", skin, "default");
         buttonPlay.addListener(new ClickListener() {
