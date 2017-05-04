@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.data.Direction;
-import com.mygdx.game.data.QuestionText;
+import com.mygdx.game.data.MultipleChoice;
 import com.mygdx.game.screens.Play;
 import com.mygdx.game.utils.CustomDialog;
 import com.mygdx.game.utils.QuestionDialog;
@@ -26,7 +26,7 @@ import static java.lang.Math.min;
  *
  */
 public class Player extends Sprite {
-    
+
     static final float SPEED = 12f;
     public static int health = 12;
     static final int TOTAL_HEALTH = 12;
@@ -162,9 +162,20 @@ public class Player extends Sprite {
                 CustomDialog introDialog = new CustomDialog("QUESTION", play.getSkin(), null) {
                     @Override
                     public void renderContent(Object object) {
-                        addLabel("Which path do you want to go?", play.getSkin());
-                        button("Next", dialogBox);
-                        button("Skip", mcDialog);
+                        Object content = dialogBox.getContent();
+                        String label;
+                        if (content instanceof MultipleChoice) {
+                            MultipleChoice problem = (MultipleChoice) content;
+                            label = problem.getQuestion()[0];
+                        } else if (content instanceof String[]) {
+                            label = ((String[]) content)[0];
+                        } else {
+                            label = "Which path do you want to go?";
+                        }
+
+                        addLabel(label, play.getSkin());
+                        button("See clues again", dialogBox.getResponseDialog());
+                        button("Skip to question", mcDialog);
                     }
 
                     @Override
@@ -173,7 +184,7 @@ public class Player extends Sprite {
                     @Override
                     protected void result(Object object) {
                         if (object instanceof TextDialog) {
-                            setResponseDialog(dialogBox);
+                            setResponseDialog(dialogBox.getResponseDialog());
                             super.result(((TextDialog) object).getContent());
                         } else if (object instanceof QuestionDialog){
                             setResponseDialog(mcDialog);
@@ -206,7 +217,7 @@ public class Player extends Sprite {
         for (Enemy enemy : enemies) {
             if(isCollided(enemy.getBoundingRectangle())) {
                 health--;
-                GameStats.remainingFlashingTime = 2.0f;
+                GameStats.remainingFlashingTime = 3.0f;
                 enemies.removeValue(enemy, true);
                 explosions.add(new Explosion(enemy.getX(), enemy.getY()));
                 Play.enemyHit.play();
