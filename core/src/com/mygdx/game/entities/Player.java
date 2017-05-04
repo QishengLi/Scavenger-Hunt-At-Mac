@@ -28,8 +28,8 @@ import static java.lang.Math.min;
 public class Player extends Sprite {
 
     static final float SPEED = 12f;
-    public static int health = 20;
-    static final int TOTAL_HEALTH = 20;
+    public static int health = 12;
+    static final int TOTAL_HEALTH = 12;
 
     private List<Direction> movingDirs;
 
@@ -217,7 +217,7 @@ public class Player extends Sprite {
         for (Enemy enemy : enemies) {
             if(isCollided(enemy.getBoundingRectangle())) {
                 health--;
-                GameStats.remainingFlashingTime = 2.0f;
+                GameStats.remainingFlashingTime = 3.0f;
                 enemies.removeValue(enemy, true);
                 explosions.add(new Explosion(enemy.getX(), enemy.getY()));
                 Play.enemyHit.play();
