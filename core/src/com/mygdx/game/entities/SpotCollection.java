@@ -14,7 +14,8 @@ import java.util.Objects;
  */
 
 /**
- * This class groups doors and questions together.
+ * This class groups doors and questions together as spots. It contains a map which matches each door with the
+ * corresponding question.
  */
 public class SpotCollection {
 

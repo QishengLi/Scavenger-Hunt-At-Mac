@@ -19,7 +19,7 @@ import java.util.Random;
 public class Enemy extends Player {
 
     private Random rd = new Random();
-    private boolean shouldFreeze;
+    private boolean shouldFreeze; // true if the enemy stops moving, false if the enemy is moving
     private Direction prevDir;
     private Direction nextDir;
 

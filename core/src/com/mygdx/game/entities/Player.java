@@ -39,10 +39,7 @@ public class Player extends Sprite {
     private Array<Rectangle> collisionRects;
     private Map<Rectangle, CustomDialog> spots;
 
-    public QuestionText qt = new QuestionText();
-
     public ArrayList<Explosion> explosions;
-
 
     public Player(Texture texture, Stage stage) {
         super(texture);
@@ -129,8 +126,6 @@ public class Player extends Sprite {
         if (doorRects.random() == null || questions.random() == null) { // check if the array is empty
             return;
         }
-        //Array<Rectangle> existingDoors = getExistingDoors();
-        //Rectangle newDoor = nextDoor(existingDoors);
 
         Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
         final Play play = (Play) curScreen;
@@ -149,19 +144,6 @@ public class Player extends Sprite {
                     dialogBox = dialogBox.getResponseDialog();
                 }
                 dialogBox.getResponseDialog().show(this.stage);
-                //Zhaoqi: I changed back here since I think this makes more sense when rehitting doors. Easy switch by just uncommenting
-                // the lines below.
-
-//                CustomDialog tmpDialog = spots.get(rect);
-//                while (tmpDialog != null && tmpDialog instanceof TextDialog) {
-//                    tmpDialog = tmpDialog.getResponseDialog();
-//                }
-//                QuestionDialog mcDialog = (QuestionDialog) tmpDialog;
-//                MultipleChoice mc = (MultipleChoice) mcDialog.getContent();
-//                CustomDialog curClueDialog = new TextDialog("Clue", play.getSkin(), null);
-//                curClueDialog.renderContent(new String[]{mc.getCorrectResponse()});
-//                curClueDialog.show(this.stage);
-
             }
         }
 
@@ -188,11 +170,6 @@ public class Player extends Sprite {
                     @Override
                     public Object getContent() { return null; }
 
-//                    @Override
-//                    public Dialog button (Button button, Object object) {
-//                        return super.button(button, object);
-//                    }
-
                     @Override
                     protected void result(Object object) {
                         if (object instanceof TextDialog) {
@@ -214,24 +191,7 @@ public class Player extends Sprite {
                     GameStats.remainingFlashingTime = 4.0f;
                 }
             }
-
-
-
-            //不要删，list of clues
-
-//            if ((qt.getQs().get(existingDoors.size)) instanceof MultipleChoice) {
-//                MultipleChoice mc = (MultipleChoice) qt.getQs().get(existingDoors.size);
-//                play.setCurClue(mc.getCorrectResponse());
-//            }
-
-                //Object[] old = play.sampleSelectBox;
-                //play.sampleSelectBox = new Object[old.length + 1];
-                //for (int i = 0; i < old.length; i++) {
-                //    play.sampleSelectBox[i] =  old[i];
-                //}
-                //play.sampleSelectBox[old.length] = "update";
-            }
-
+        }
 
         for (Rectangle rect : doorRects) {
             if (isCollided(rect) && !existingDoors.contains(rect, true)) {
