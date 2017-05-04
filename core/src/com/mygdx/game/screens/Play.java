@@ -23,8 +23,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.data.ClueText;
 import com.mygdx.game.data.Direction;
+import com.mygdx.game.data.TextGenerator;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.utils.CustomDialog;
 import com.mygdx.game.utils.TextDialog;
@@ -75,12 +75,9 @@ public class Play implements Screen, InputProcessor {
     private Label timeLabel;
 
     //不要删
+    public TextGenerator textGenerator;
     public String clue;
-    //public Object[] sampleSelectBox;
     public TextDialog curClueDialog;
-    //private SelectBox<Object> clueBox;
-    //private Table table;
-    public ClueText clueText;
 
     private int initialWidth;
     private int initialHeight;
@@ -92,7 +89,6 @@ public class Play implements Screen, InputProcessor {
     public static final long SECOND = 1000;
 
     public DialogGenerator dialogGenerator;
-    //public QuestionText qt;
 
     public Play() {
         initialWidth = 0;
@@ -151,15 +147,14 @@ public class Play implements Screen, InputProcessor {
 
         questions = dialogGenerator.generateQuestions(skin);
 
-        clueText = new ClueText();
-        clueText.initClues();
+        textGenerator = new TextGenerator();
+        textGenerator.initClues();
 
         enemies = new Array<>();
         initializeEnemies(enemies, 20);
         enemyHit = Gdx.audio.newSound(Gdx.files.internal("soundEffects/enemyHit.wav"));
         hitCorrectDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorOpen.mp3"));
         hitWrongDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorPunch.mp3"));
-
 
         SpotCollection spotCollection = new SpotCollection();
         spotCollection.initSpots(doors, questions);
@@ -190,20 +185,6 @@ public class Play implements Screen, InputProcessor {
                 "Richard: \"I, I don't have much time left. Go... Go to Kirk Section 9!\"",
                 "Richard drew his last breath."
         });
-
-          //不要删，list of clues
-//        sampleSelectBox = new Object[2];
-//        sampleSelectBox[0] = "Current Clue List";
-//        sampleSelectBox[1] = "Current clue 1, 他妈的逗我呢，为啥不work？";
-//        clueBox = new SelectBox<Object>(skin);
-//        clueBox.setItems(sampleSelectBox);
-//        Table table1 = new Table();
-//        table1.setFillParent(true);
-//        table1.top();
-//
-//        table1.add(clueBox);
-//        stage.addActor(table1);
-
 
         curClueDialog = new TextDialog("Current Clue", skin, null);
         clue = "You could click the button to show the current clue. Go to Kirk Section 9 for your first clue.";

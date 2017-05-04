@@ -39,7 +39,7 @@ public class Player extends Sprite {
     private Array<Rectangle> collisionRects;
     private Map<Rectangle, CustomDialog> spots;
 
-    //public QuestionText qt = new QuestionText();
+    //public TextGenerator qt = new TextGenerator();
 
     public ArrayList<Explosion> explosions;
 

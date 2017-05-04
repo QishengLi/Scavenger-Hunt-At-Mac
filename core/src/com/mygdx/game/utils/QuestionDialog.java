@@ -60,7 +60,7 @@ public class QuestionDialog extends CustomDialog {
                 Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
                 Play play = (Play) curScreen;
                 //MultipleChoice mc = (MultipleChoice) this.getContent();
-                play.setCurClue(play.clueText.getNextClue(play.getCurClue()));
+                play.setCurClue(play.textGenerator.getNextClue(play.getCurClue()));
             }
             else {
                 Player.health--;

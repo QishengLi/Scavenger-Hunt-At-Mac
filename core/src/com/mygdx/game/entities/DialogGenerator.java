@@ -3,7 +3,7 @@ package com.mygdx.game.entities;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.data.MultipleChoice;
-import com.mygdx.game.data.QuestionText;
+import com.mygdx.game.data.TextGenerator;
 import com.mygdx.game.utils.CustomDialog;
 import com.mygdx.game.utils.QuestionDialog;
 import com.mygdx.game.utils.TextDialog;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class DialogGenerator {
 
-    private QuestionText qt = new QuestionText();
+    private TextGenerator qt = new TextGenerator();
 
     public DialogGenerator() {
         qt.initQuestions();
