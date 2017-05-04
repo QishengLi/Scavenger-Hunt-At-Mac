@@ -109,12 +109,6 @@ public class Play implements Screen, InputProcessor {
         float w = ((this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth) * 2;
         float h = ((this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight) * 2;
 
-        System.out.println(Gdx.graphics.getWidth());
-        System.out.println(Gdx.graphics.getHeight());
-        System.out.println(initialWidth);
-        System.out.println(initialHeight);
-
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false,w,h);
         camera.update();

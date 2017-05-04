@@ -40,15 +40,6 @@ public class TextDialog extends CustomDialog {
     @Override
     protected void result(Object object) {
         super.result(object);
-
-        //TODO: move the part in CustomDialog here.
-//        if (object instanceof String[]) {
-//            String[] strs = (String[]) object;
-//            if (!(strs.length == 0)) {
-//                getResponseDialog().renderContent(strs);
-//                getResponseDialog().show(getStage());
-//            }
-//        }
     }
 
     public Object getContent() {
