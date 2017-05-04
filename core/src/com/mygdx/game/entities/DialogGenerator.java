@@ -28,7 +28,6 @@ public class DialogGenerator {
         Array<CustomDialog> questions = new Array<>();
 
         for (int i = 0; i < qt.getNumQuestions(); i++){
-            CustomDialog td = new TextDialog("TEXT", skin, null);
             List<CustomDialog> responseDialogs = generateTextDialog(skin, 20, "ANSWER");
             CustomDialog responseDialog = responseDialogs.get(0);
             CustomDialog qd = new QuestionDialog("CLUE", skin, responseDialog);
@@ -49,10 +48,6 @@ public class DialogGenerator {
                     qd.renderContent(ithQuestion);
                     questions.add(qd);
                 }
-            }
-            else if (ithQuestion instanceof String) {
-                td.renderContent(ithQuestion);
-                questions.add(td);
             }
         }
         return questions;
