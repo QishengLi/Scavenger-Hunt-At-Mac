@@ -37,8 +37,6 @@ import java.util.Random;
 
 /**
  * Created by Qisheng on 2/9/2017.
- *
- * The order in show method MATTERS!!!!!
  */
 
 
@@ -256,20 +254,18 @@ public class Play implements Screen, InputProcessor {
         ememyMoves(enemies);
         player.hitEnemy(enemies);
         GameStats.remainingFlashingTime -= Gdx.graphics.getDeltaTime();
-        if(!player.isAlive(Player.health) || timeLeft < 0) { // time > 5s
-            //bgm.stop();
+        if(!player.isAlive(Player.health) || timeLeft < 0) {
             ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight, false));
         }
         if (isFinished(getExistingDoors())) {
-            //bgm.stop();
             ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight, true));
         }
 
-        camera.position.set(player.getX(),player.getY(),0); // let the camera follow the player
+        camera.position.set(player.getX(),player.getY(),0);
         mac.adjustBoundary(camera);
-        sb.setProjectionMatrix(camera.combined); // Combine the character with the camera?
+        sb.setProjectionMatrix(camera.combined);
         sb.begin();
-        player.draw(sb); // draw the character
+        player.draw(sb);
         drawEnemies(enemies);
         drawExplosion(delta);
 

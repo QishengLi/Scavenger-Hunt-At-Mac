@@ -123,46 +123,6 @@ public class Player extends Sprite {
         return (!((p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
     }
 
-    // get the array of doors where questions have been answered
-    public Array<Rectangle> getExistingDoors() {
-        //TODO: Refactor this part. Confusing.
-        Array<Rectangle> existingDoors = new Array<>();
-        for (CustomDialog questionDialog : questions) {
-            if (questionDialog instanceof TextDialog) {
-                CustomDialog customDialog = questionDialog;
-                while (customDialog instanceof TextDialog) {
-                    customDialog = customDialog.getResponseDialog();
-                }
-                if (customDialog instanceof QuestionDialog) {
-                    QuestionDialog question = (QuestionDialog) customDialog;
-                    if (question.isCorrect()) {
-                        existingDoors.add(SpotCollection.getKeyByValue(spots, questionDialog));
-                    }
-                }
-            }
-            if (questionDialog instanceof QuestionDialog) {
-                QuestionDialog question = (QuestionDialog) questionDialog;
-                if (question.isCorrect()) {
-                    existingDoors.add(SpotCollection.getKeyByValue(spots, question));
-                }
-            }
-        }
-        return existingDoors;
-    }
-
-    // get the next door where the player should go
-    private Rectangle nextDoor(Array<Rectangle> existingDoors) {
-        if (isFinished(existingDoors)) {
-            return doorRects.get(existingDoors.size - 1);
-        }
-        return (doorRects.get(existingDoors.size));
-    }
-
-    // check if the player has finished answering all questions
-    public boolean isFinished(Array<Rectangle> existingDoors) {
-        return (existingDoors.size == doorRects.size);
-    }
-
     // TODO：factor out sound playing and update current clue
     private void popUpMessage(Rectangle newDoor, Array<Rectangle> existingDoors) {
 
