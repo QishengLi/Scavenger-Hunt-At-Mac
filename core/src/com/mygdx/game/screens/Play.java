@@ -14,7 +14,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -65,12 +64,8 @@ public class Play implements Screen, InputProcessor {
 
     private Texture playerImg;
     private Texture enemyImg;
-    private Texture healthBar;
-    private Texture bar;
 
-    private GameStats barGroup;
-    private Label lifeLabel;
-    private Label timeLabel;
+    private GameStats gameStatsGroup;
 
     public TextGenerator textGenerator;
     public String clue;
@@ -149,14 +144,8 @@ public class Play implements Screen, InputProcessor {
         spotCollection.initSpots(doors, questions);
         spots = spotCollection.getSpots();
 
-        healthBar = new Texture(Gdx.files.internal("interfaceComponents/healthbar.png"));
-        bar = new Texture(Gdx.files.internal("interfaceComponents/bar.png"));
-
-        lifeLabel = new Label("Life: "+ Player.health, skin);
-        barGroup = new GameStats(player, bar, healthBar, lifeLabel, mac);
-        barGroup.initBar();
-
-        timeLabel = new Label("Time:" + timeLeft, skin);
+        gameStatsGroup = new GameStats(skin);
+        gameStatsGroup.init(stage);
 
         player.setCollisionRects(collisionRects);
         player.setDoorRects(doors);
@@ -215,7 +204,7 @@ public class Play implements Screen, InputProcessor {
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
 
         setTimeStart(player);
-        if (timeLimitStart != 0 && !(barGroup.isFrozen())) {
+        if (timeLimitStart != 0 && !(gameStatsGroup.isFrozen())) {
             timeLeft -= 1000 * Gdx.graphics.getDeltaTime();
         }
 
@@ -242,21 +231,11 @@ public class Play implements Screen, InputProcessor {
         drawExplosion(delta);
 
         if (timeLimitStart != 0) {
-            barGroup.initTimeLabel(timeLabel);
+            gameStatsGroup.startCountdown();
         }
-
-        if (barGroup.isTimeLabelSet()) {
-            barGroup.updateTimeLabel();
-        }
-
-        barGroup.updateBar(camera);
-        barGroup.adjustBoundary(camera);
-        barGroup.draw(sb, 1);
+        gameStatsGroup.update();
 
         sb.end();
-
-        //不要删
-       // clueBox.setItems(sampleSelectBox);
 
         stage.act();
         stage.draw();
@@ -331,8 +310,8 @@ public class Play implements Screen, InputProcessor {
         }
     }
 
-    public GameStats getBarGroup() {
-        return barGroup;
+    public GameStats getGameStatsGroup() {
+        return gameStatsGroup;
     }
 
     private void drawEnemies(Array<Enemy> enemies) {

@@ -94,7 +94,7 @@ public class Instruction implements Screen {
         table = new Table(skin);
         table.setFillParent(true);
 
-        TextButton buttonPlay = new TextButton("Play", skin, "default");
+        TextButton buttonPlay = new TextButton("PLAY", skin, "default");
         buttonPlay.addListener(new ClickListener() {
 
             @Override
@@ -110,7 +110,7 @@ public class Instruction implements Screen {
         });
         buttonPlay.pad(10);
 
-        TextButton buttonBack = new TextButton("Back", skin, "default");
+        TextButton buttonBack = new TextButton("BACK", skin, "default");
         buttonBack.addListener(new ClickListener() {
 
             @Override

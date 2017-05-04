@@ -110,7 +110,7 @@ public abstract class CustomDialog extends Dialog {
         for (Enemy e : enemies) {
             e.setFreeze(freeze);
         }
-        this.playScreen.getBarGroup().setFrozen(freeze);
+        this.playScreen.getGameStatsGroup().setFrozen(freeze);
     }
 
     @Override
