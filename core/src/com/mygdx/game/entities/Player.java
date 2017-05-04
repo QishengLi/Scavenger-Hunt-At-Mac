@@ -63,7 +63,7 @@ public class Player extends Sprite {
         this.movingDirs.clear();
     }
 
-    public void makePlayerMove(){
+    public void makePlayerMove(Rectangle newDoor, Array<Rectangle> existingDoors){
 
         float oldXPos = getX();
         float oldYPos = getY();
@@ -72,8 +72,8 @@ public class Player extends Sprite {
             makeMove(dirInCurDir, 1.0f);
         }
 
-        if (isOverlappedArray(collisionRects)) {
-            popUpMessage();
+        if (isCollidedWithAll(collisionRects)) {
+            popUpMessage(newDoor, existingDoors);
             setPosition(oldXPos, oldYPos);
         }
     }
@@ -95,18 +95,22 @@ public class Player extends Sprite {
         }
     }
 
-    // check if an object is overlapped with an array of rectangles
-    public boolean isOverlappedArray(Array<Rectangle> rects) {
+    /**
+     * check if a sprite is overlapped with an array of rectangle boxes
+     */
+    public boolean isCollidedWithAll(Array<Rectangle> rects) {
         for (Rectangle rect : rects) {
-            if (isOverlapped(rect)){
+            if (isCollided(rect)){
                 return true;
             }
         }
         return false;
     }
 
-    // check if an object is overlapped with a rectangle
-    boolean isOverlapped(Rectangle rec2) {
+    /**
+     * check if a sprite is overlapped with a rectangle box.
+     */
+    boolean isCollided(Rectangle rec2) {
         float p1x = getX();
         float p1y = getY() + getHeight();
         float p2x = getX() + getWidth();
@@ -119,56 +123,15 @@ public class Player extends Sprite {
         return (!((p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
     }
 
-    // get the array of doors where questions have been answered
-    public Array<Rectangle> getExistingDoors() {
-        //TODO: Refactor this part. Confusing.
-        Array<Rectangle> existingDoors = new Array<>();
-        for (CustomDialog questionDialog : questions) {
-            int i = 0;
-            if (questionDialog instanceof TextDialog) {
-                CustomDialog customDialog = questionDialog;
-                while (customDialog instanceof TextDialog && i < 20) {
-                    customDialog = customDialog.getResponseDialog();
-                    i++;
-                }
-                if (customDialog instanceof QuestionDialog) {
-                    QuestionDialog question = (QuestionDialog) customDialog;
-                    if (question.isCorrect()) {
-                        existingDoors.add(SpotCollection.getKeyByValue(spots, questionDialog));
-                    }
-                }
-            }
-            if (questionDialog instanceof QuestionDialog) {
-                QuestionDialog question = (QuestionDialog) questionDialog;
-                if (question.isCorrect()) {
-                    existingDoors.add(SpotCollection.getKeyByValue(spots, question));
-                }
-            }
-        }
-        return existingDoors;
-    }
-
-    // get the next door where the player should go
-    private Rectangle nextDoor(Array<Rectangle> existingDoors) {
-        if (isFinished(existingDoors)) {
-            return doorRects.get(existingDoors.size - 1);
-        }
-        return (doorRects.get(existingDoors.size));
-    }
-
-    // check if the player has finished answering all questions
-    public boolean isFinished(Array<Rectangle> existingDoors) {
-        return (existingDoors.size == doorRects.size);
-    }
 
     // TODO：factor out sound playing and update current clue
-    private void popUpMessage() {
+    private void popUpMessage(Rectangle newDoor, Array<Rectangle> existingDoors) {
 
         if (doorRects.random() == null || questions.random() == null) { // check if the array is empty
             return;
         }
-        Array<Rectangle> existingDoors = getExistingDoors();
-        Rectangle newDoor = nextDoor(existingDoors);
+        //Array<Rectangle> existingDoors = getExistingDoors();
+        //Rectangle newDoor = nextDoor(existingDoors);
 
         Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
         final Play play = (Play) curScreen;
@@ -179,7 +142,7 @@ public class Player extends Sprite {
             if ((existingDoors.size >= 6 && rect == existingDoors.get(4))
                     ||(existingDoors.size >= 10 && rect == existingDoors.get(8))
                     || (existingDoors.size >= 10 && rect == existingDoors.get(2))) continue;
-            if (isOverlapped(rect)) {
+            if (isCollided(rect)) {
                 Play.hitCorrectDoor.play();
                 resetDirection();
                 CustomDialog dialogBox = spots.get(rect);
@@ -204,14 +167,10 @@ public class Player extends Sprite {
         }
 
         // Visiting a new spot
-        if (isOverlapped(newDoor)) {
+        if (isCollided(newDoor)) {
             Play.hitCorrectDoor.play();
             resetDirection();
             final CustomDialog dialogBox = spots.get(newDoor);
-            if (isFinished(existingDoors)) {
-                dialogBox.getResponseDialog().show(this.stage);
-                return;
-            }
 
             CustomDialog tmpDialog = dialogBox;
             while (tmpDialog != null && tmpDialog instanceof TextDialog) {
@@ -276,7 +235,7 @@ public class Player extends Sprite {
 
 
         for (Rectangle rect : doorRects) {
-            if (isOverlapped(rect) && !existingDoors.contains(rect, true)) {
+            if (isCollided(rect) && !existingDoors.contains(rect, true)) {
                 Play.hitWrongDoor.play();
                 resetDirection();
             }
@@ -286,7 +245,7 @@ public class Player extends Sprite {
     // perform the effect of hitting the enemies, including checking if a player hits the enemy, and decreasing life
     public void hitEnemy(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
-            if(isOverlapped(enemy.getBoundingRectangle())) {
+            if(isCollided(enemy.getBoundingRectangle())) {
                 health--;
                 GameStats.remainingFlashingTime = 2.0f;
                 enemies.removeValue(enemy, true);

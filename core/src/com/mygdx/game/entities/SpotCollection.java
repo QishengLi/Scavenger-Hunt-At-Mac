@@ -4,7 +4,6 @@ package com.mygdx.game.entities;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.utils.CustomDialog;
-import com.mygdx.game.utils.QuestionDialog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +31,7 @@ public class SpotCollection {
         }
     }
 
-    static <T, E> T getKeyByValue(Map<T, E> map, E value) {
+    public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
         for (Map.Entry<T, E> entry : map.entrySet()) {
             if (Objects.equals(value, entry.getValue())) {
                 return entry.getKey();

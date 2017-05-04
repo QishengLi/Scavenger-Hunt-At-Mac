@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.screens.Play;
 
@@ -50,7 +49,7 @@ public class Enemy extends Player {
         float newY = getY();
 
         for (Rectangle rect : collisionRects) {
-            if (isOverlapped(rect)){
+            if (isCollided(rect)){
                 updatePosition(oldX, oldY, newX, newY, rect);
             }
         }
@@ -86,13 +85,13 @@ public class Enemy extends Player {
 
     public void updatePosition(float oldX, float oldY, float newX, float newY, Rectangle rec) {
         setX(oldX);
-        if (!isOverlapped(rec)) {
+        if (!isCollided(rec)) {
             return;
         }
         else {
             setY(oldY);
             setX(newX);
-            if (!isOverlapped(rec)) {
+            if (!isCollided(rec)) {
                 return;
             }
             else {
