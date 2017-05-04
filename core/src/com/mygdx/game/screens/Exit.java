@@ -103,7 +103,7 @@ public class Exit implements Screen{
 
     public Label showHeading(boolean gameWon){
         if (gameWon){
-            Label heading = new Label("Congrats, you win!", skin, "title");
+            Label heading = new Label("You win!", skin, "title");
             return heading;
         }
         else{
