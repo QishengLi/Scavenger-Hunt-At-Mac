@@ -110,20 +110,13 @@ public class Enemy extends Player {
      * @param newY New y-coordinate after the movement.
      * @param rec the rectangle it is collided at.
      */
-    public void updatePosition(float oldX, float oldY, float newX, float newY, Rectangle rec) {
+    private void updatePosition(float oldX, float oldY, float newX, float newY, Rectangle rec) {
         setX(oldX);
-        if (!isCollided(rec)) {
-            return;
-        }
-        else {
+        if (isCollided(rec)) {
             setY(oldY);
             setX(newX);
-            if (!isCollided(rec)) {
-                return;
-            }
-            else {
+            if (isCollided(rec)) {
                 setX(oldX);
-                return;
             }
         }
     }
