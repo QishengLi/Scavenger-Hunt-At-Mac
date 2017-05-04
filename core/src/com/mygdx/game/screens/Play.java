@@ -215,14 +215,14 @@ public class Play implements Screen, InputProcessor {
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
 
         setTimeStart(player);
-        if (timeLimitStart != 0 && !(barGroup.isFreezed())) {
+        if (timeLimitStart != 0 && !(barGroup.isFrozen())) {
             timeLeft -= 1000 * Gdx.graphics.getDeltaTime();
         }
 
         existingDoors = getExistingDoors();
         player.makePlayerMove(nextDoor(), existingDoors);
         elapseTime = TimeUtils.timeSinceMillis(startTime);
-        ememyMoves(enemies);
+        enemyMoves(enemies);
         player.hitEnemy(enemies);
         GameStats.remainingFlashingTime -= Gdx.graphics.getDeltaTime();
 
@@ -252,6 +252,7 @@ public class Play implements Screen, InputProcessor {
         barGroup.updateBar(camera);
         barGroup.adjustBoundary(camera);
         barGroup.draw(sb, 1);
+
         sb.end();
 
         //不要删
@@ -300,7 +301,7 @@ public class Play implements Screen, InputProcessor {
     }
 
     // Initialize ct number of enemies in an array of enemies
-    public void initializeEnemies(Array<Enemy> enemies, int ct) {
+    private void initializeEnemies(Array<Enemy> enemies, int ct) {
         for (int i = 1; i <= ct; i++) {
             Enemy enemy = new Enemy(enemyImg, stage);
             enemy.setCenter(rd.nextInt(mac.mapWidth), rd.nextInt(mac.mapHeight));
@@ -320,7 +321,7 @@ public class Play implements Screen, InputProcessor {
     }
 
     // Makes move for each enemy, and loops over timer for each second
-    public void ememyMoves(Array<Enemy> enemies) {
+    private void enemyMoves(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             enemy.makeEnemyMove(player, collisionRects);
         }
@@ -334,7 +335,7 @@ public class Play implements Screen, InputProcessor {
         return barGroup;
     }
 
-    public void drawEnemies(Array<Enemy> enemies) {
+    private void drawEnemies(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             enemy.draw(sb);
         }
@@ -343,7 +344,7 @@ public class Play implements Screen, InputProcessor {
     /**
      * Draw the animation when player hits enemy.
      * */
-    public void drawExplosion(float delta){
+    private void drawExplosion(float delta){
         ArrayList<Explosion> explosionsToRemove= new ArrayList<>();
         for (Explosion explosion: player.explosions){
             explosion.update(delta);
@@ -359,7 +360,7 @@ public class Play implements Screen, InputProcessor {
     }
 
     // triggers the start of time limit when player hits the door of CC
-    public void setTimeStart(Player player) {
+    private void setTimeStart(Player player) {
         if (timeLimitStart == 0 && getExistingDoors().size >= 10) {
             timeLimitStart = TimeUtils.millis();
         }
@@ -418,7 +419,7 @@ public class Play implements Screen, InputProcessor {
     }
 
     // get the array of doors where questions have been answered
-    public Array<Rectangle> getExistingDoors() {
+    private Array<Rectangle> getExistingDoors() {
         //TODO: Refactor this part. Confusing.
         Array<Rectangle> existingDoors = new Array<>();
         for (CustomDialog questionDialog : questions) {
@@ -455,7 +456,7 @@ public class Play implements Screen, InputProcessor {
     }
 
     // check if the player has finished answering all questions
-    public boolean isFinished(Array<Rectangle> existingDoors) {
+    private boolean isFinished(Array<Rectangle> existingDoors) {
         return (existingDoors.size == doors.size);
     }
 }

@@ -28,7 +28,7 @@ public class GameStats extends Group {
     private final float VERTICAL_MARGIN = 70;
     public static float remainingFlashingTime = 0f;
     private boolean timeLabelSet;
-    private boolean freezed;
+    private boolean frozen;
     private Player player;
 
     public GameStats(Player player, Texture bar, Texture healthBar, Label lifeLabel, CampusMap map) {
@@ -37,7 +37,7 @@ public class GameStats extends Group {
         this.lifeLabel = lifeLabel;
         this.map = map;
         this.timeLabelSet = false;
-        this.freezed = false;
+        this.frozen = false;
         this.player = player;
     }
 
@@ -138,11 +138,11 @@ public class GameStats extends Group {
         if (isTransform()) resetTransform(sb);
     }
 
-    public boolean isFreezed() {
-        return freezed;
+    public boolean isFrozen() {
+        return frozen;
     }
 
-    public void setFreezed(boolean freezed) {
-        this.freezed = freezed;
+    public void setFrozen(boolean frozen) {
+        this.frozen = frozen;
     }
 }
