@@ -26,6 +26,7 @@ public class Exit implements Screen{
     private Stage stage;
     private Skin skin;
     private Table table;
+    private OrthographicCamera camera;
 
     private int initialWidth;
     private int initialHeight;
@@ -60,11 +61,15 @@ public class Exit implements Screen{
     @Override
     public void show() {
 
-        float w = (this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth;
-        float h = (this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight;
+        float w = ((this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth) * 2;
+        float h = ((this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight) * 2;
 
-        Viewport viewport = new FitViewport(w, h, new OrthographicCamera());
-        stage = new Stage(viewport);
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, w, h);
+        camera.zoom -= 0.5;
+        camera.update();
+        Viewport v = new FitViewport(w, h, camera);
+        stage = new Stage(v);
 
         Gdx.input.setInputProcessor(stage);
 

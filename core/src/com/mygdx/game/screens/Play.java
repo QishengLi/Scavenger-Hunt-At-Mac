@@ -27,6 +27,7 @@ import com.mygdx.game.data.ClueText;
 import com.mygdx.game.data.Direction;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.utils.CustomDialog;
+import com.mygdx.game.utils.QuestionDialog;
 import com.mygdx.game.utils.TextDialog;
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class Play implements Screen, InputProcessor {
     private Array<CustomDialog> questions;
     private Array<Rectangle> collisionRects;
     private Array<Rectangle> doors;
+    private Array<Rectangle> existingDoors;
     private Map<Rectangle, CustomDialog> spots;
 
     private Music bgm;
@@ -92,7 +94,6 @@ public class Play implements Screen, InputProcessor {
     public static final long SECOND = 1000;
 
     public DialogGenerator dialogGenerator;
-    //public QuestionText qt;
 
     public Play() {
         initialWidth = 0;
@@ -109,6 +110,12 @@ public class Play implements Screen, InputProcessor {
 
         float w = ((this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth) * 2;
         float h = ((this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight) * 2;
+
+        System.out.println(Gdx.graphics.getWidth());
+        System.out.println(Gdx.graphics.getHeight());
+        System.out.println(initialWidth);
+        System.out.println(initialHeight);
+
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false,w,h);
@@ -243,7 +250,8 @@ public class Play implements Screen, InputProcessor {
             timeLeft -= 1000 * Gdx.graphics.getDeltaTime();
         }
 
-        player.makePlayerMove();
+        existingDoors = getExistingDoors();
+        player.makePlayerMove(nextDoor(), existingDoors);
         elapseTime = TimeUtils.timeSinceMillis(startTime);
         ememyMoves(enemies);
         player.hitEnemy(enemies);
@@ -252,7 +260,7 @@ public class Play implements Screen, InputProcessor {
             //bgm.stop();
             ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight, false));
         }
-        if (player.isFinished(player.getExistingDoors())) {
+        if (isFinished(getExistingDoors())) {
             //bgm.stop();
             ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight, true));
         }
@@ -328,7 +336,7 @@ public class Play implements Screen, InputProcessor {
         for (int i = 1; i <= ct; i++) {
             Enemy enemy = new Enemy(enemyImg, stage);
             enemy.setCenter(rd.nextInt(mac.mapWidth), rd.nextInt(mac.mapHeight));
-            while (enemy.isOverlappedArray(collisionRects)) {
+            while (enemy.isCollidedWithAll(collisionRects)) {
                 enemy.setCenter(rd.nextInt(mac.mapWidth), rd.nextInt(mac.mapHeight));
             }
             enemies.add(enemy);
@@ -384,7 +392,7 @@ public class Play implements Screen, InputProcessor {
 
     // triggers the start of time limit when player hits the door of CC
     public void setTimeStart(Player player) {
-        if (timeLimitStart == 0 && player.getExistingDoors().size >= 10) {
+        if (timeLimitStart == 0 && getExistingDoors().size >= 10) {
             timeLimitStart = TimeUtils.millis();
         }
     }
@@ -439,5 +447,47 @@ public class Play implements Screen, InputProcessor {
 
     @Override public boolean scrolled(int amount) {
         return false;
+    }
+
+    // get the array of doors where questions have been answered
+    public Array<Rectangle> getExistingDoors() {
+        //TODO: Refactor this part. Confusing.
+        Array<Rectangle> existingDoors = new Array<>();
+        for (CustomDialog questionDialog : questions) {
+            int i = 0;
+            if (questionDialog instanceof TextDialog) {
+                CustomDialog customDialog = questionDialog;
+                while (customDialog instanceof TextDialog && i < 20) {
+                    customDialog = customDialog.getResponseDialog();
+                    i++;
+                }
+                if (customDialog instanceof QuestionDialog) {
+                    QuestionDialog question = (QuestionDialog) customDialog;
+                    if (question.isCorrect()) {
+                        existingDoors.add(SpotCollection.getKeyByValue(spots, questionDialog));
+                    }
+                }
+            }
+            if (questionDialog instanceof QuestionDialog) {
+                QuestionDialog question = (QuestionDialog) questionDialog;
+                if (question.isCorrect()) {
+                    existingDoors.add(SpotCollection.getKeyByValue(spots, question));
+                }
+            }
+        }
+        return existingDoors;
+    }
+
+    // get the next door where the player should go
+    private Rectangle nextDoor() {
+        if (isFinished(existingDoors)) {
+            return doors.get(existingDoors.size - 1);
+        }
+        return (doors.get(existingDoors.size));
+    }
+
+    // check if the player has finished answering all questions
+    public boolean isFinished(Array<Rectangle> existingDoors) {
+        return (existingDoors.size == doors.size);
     }
 }

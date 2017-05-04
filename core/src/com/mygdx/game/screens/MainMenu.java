@@ -1,10 +1,10 @@
 package com.mygdx.game.screens;
 
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MainGame;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
@@ -27,6 +29,7 @@ public class MainMenu implements Screen{
     private Stage stage;
     private Skin skin;
     private Table table;
+    private OrthographicCamera camera;
 
     private int initialWidth;
     private int initialHeight;
@@ -46,6 +49,7 @@ public class MainMenu implements Screen{
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        //stage.setDebugAll(true);
         stage.act(delta);
         stage.draw();
     }
@@ -59,22 +63,27 @@ public class MainMenu implements Screen{
     @Override
     public void show() {
 
-        final int initialWidth = Gdx.graphics.getWidth();
-        final int initialHeight = Gdx.graphics.getHeight();
+        float w = ((this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth) * 2;
+        float h = ((this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight) * 2 ;
 
-        stage = new Stage();
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, w, h);
+        camera.zoom -= 0.5;
+        camera.update();
+        Viewport v = new FitViewport(w, h, camera);
+        stage = new Stage(v);
+
         Gdx.input.setInputProcessor(stage);
 
-        skin = new Skin(Gdx.files.internal("ui/skin/uiskin-edit.json"), new TextureAtlas("ui/skin/uiskin-edit.atlas"));
+        skin = new Skin(Gdx.files.internal("ui/skin/uiskin-edit.json"),
+                        new TextureAtlas("ui/skin/uiskin-edit.atlas"));
 
         table = new Table(skin);
         table.setFillParent(true);
 
-        // creating heading
         Label heading = new Label(MainGame.TITLE, skin, "title");
-        //heading.setFontScale(2);
+        heading.setFontScale((float)0.7);
 
-        // creating play buttons
         TextButton buttonPlay = new TextButton("PLAY", skin, "default");
         buttonPlay.addListener(new ClickListener() {
 
@@ -91,8 +100,7 @@ public class MainMenu implements Screen{
         });
         buttonPlay.pad(15);
 
-        // creating instruction button
-        TextButton buttonInstruction = new TextButton("Instructions", skin, "default");
+        TextButton buttonInstruction = new TextButton("INSTRUCTIONS", skin, "default");
         buttonInstruction.addListener(new ClickListener() {
 
             @Override
@@ -108,12 +116,11 @@ public class MainMenu implements Screen{
         });
         buttonInstruction.pad(15);
 
-        table.add(heading).spaceBottom(100).row();
+        table.add(heading).spaceBottom(80).center().row();
         table.add(buttonPlay).spaceBottom(20).row();
-        table.add(buttonInstruction).spaceBottom(15).row();
+        table.add(buttonInstruction).spaceBottom(20).row();
 
         stage.addActor(table);
-
     }
 
     @Override
