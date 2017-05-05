@@ -7,7 +7,7 @@ import com.mygdx.game.data.MultipleChoice;
 import java.util.Arrays;
 
 /**
- * Created by Shuni on 3/12/17.
+ * TextDialog is used to show one or more statements with a single button.
  */
 public class TextDialog extends CustomDialog {
     private Skin skin;
@@ -20,6 +20,7 @@ public class TextDialog extends CustomDialog {
 
     public void renderContent(Object object) {
         content = object;
+        // To render a series of messages right before a multiple choice question.
         if (object instanceof MultipleChoice) {
             MultipleChoice problem = (MultipleChoice) object;
             String[] strs = problem.getQuestion();
@@ -29,6 +30,7 @@ public class TextDialog extends CustomDialog {
                     (Answer[]) problem.getChoices().toArray());
             button("OK", newProblem);
         }
+        // To render one or more messages
         if (object instanceof String[]) {
             String[] strs = (String[]) object;
             String str1 = strs[0];
@@ -37,12 +39,10 @@ public class TextDialog extends CustomDialog {
         }
     }
 
+    public Object getContent() { return this.content; }
+
     @Override
     protected void result(Object object) {
         super.result(object);
-    }
-
-    public Object getContent() {
-        return this.content;
     }
 }

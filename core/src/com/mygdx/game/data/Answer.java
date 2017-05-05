@@ -5,7 +5,7 @@ package com.mygdx.game.data;
  */
 
 /**
- * An object of an answer. It has a choice and a response.
+ * An Answer object is a choice of a multiple choice question.
  */
 public final class Answer {
 
@@ -30,5 +30,4 @@ public final class Answer {
     public boolean isCorrect() {
         return correct;
     }
-
 }

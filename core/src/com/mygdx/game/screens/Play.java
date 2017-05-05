@@ -153,20 +153,12 @@ public class Play implements Screen, InputProcessor {
         player.setQuestions(questions);
 
         List<CustomDialog> bgs = dialogGenerator.generateTextDialog(skin, 8, "Background");
-
-        bgs.get(0).renderContent(new String[]{"Today is May 4th, 2037.",
-                "1600 Grand Ave, Saint Paul. Macalester College Campus.",
-                "The robots... they revolted.",
-                "\"Zhaoqi! Zhaoqi!...\" Richard is severely injured.",
-                "\"There's something I haven't told you. I have designed, a way, to turn the clock back...\"",
-                "Turn the clock back? Wait! -- \"Richard! You mean, we could go back to, to 20 years ago?\"",
-                "Richard: \"I, I don't have much time left. Go... Go to Kirk Section 9!\"",
-                "Richard drew his last breath."
-        });
+        textGenerator.initBackgroundMessage();
+        bgs.get(0).renderContent(textGenerator.getBackgroundMessage());
 
         curClueDialog = new TextDialog("Current Clue", skin, null);
-        clue = "You could click the button to show the current clue. Go to Kirk Section 9 for your first clue.";
-
+        //clue = "You could click the button to show the current clue. Go to Kirk Section 9 for your first clue.";
+        clue = textGenerator.getFirstClue();
         TextButton curClue = new TextButton("Current Clue", skin, "default");
         curClue.addListener(new ClickListener() {
             @Override

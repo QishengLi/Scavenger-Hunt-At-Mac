@@ -9,14 +9,26 @@ import java.util.List;
 
 public class TextGenerator {
 
-    private List<Object> Qs = new ArrayList<>();
-
-    private List<String> clues = new ArrayList<>();
+    private List<Object> Qs;
+    private List<String> clues;
+    private String[] backgroundMessage;
 
     public TextGenerator() { }
 
-    public void initQuestions() {
+    public void initBackgroundMessage() {
 
+        backgroundMessage = new String[]{"Today is May 4th, 2037.",
+                "1600 Grand Ave, Saint Paul. Macalester College Campus.",
+                "The robots... they revolted.",
+                "\"Zhaoqi! Zhaoqi!...\" Richard is severely injured.",
+                "\"There's something I haven't told you. I have designed, a way, to turn the clock back...\"",
+                "Turn the clock back? Wait! -- \"Richard! You mean, we could go back to, to 20 years ago?\"",
+                "Richard: \"I, I don't have much time left. Go... Go to Kirk Section 9!\"",
+                "Richard drew his last breath."};
+    }
+
+    public void initQuestions() {
+        Qs = new ArrayList<>();
         //Door 1 at Kirk
         Qs.add(
             new MultipleChoice(
@@ -27,15 +39,14 @@ public class TextGenerator {
                             "\"You must prove yourself to be a true Macalester Scot.\"",
                             "Which building has been changed name in the past 10 years?"
                 },
-
                 new Answer("Old Main Building", new String[]{"Ouch! An electric shock! I think the answer was wrong. Hit the door to answer the question again.\n" +
-                        "Keep an eye on your life bar. Each wrong answer will cost you a life. "},false),
+                            "Keep an eye on your life bar. Each wrong answer will cost you a life. "},false),
                 new Answer("Dewitt Wallace Library", new String[]{"Ugh! You are wrong. Hit the door to answer the question again.\n" +
-                        "Keep an eye on your life bar. Each wrong answer will cost you a life. "},false),
+                            "Keep an eye on your life bar. Each wrong answer will cost you a life. "},false),
                 new Answer("Neill Hall", new String[]{"Great!",
-                        "Actually, Macalester College has renamed its \"Humanities Building\" NEILL HALL after Edward Duffield Neill (1823 -1893), " +
-                                "founder and first president of the college, in 2013.",
-                        "You might find something helpful there!"},true)
+                            "Actually, Macalester College has renamed its \"Humanities Building\" NEILL HALL after Edward Duffield Neill (1823 -1893), " +
+                            "founder and first president of the college, in 2013.",
+                            "You might find something helpful there!"},true)
             )
         );
 
@@ -43,13 +54,13 @@ public class TextGenerator {
         Qs.add(
             new MultipleChoice(
                 new String[]{"What a familiar place... ",
-                        "It is winter here more than half of the year. The first robot we developed helped the school build tunnels between buildings, while people could hide indoors and avoid the cold.",
-                        "Which building is connected to Neill Hall on the first floor?"
+                            "It is winter here more than half of the year. The first robot we developed helped the school build tunnels between buildings, while people could hide indoors and avoid the cold.",
+                            "Which building is connected to Neill Hall on the first floor?"
                 },
                 new Answer("Olin Rice Science Building", new String[]{"Ouch! An electric shock! I think the answer was wrong. (Hit the door to answer the question again)\n"},false),
                 new Answer("Janet Wallace Fine Arts Center", new String[]{"Yes! After the tunnel was built, the JANET WALLACE BUILDING became a center for experiments with robots."},true),
-                    new Answer("Joan Adams Mondale Hall of Studio Art", new String[]{"Ouch! An electric shock! I think the answer was wrong. (Hit the door to answer the question again)\n"},false)
-                    )
+                new Answer("Joan Adams Mondale Hall of Studio Art", new String[]{"Ouch! An electric shock! I think the answer was wrong. (Hit the door to answer the question again)\n"},false)
+                )
         );
 
         //Door 3 at J-Wall
@@ -229,6 +240,10 @@ public class TextGenerator {
 
     public void initClues() {
 
+        clues = new ArrayList<>();
+
+        clues.add("You could click the button to show the current clue. Go to Kirk Section 9 for your first clue.");
+
         //Door 1 at Kirk
         clues.add("Macalester College has renamed its \"Humanities Building\" NEILL HALL" +
                 " after Edward Duffield Neill, " +
@@ -280,7 +295,19 @@ public class TextGenerator {
 
     }
 
+    public String[] getBackgroundMessage() {return backgroundMessage;}
+
+    public String getFirstClue() {
+        if (this.clues.size() == 0) {
+            throw new IllegalArgumentException("Clue is not initiated.");
+        }
+        return clues.get(0);
+    }
+
     public String getNextClue(String curClue) {
+        if (clues.indexOf(curClue) + 1 == clues.size()) {
+            throw new IllegalArgumentException("Index out of bound");
+        }
         return clues.get(clues.indexOf(curClue) + 1);
     }
 
