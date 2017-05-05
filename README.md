@@ -30,8 +30,10 @@ And you name it!
 - Shade UI used under CC BY license (http://creativecommons.org/licenses/by/4.0/). We made some changes to the original UI 
 - Robot sprite used under CC0 License(https://creativecommons.org/share-your-work/public-domain/cc0/). Source: https://opengameart.org/content/a-pack-of-robots-2
 - BGM used under CC BY 3.0 License(https://creativecommons.org/licenses/by/3.0/) Source: https://opengameart.org/content/winds-of-stories 
+- Hit enemy effect source: (http://soundbible.com/)
 - Code tutorials:
 https://www.youtube.com/watch?v=78amAV0_e24&list=LLij4FgNVkGdMLQ3HAXTznPQ&index=3
 https://www.youtube.com/watch?v=a8MPxzkwBwo&list=PLZm85UZQLd2SXQzsF-a0-pPF6IWDDdrXt
 https://www.youtube.com/playlist?list=PLXY8okVWvwZ0JOwHiH1TntAdq-UDPnC2L
 https://www.youtube.com/playlist?list=PLXY8okVWvwZ0qmqSBhOtqYRjzWtUCWylb
+https://www.youtube.com/watch?v=jzFZ7N-SKfk
