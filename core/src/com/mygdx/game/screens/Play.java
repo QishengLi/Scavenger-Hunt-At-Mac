@@ -203,7 +203,7 @@ public class Play implements Screen, InputProcessor {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
 
-        setTimeStart(player);
+        setTimeStart();
         if (timeLimitStart != 0 && !(gameStatsGroup.isFrozen())) {
             timeLeft -= 1000 * Gdx.graphics.getDeltaTime();
         }
@@ -255,8 +255,8 @@ public class Play implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
+        player.resetDirection();
         stage.getViewport().update(width, height, true);
-
     }
 
     @Override
@@ -339,7 +339,7 @@ public class Play implements Screen, InputProcessor {
     }
 
     // triggers the start of time limit when player hits the door of CC
-    private void setTimeStart(Player player) {
+    private void setTimeStart() {
         if (timeLimitStart == 0 && getExistingDoors().size >= 10) {
             timeLimitStart = TimeUtils.millis();
         }
