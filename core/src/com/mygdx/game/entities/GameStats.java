@@ -14,6 +14,7 @@ import com.mygdx.game.screens.Play;
 
 /**
  * Created by Shuni on 5/4/17.
+ * GameStats includes Health bar and Time Label
  */
 public class GameStats {
 

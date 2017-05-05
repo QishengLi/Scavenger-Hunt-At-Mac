@@ -120,7 +120,6 @@ public class Player extends Sprite {
         return (!((p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
     }
 
-    // TODO：factor out sound playing and update current clue
     private void popUpMessage(Rectangle newDoor, Array<Rectangle> existingDoors) {
 
         if (doorRects.random() == null || questions.random() == null) { // check if the array is empty

@@ -20,8 +20,8 @@ import com.mygdx.game.MainGame;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 /**
- * Created by Shuni on 3/19/17.
- * Tutorial from https://www.youtube.com/watch?v=CNjkPPveqG8
+ * Credits:
+ * https://www.youtube.com/watch?v=CNjkPPveqG8
  * https://bitbucket.org/dermetfan/blackpoint2/downloads/
  */
 public class MainMenu implements Screen{
@@ -33,11 +33,6 @@ public class MainMenu implements Screen{
     private int initialWidth;
     private int initialHeight;
 
-    public MainMenu() {
-        initialWidth = 0;
-        initialHeight = 0;
-    }
-
     public MainMenu(int w, int h) {
         initialWidth = w;
         initialHeight = h;
@@ -48,7 +43,6 @@ public class MainMenu implements Screen{
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        //stage.setDebugAll(true);
         stage.act(delta);
         stage.draw();
     }
