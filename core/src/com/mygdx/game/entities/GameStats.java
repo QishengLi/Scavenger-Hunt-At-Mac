@@ -18,8 +18,8 @@ import com.mygdx.game.screens.Play;
  */
 public class GameStats {
 
-    private static final int TABLE_HORIZONTAL_PADDING = 270;
-    private static final int TABLE_VERTICAL_PADDING = 350;
+    private static final int TABLE_HORIZONTAL_PADDING = 250;
+    private static final int TABLE_VERTICAL_PADDING = 330;
 
     private static final int BAR_WIDTH = 100;
     private static final int BAR_HEIGHT = 10;
