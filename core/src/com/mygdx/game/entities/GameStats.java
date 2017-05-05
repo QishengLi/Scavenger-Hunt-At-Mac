@@ -45,13 +45,13 @@ public class GameStats {
         this.health = new Group() {
 
             // This method makes the player flash for some amount of seconds.
-        @Override
-        public void draw(Batch sb, float parentAlpha) {
-            if (remainingFlashingTime > 0 && System.currentTimeMillis() % 400 < 150){
-                return;
+            @Override
+            public void draw(Batch sb, float parentAlpha) {
+                if (remainingFlashingTime > 0 && System.currentTimeMillis() % 400 < 150){
+                    return;
+                }
+                super.draw(sb, parentAlpha);
             }
-            super.draw(sb, parentAlpha);
-        }
     };
 
         this.healthLabel = new Label("Life: "+ Player.health, skin);
@@ -89,7 +89,6 @@ public class GameStats {
         timeTable.setFillParent(true);
         timeTable.top();
 
-        timeLabel.setFontScale(4);
         timeTable.add(timeLabel).expandX().align(Align.center).row();
         timeTable.setVisible(false);
 
