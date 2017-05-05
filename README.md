@@ -18,4 +18,5 @@ set config
 UI
 Sprite
 SoundEffect
+Hit enemy effect: http://soundbible.com/
 Code tutorials
