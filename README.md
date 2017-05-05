@@ -22,3 +22,5 @@ SoundEffect
 Hit enemy effect: http://soundbible.com/
 
 Code tutorials
+
+https://www.youtube.com/watch?v=jzFZ7N-SKfk
