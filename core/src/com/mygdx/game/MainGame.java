@@ -9,7 +9,7 @@ import com.mygdx.game.screens.MainMenu;
  */
 public class MainGame extends Game {
 
-    public static final String TITLE = "Scavenger Hunt @ Mac", VERSION = "0.0.0.0 Early";
+    public static final String TITLE = "Scavenger Hunt @ Mac";
 
     @Override
     public void create() {

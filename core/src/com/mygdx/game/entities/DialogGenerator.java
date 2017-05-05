@@ -3,7 +3,7 @@ package com.mygdx.game.entities;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.data.MultipleChoice;
-import com.mygdx.game.data.QuestionText;
+import com.mygdx.game.data.TextGenerator;
 import com.mygdx.game.utils.CustomDialog;
 import com.mygdx.game.utils.QuestionDialog;
 import com.mygdx.game.utils.TextDialog;
@@ -15,14 +15,24 @@ import java.util.List;
 /**
  * Created by hys1435 on 4/28/17.
  */
+
+/**
+ * Generates different types of dialogs.
+ */
+
 public class DialogGenerator {
 
-    private QuestionText qt = new QuestionText();
+    private TextGenerator qt = new TextGenerator();
 
     public DialogGenerator() {
         qt.initQuestions();
     }
 
+    /**
+     * Generate the question dialogs for the question text.
+     * @param skin skin of the dialog
+     * @return a libgdx array of question dialogs.
+     */
     public Array<CustomDialog> generateQuestions(Skin skin) {
 
         Array<CustomDialog> questions = new Array<>();
@@ -53,7 +63,13 @@ public class DialogGenerator {
         return questions;
     }
 
-    // Generate num of TextDialogs in a list
+    /**
+     * Generate num of empty TextDialogs in a list.
+     * @param skin skin of the dialog
+     * @param num Number of text dialogs
+     * @param title the title of text dialog
+     * @return a list of num empty text dialogs
+     */
     public List<CustomDialog> generateTextDialog(Skin skin, int num, String title) {
         List<CustomDialog> responseDialogs = new ArrayList<>();
         for (int i = 0; i < num; i++) {

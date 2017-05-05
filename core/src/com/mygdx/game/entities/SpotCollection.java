@@ -14,7 +14,8 @@ import java.util.Objects;
  */
 
 /**
- * This class groups doors and questions together.
+ * This class groups doors and questions together as spots. It contains a map which matches each door with the
+ * corresponding question.
  */
 public class SpotCollection {
 
@@ -22,6 +23,11 @@ public class SpotCollection {
 
     public SpotCollection() {}
 
+    /**
+     * initiate spots by putting the ith door and ith question in a map.
+     * @param doorRects array of doors.
+     * @param questions array of questions.
+     */
     public void initSpots(Array<Rectangle> doorRects, Array<CustomDialog> questions) {
         spots = new HashMap<>();
         for(int i=0; i<doorRects.size; i++){

@@ -37,12 +37,10 @@ public abstract class CustomDialog extends Dialog {
         //Shuni: To get the current screen, used to get enemies and freeze them
         //Can be used to freeze time/clock in the future
         //TODO: write interface freezable, enemy/player implements freezable
-        // Zhaoqi: I didn't understand these lines below... Start
         Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
         if (curScreen instanceof Play) {
             this.playScreen = (Play) curScreen;
         }
-        // End
     }
 
     /**
@@ -110,7 +108,7 @@ public abstract class CustomDialog extends Dialog {
         for (Enemy e : enemies) {
             e.setFreeze(freeze);
         }
-        this.playScreen.getBarGroup().setFreezed(freeze);
+        this.playScreen.getGameStatsGroup().setFrozen(freeze);
     }
 
     @Override

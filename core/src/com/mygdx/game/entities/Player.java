@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.data.Direction;
-import com.mygdx.game.data.QuestionText;
+import com.mygdx.game.data.MultipleChoice;
 import com.mygdx.game.screens.Play;
 import com.mygdx.game.utils.CustomDialog;
 import com.mygdx.game.utils.QuestionDialog;
@@ -26,7 +26,7 @@ import static java.lang.Math.min;
  *
  */
 public class Player extends Sprite {
-    
+
     static final float SPEED = 12f;
     public static int health = 12;
     static final int TOTAL_HEALTH = 12;
@@ -39,10 +39,7 @@ public class Player extends Sprite {
     private Array<Rectangle> collisionRects;
     private Map<Rectangle, CustomDialog> spots;
 
-    public QuestionText qt = new QuestionText();
-
     public ArrayList<Explosion> explosions;
-
 
     public Player(Texture texture, Stage stage) {
         super(texture);
@@ -123,15 +120,12 @@ public class Player extends Sprite {
         return (!((p2x < p3x) || (p1y < p4y) || (p1x > p4x) || (p2y > p3y)));
     }
 
-
     // TODO：factor out sound playing and update current clue
     private void popUpMessage(Rectangle newDoor, Array<Rectangle> existingDoors) {
 
         if (doorRects.random() == null || questions.random() == null) { // check if the array is empty
             return;
         }
-        //Array<Rectangle> existingDoors = getExistingDoors();
-        //Rectangle newDoor = nextDoor(existingDoors);
 
         Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
         final Play play = (Play) curScreen;
@@ -150,19 +144,6 @@ public class Player extends Sprite {
                     dialogBox = dialogBox.getResponseDialog();
                 }
                 dialogBox.getResponseDialog().show(this.stage);
-                //Zhaoqi: I changed back here since I think this makes more sense when rehitting doors. Easy switch by just uncommenting
-                // the lines below.
-
-//                CustomDialog tmpDialog = spots.get(rect);
-//                while (tmpDialog != null && tmpDialog instanceof TextDialog) {
-//                    tmpDialog = tmpDialog.getResponseDialog();
-//                }
-//                QuestionDialog mcDialog = (QuestionDialog) tmpDialog;
-//                MultipleChoice mc = (MultipleChoice) mcDialog.getContent();
-//                CustomDialog curClueDialog = new TextDialog("Clue", play.getSkin(), null);
-//                curClueDialog.renderContent(new String[]{mc.getCorrectResponse()});
-//                curClueDialog.show(this.stage);
-
             }
         }
 
@@ -181,23 +162,29 @@ public class Player extends Sprite {
                 CustomDialog introDialog = new CustomDialog("QUESTION", play.getSkin(), null) {
                     @Override
                     public void renderContent(Object object) {
-                        addLabel("Which path do you want to go?", play.getSkin());
-                        button("Next", dialogBox);
-                        button("Skip", mcDialog);
+                        Object content = dialogBox.getContent();
+                        String label;
+                        if (content instanceof MultipleChoice) {
+                            MultipleChoice problem = (MultipleChoice) content;
+                            label = problem.getQuestion()[0];
+                        } else if (content instanceof String[]) {
+                            label = ((String[]) content)[0];
+                        } else {
+                            label = "Which path do you want to go?";
+                        }
+
+                        addLabel(label, play.getSkin());
+                        button("See clues again", dialogBox.getResponseDialog());
+                        button("Skip to question", mcDialog);
                     }
 
                     @Override
                     public Object getContent() { return null; }
 
-//                    @Override
-//                    public Dialog button (Button button, Object object) {
-//                        return super.button(button, object);
-//                    }
-
                     @Override
                     protected void result(Object object) {
                         if (object instanceof TextDialog) {
-                            setResponseDialog(dialogBox);
+                            setResponseDialog(dialogBox.getResponseDialog());
                             super.result(((TextDialog) object).getContent());
                         } else if (object instanceof QuestionDialog){
                             setResponseDialog(mcDialog);
@@ -215,24 +202,7 @@ public class Player extends Sprite {
                     GameStats.remainingFlashingTime = 4.0f;
                 }
             }
-
-
-
-            //不要删，list of clues
-
-//            if ((qt.getQs().get(existingDoors.size)) instanceof MultipleChoice) {
-//                MultipleChoice mc = (MultipleChoice) qt.getQs().get(existingDoors.size);
-//                play.setCurClue(mc.getCorrectResponse());
-//            }
-
-                //Object[] old = play.sampleSelectBox;
-                //play.sampleSelectBox = new Object[old.length + 1];
-                //for (int i = 0; i < old.length; i++) {
-                //    play.sampleSelectBox[i] =  old[i];
-                //}
-                //play.sampleSelectBox[old.length] = "update";
-            }
-
+        }
 
         for (Rectangle rect : doorRects) {
             if (isCollided(rect) && !existingDoors.contains(rect, true)) {
@@ -247,7 +217,7 @@ public class Player extends Sprite {
         for (Enemy enemy : enemies) {
             if(isCollided(enemy.getBoundingRectangle())) {
                 health--;
-                GameStats.remainingFlashingTime = 2.0f;
+                GameStats.remainingFlashingTime = 3.0f;
                 enemies.removeValue(enemy, true);
                 explosions.add(new Explosion(enemy.getX(), enemy.getY()));
                 Play.enemyHit.play();

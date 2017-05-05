@@ -1,149 +1,127 @@
 package com.mygdx.game.entities;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.mygdx.game.data.Direction;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.screens.Play;
 
-
 /**
- * Created by Zhaoqi on 2017/4/3.
+ * Created by Shuni on 5/4/17.
  */
+public class GameStats {
 
-/**
- * This class groups the labels on the screen together, and set the position of them relative to the player.
- */
-public class GameStats extends Group {
+    private static final int TABLE_HORIZONTAL_PADDING = 250;
+    private static final int TABLE_VERTICAL_PADDING = 330;
 
+    private static final int BAR_WIDTH = 100;
+    private static final int BAR_HEIGHT = 10;
+    private static final int HEALTHBAR_HORIZONTAL_OFFSET = 8;
+    private static final int HEALTHBAR_VERTICAL_OFFSET = 2;
+
+    private Table healthTable;
+    private Table timeTable;
+
+    private Group health;
     private Image barImg;
     private Image healthBarImg;
-    private Label lifeLabel;
+    private Label healthLabel;
     private Label timeLabel;
-    private CampusMap map;
-    private final float HORIZONTAL_MARGIN = 250;
-    private final float VERTICAL_MARGIN = 70;
+
     public static float remainingFlashingTime = 0f;
-    private boolean timeLabelSet;
-    private boolean freezed;
-    private Player player;
+    private boolean shouldStartCountdown;
+    private boolean frozen;
 
-    public GameStats(Player player, Texture bar, Texture healthBar, Label lifeLabel, CampusMap map) {
-        this.barImg = new Image(bar);
-        this.healthBarImg = new Image(healthBar);
-        this.lifeLabel = lifeLabel;
-        this.map = map;
-        this.timeLabelSet = false;
-        this.freezed = false;
-        this.player = player;
-    }
+    public GameStats(Skin skin) {
+        this.healthTable = new Table(skin);
+        this.timeTable = new Table(skin);
 
-    public void initBar() {
-        lifeLabel.setFontScale(3);
-        barImg.setPosition(0, 0);
-        healthBarImg.setPosition(19, 6);
-        lifeLabel.setPosition(24, -36);
-        this.addActor(lifeLabel);
-        this.addActor(barImg);
-        this.addActor(healthBarImg);
-    }
+        this.health = new Group() {
 
-    public void updateBar(OrthographicCamera camera) {
-        float x = player.getX() + camera.viewportWidth / 2 - HORIZONTAL_MARGIN;
-        float y = player.getY() + camera.viewportHeight / 2 - VERTICAL_MARGIN;
-        lifeLabel.setText("Life: " + Player.health);
-        healthBarImg.setWidth(177 * Player.health / Player.TOTAL_HEALTH);
-        healthBarImg.setHeight(21);
-        for (Direction dir : player.getMovingDirs()) {
-            switch (dir) {
-                case UP:
-                    y -= Player.SPEED;
-                    break;
-                case DOWN:
-                    y += Player.SPEED;
-                    break;
-                case LEFT:
-                    x += Player.SPEED;
-                    break;
-                case RIGHT:
-                    x -= Player.SPEED;
-                    break;
+            // This method makes the player flash for some amount of seconds.
+            @Override
+            public void draw(Batch sb, float parentAlpha) {
+                if (remainingFlashingTime > 0 && System.currentTimeMillis() % 400 < 150){
+                    return;
+                }
+                super.draw(sb, parentAlpha);
             }
-        }
-        this.setPosition(x, y);
+    };
+
+        this.healthLabel = new Label("Life: "+ Player.health, skin);
+        this.barImg = new Image(new Texture(Gdx.files.internal("interfaceComponents/bar.png")));
+        this.healthBarImg = new Image(new Texture(Gdx.files.internal("interfaceComponents/healthbar.png")));
+        this.timeLabel = new Label("", skin);
+
+        this.shouldStartCountdown = false;
+        this.frozen = false;
     }
 
-    public void initTimeLabel(Label timeLabel) {
-        this.timeLabel = timeLabel;
-        this.timeLabel.setFontScale(4);
-        this.timeLabel.setPosition(-1200,0);
-        this.addActor(this.timeLabel);
-        timeLabelSet = true;
+    public void init(Stage stage) {
+        // Group bar and health bar
+        health.setSize(BAR_WIDTH, BAR_HEIGHT);
+        barImg.setWidth(BAR_WIDTH);
+        barImg.setHeight(BAR_HEIGHT);
+        healthBarImg.setWidth(BAR_WIDTH - 2 * HEALTHBAR_HORIZONTAL_OFFSET);
+        healthBarImg.setHeight(BAR_HEIGHT - 2 * HEALTHBAR_VERTICAL_OFFSET);
+        barImg.setPosition(0, 0);
+        healthBarImg.setPosition(HEALTHBAR_HORIZONTAL_OFFSET, HEALTHBAR_VERTICAL_OFFSET);
+        health.addActor(barImg);
+        health.addActor(healthBarImg);
+
+        // Construct health table
+        healthTable.pad(TABLE_HORIZONTAL_PADDING, 0, 0, TABLE_VERTICAL_PADDING);
+        healthTable.setFillParent(true);
+        healthTable.top();
+        healthTable.right();
+
+        healthTable.add(health).width(BAR_WIDTH).spaceBottom(5).row();
+        healthTable.add(healthLabel).align(Align.center).row();
+
+        // Construct time table
+        timeTable.pad(TABLE_HORIZONTAL_PADDING, 0, 0, 0);
+        timeTable.setFillParent(true);
+        timeTable.top();
+
+        timeTable.add(timeLabel).expandX().align(Align.center).row();
+        timeTable.setVisible(false);
+
+        stage.addActor(healthTable);
+        stage.addActor(timeTable);
     }
 
-    public void updateTimeLabel() {
-        if (timeLabel != null) {
+    public void update() {
+        // Update health
+        healthLabel.setText("Life: " + Player.health);
+        updateHealthBarWidth();
+
+        // Update time if necessary
+        if (shouldStartCountdown) {
             timeLabel.setText("Time Left: "+ Play.timeLeft / 60000 + " : " + (Play.timeLeft / 1000) % 60);
         }
     }
 
-    //TODO: Refactor
-    public void adjustBoundary(OrthographicCamera camera) {
-
-        float mapLeft = 0;
-        float mapBottom = 0;
-        float mapWidth = map.mapWidth;
-        float mapHeight = map.mapHeight;
-
-        // The camera dimensions, halved
-        float cameraHalfWidth = camera.viewportWidth * .5f;
-        float cameraHalfHeight = camera.viewportHeight * .5f;
-
-        float cameraLeft = camera.position.x - cameraHalfWidth;
-        float cameraRight = camera.position.x + cameraHalfWidth;
-        float cameraBottom = camera.position.y - cameraHalfHeight;
-        float cameraTop = camera.position.y + cameraHalfHeight;
-
-        if (cameraRight + Player.SPEED >= mapWidth) {
-            this.setX(mapWidth - HORIZONTAL_MARGIN);
-        }
-        if (cameraTop + Player.SPEED >= mapHeight) {
-            this.setY(mapHeight - VERTICAL_MARGIN);
-        }
-        if (cameraLeft - Player.SPEED <= mapLeft) {
-            this.setX(cameraHalfWidth * 2 - HORIZONTAL_MARGIN);
-        }
-        if (cameraBottom - Player.SPEED <= mapBottom) {
-            this.setY(cameraHalfHeight * 2 - VERTICAL_MARGIN);
-        }
+    public void startCountdown() {
+        timeTable.setVisible(true);
+        this.shouldStartCountdown = true;
     }
 
-    public boolean isTimeLabelSet() {
-        return timeLabelSet;
+    public boolean isFrozen() {
+        return frozen;
     }
 
-    /**
-     * This method makes the player flash for some amount of seconds.
-     */
-
-    @Override
-    public void draw(Batch sb, float parentAlpha) {
-        if (remainingFlashingTime > 0 && System.currentTimeMillis() % 400 < 150){
-            return;
-        }
-        if (isTransform()) applyTransform(sb, computeTransform());
-        drawChildren(sb, parentAlpha);
-        if (isTransform()) resetTransform(sb);
+    public void setFrozen(boolean frozen) {
+        this.frozen = frozen;
     }
 
-    public boolean isFreezed() {
-        return freezed;
-    }
-
-    public void setFreezed(boolean freezed) {
-        this.freezed = freezed;
+    private void updateHealthBarWidth() {
+        int rawWidth = BAR_WIDTH - 2 * HEALTHBAR_HORIZONTAL_OFFSET;
+        healthBarImg.setWidth(rawWidth * Player.health / Player.TOTAL_HEALTH);
     }
 }

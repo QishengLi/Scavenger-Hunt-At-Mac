@@ -14,7 +14,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -23,8 +22,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.data.ClueText;
 import com.mygdx.game.data.Direction;
+import com.mygdx.game.data.TextGenerator;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.utils.CustomDialog;
 import com.mygdx.game.utils.QuestionDialog;
@@ -37,11 +36,7 @@ import java.util.Random;
 
 /**
  * Created by Qisheng on 2/9/2017.
- *
- * The order in show method MATTERS!!!!!
  */
-
-
 public class Play implements Screen, InputProcessor {
 
     private TiledMap tiledMap;
@@ -69,20 +64,12 @@ public class Play implements Screen, InputProcessor {
 
     private Texture playerImg;
     private Texture enemyImg;
-    private Texture healthBar;
-    private Texture bar;
 
-    private GameStats barGroup;
-    private Label lifeLabel;
-    private Label timeLabel;
+    private GameStats gameStatsGroup;
 
-    //不要删
+    public TextGenerator textGenerator;
     public String clue;
-    //public Object[] sampleSelectBox;
     public TextDialog curClueDialog;
-    //private SelectBox<Object> clueBox;
-    //private Table table;
-    public ClueText clueText;
 
     private int initialWidth;
     private int initialHeight;
@@ -111,23 +98,9 @@ public class Play implements Screen, InputProcessor {
         float w = ((this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth) * 2;
         float h = ((this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight) * 2;
 
-        System.out.println(Gdx.graphics.getWidth());
-        System.out.println(Gdx.graphics.getHeight());
-        System.out.println(initialWidth);
-        System.out.println(initialHeight);
-
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false,w,h);
         camera.update();
-
-        tiledMap = new TmxMapLoader().load("map/full_map.tmx");
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-        Gdx.input.setInputProcessor(this);
-        rd = new Random();
-        mac = new CampusMap(tiledMap);
-        collisionRects = mac.getCollisionBoxes();
-        doors = mac.getDoors();
 
         OrthographicCamera stageCam = new OrthographicCamera();
         stageCam.setToOrtho(false, w, h);
@@ -137,12 +110,23 @@ public class Play implements Screen, InputProcessor {
         stage = new Stage(v);
         skin = new Skin(Gdx.files.internal("ui/skin/uiskin-edit.json"));
 
+        tiledMap = new TmxMapLoader().load("map/full_map.tmx");
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+        Gdx.input.setInputProcessor(this);
+        rd = new Random();
+        mac = new CampusMap(tiledMap);
+        collisionRects = mac.getCollisionBoxes();
+        doors = mac.getDoors();
+
         // Add background music
         bgm = Gdx.audio.newMusic(Gdx.files.internal("soundEffects/bgm.mp3"));
         bgm.setLooping(true); // looping music after it's finished
         bgm.play();
 
+        textGenerator = new TextGenerator();
+        textGenerator.initClues();
         dialogGenerator = new DialogGenerator();
+        questions = dialogGenerator.generateQuestions(skin);
 
         sb = new SpriteBatch();
         playerImg = new Texture(Gdx.files.internal("sprite/scot_small.png"));
@@ -150,30 +134,18 @@ public class Play implements Screen, InputProcessor {
         player = new Player(playerImg, stage);
         player.setCenter(mac.mapWidth/2+1520,mac.mapHeight/2); //TODO: change position
 
-        questions = dialogGenerator.generateQuestions(skin);
-
-        clueText = new ClueText();
-        clueText.initClues();
-
         enemies = new Array<>();
         initializeEnemies(enemies, 20);
         enemyHit = Gdx.audio.newSound(Gdx.files.internal("soundEffects/enemyHit.wav"));
         hitCorrectDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorOpen.mp3"));
         hitWrongDoor = Gdx.audio.newSound(Gdx.files.internal("soundEffects/doorPunch.mp3"));
 
-
         SpotCollection spotCollection = new SpotCollection();
         spotCollection.initSpots(doors, questions);
         spots = spotCollection.getSpots();
 
-        healthBar = new Texture(Gdx.files.internal("interfaceComponents/healthbar.png"));
-        bar = new Texture(Gdx.files.internal("interfaceComponents/bar.png"));
-
-        lifeLabel = new Label("Life: "+ Player.health, skin);
-        barGroup = new GameStats(player, bar, healthBar, lifeLabel, mac);
-        barGroup.initBar();
-
-        timeLabel = new Label("Time:" + timeLeft, skin);
+        gameStatsGroup = new GameStats(skin);
+        gameStatsGroup.init(stage);
 
         player.setCollisionRects(collisionRects);
         player.setDoorRects(doors);
@@ -192,20 +164,6 @@ public class Play implements Screen, InputProcessor {
                 "Richard drew his last breath."
         });
 
-          //不要删，list of clues
-//        sampleSelectBox = new Object[2];
-//        sampleSelectBox[0] = "Current Clue List";
-//        sampleSelectBox[1] = "Current clue 1, 他妈的逗我呢，为啥不work？";
-//        clueBox = new SelectBox<Object>(skin);
-//        clueBox.setItems(sampleSelectBox);
-//        Table table1 = new Table();
-//        table1.setFillParent(true);
-//        table1.top();
-//
-//        table1.add(clueBox);
-//        stage.addActor(table1);
-
-
         curClueDialog = new TextDialog("Current Clue", skin, null);
         clue = "You could click the button to show the current clue. Go to Kirk Section 9 for your first clue.";
 
@@ -219,14 +177,14 @@ public class Play implements Screen, InputProcessor {
         });
         curClue.pad(10);
 
-        Table table2 = new Table();
-        table2.pad(250, 330, 250, 330);
-        table2.setFillParent(true);
-        table2.bottom();
-        table2.left();
+        Table table = new Table();
+        table.pad(250, 330, 250, 330);
+        table.setFillParent(true);
+        table.bottom();
+        table.left();
 
-        table2.add(curClue);
-        stage.addActor(table2);
+        table.add(curClue);
+        stage.addActor(table);
 
         bgs.get(0).show(this.stage);
 
@@ -245,49 +203,39 @@ public class Play implements Screen, InputProcessor {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render(); // draw the map on canvas combined with the previous line
 
-        setTimeStart(player);
-        if (timeLimitStart != 0 && !(barGroup.isFreezed())) {
+        setTimeStart();
+        if (timeLimitStart != 0 && !(gameStatsGroup.isFrozen())) {
             timeLeft -= 1000 * Gdx.graphics.getDeltaTime();
         }
 
         existingDoors = getExistingDoors();
         player.makePlayerMove(nextDoor(), existingDoors);
         elapseTime = TimeUtils.timeSinceMillis(startTime);
-        ememyMoves(enemies);
+        enemyMoves(enemies);
         player.hitEnemy(enemies);
         GameStats.remainingFlashingTime -= Gdx.graphics.getDeltaTime();
-        if(!player.isAlive(Player.health) || timeLeft < 0) { // time > 5s
-            //bgm.stop();
-            ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight, false));
+
+        if(!player.isAlive(Player.health) || timeLeft < 0) {
+            ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth / 2,initialHeight / 2, false));
         }
         if (isFinished(getExistingDoors())) {
-            //bgm.stop();
-            ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth,initialHeight, true));
+            ((Game) Gdx.app.getApplicationListener()).setScreen(new Exit(initialWidth / 2,initialHeight / 2, true));
         }
 
-        camera.position.set(player.getX(),player.getY(),0); // let the camera follow the player
+        camera.position.set(player.getX(),player.getY(),0);
         mac.adjustBoundary(camera);
-        sb.setProjectionMatrix(camera.combined); // Combine the character with the camera?
+        sb.setProjectionMatrix(camera.combined);
         sb.begin();
-        player.draw(sb); // draw the character
+        player.draw(sb);
         drawEnemies(enemies);
         drawExplosion(delta);
 
         if (timeLimitStart != 0) {
-            barGroup.initTimeLabel(timeLabel);
+            gameStatsGroup.startCountdown();
         }
+        gameStatsGroup.update();
 
-        if (barGroup.isTimeLabelSet()) {
-            barGroup.updateTimeLabel();
-        }
-
-        barGroup.updateBar(camera);
-        barGroup.adjustBoundary(camera);
-        barGroup.draw(sb, 1);
         sb.end();
-
-        //不要删
-       // clueBox.setItems(sampleSelectBox);
 
         stage.act();
         stage.draw();
@@ -307,8 +255,8 @@ public class Play implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
+        player.resetDirection();
         stage.getViewport().update(width, height, true);
-
     }
 
     @Override
@@ -332,7 +280,7 @@ public class Play implements Screen, InputProcessor {
     }
 
     // Initialize ct number of enemies in an array of enemies
-    public void initializeEnemies(Array<Enemy> enemies, int ct) {
+    private void initializeEnemies(Array<Enemy> enemies, int ct) {
         for (int i = 1; i <= ct; i++) {
             Enemy enemy = new Enemy(enemyImg, stage);
             enemy.setCenter(rd.nextInt(mac.mapWidth), rd.nextInt(mac.mapHeight));
@@ -352,7 +300,7 @@ public class Play implements Screen, InputProcessor {
     }
 
     // Makes move for each enemy, and loops over timer for each second
-    public void ememyMoves(Array<Enemy> enemies) {
+    private void enemyMoves(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             enemy.makeEnemyMove(player, collisionRects);
         }
@@ -362,11 +310,11 @@ public class Play implements Screen, InputProcessor {
         }
     }
 
-    public GameStats getBarGroup() {
-        return barGroup;
+    public GameStats getGameStatsGroup() {
+        return gameStatsGroup;
     }
 
-    public void drawEnemies(Array<Enemy> enemies) {
+    private void drawEnemies(Array<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             enemy.draw(sb);
         }
@@ -375,7 +323,7 @@ public class Play implements Screen, InputProcessor {
     /**
      * Draw the animation when player hits enemy.
      * */
-    public void drawExplosion(float delta){
+    private void drawExplosion(float delta){
         ArrayList<Explosion> explosionsToRemove= new ArrayList<>();
         for (Explosion explosion: player.explosions){
             explosion.update(delta);
@@ -391,7 +339,7 @@ public class Play implements Screen, InputProcessor {
     }
 
     // triggers the start of time limit when player hits the door of CC
-    public void setTimeStart(Player player) {
+    private void setTimeStart() {
         if (timeLimitStart == 0 && getExistingDoors().size >= 10) {
             timeLimitStart = TimeUtils.millis();
         }
@@ -450,7 +398,7 @@ public class Play implements Screen, InputProcessor {
     }
 
     // get the array of doors where questions have been answered
-    public Array<Rectangle> getExistingDoors() {
+    private Array<Rectangle> getExistingDoors() {
         //TODO: Refactor this part. Confusing.
         Array<Rectangle> existingDoors = new Array<>();
         for (CustomDialog questionDialog : questions) {
@@ -487,7 +435,7 @@ public class Play implements Screen, InputProcessor {
     }
 
     // check if the player has finished answering all questions
-    public boolean isFinished(Array<Rectangle> existingDoors) {
+    private boolean isFinished(Array<Rectangle> existingDoors) {
         return (existingDoors.size == doors.size);
     }
 }

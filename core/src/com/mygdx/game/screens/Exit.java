@@ -26,7 +26,6 @@ public class Exit implements Screen{
     private Stage stage;
     private Skin skin;
     private Table table;
-    private OrthographicCamera camera;
 
     private int initialWidth;
     private int initialHeight;
@@ -61,27 +60,22 @@ public class Exit implements Screen{
     @Override
     public void show() {
 
-        float w = ((this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth) * 2;
-        float h = ((this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight) * 2;
+        float w = ((this.initialWidth == 0) ? Gdx.graphics.getWidth() : this.initialWidth);
+        float h = ((this.initialHeight== 0) ? Gdx.graphics.getHeight() : this.initialHeight);
 
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, w, h);
-        camera.zoom -= 0.5;
-        camera.update();
-        Viewport v = new FitViewport(w, h, camera);
-        stage = new Stage(v);
+        Viewport viewport = new FitViewport(w, h, new OrthographicCamera());
+        stage = new Stage(viewport);
 
         Gdx.input.setInputProcessor(stage);
 
-        skin = new Skin(Gdx.files.internal("ui/skin/uiskin-edit.json"), new TextureAtlas("ui/skin/uiskin-edit.atlas"));
+        skin = new Skin(Gdx.files.internal("ui/skin/uiskin-edit.json"),
+                        new TextureAtlas("ui/skin/uiskin-edit.atlas"));
 
         table = new Table(skin);
         table.setFillParent(true);
 
-        // creating heading
-        Label heading = showHeading(gameWon);
+        Label heading = generateHeading(gameWon);
 
-        // creating buttons
         TextButton buttonExit = new TextButton("EXIT", skin, "default");
         buttonExit.addListener(new ClickListener() {
 
@@ -92,8 +86,6 @@ public class Exit implements Screen{
         });
         buttonExit.pad(15);
 
-
-        // putting stuff together
         table.add(heading).spaceBottom(100).row();
         table.add(buttonExit);
 
@@ -101,16 +93,13 @@ public class Exit implements Screen{
     }
 
 
-    public Label showHeading(boolean gameWon){
+    private Label generateHeading(boolean gameWon){
         if (gameWon){
-            Label heading = new Label("Congrats, you win!", skin, "title");
-            return heading;
+            return new Label("You win!", skin, "title");
         }
         else{
-            Label heading = new Label("Game over", skin, "title");
-            return heading;
+            return new Label("Game over", skin, "title");
         }
-
     }
 
     @Override
