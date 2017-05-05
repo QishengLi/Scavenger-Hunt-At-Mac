@@ -3,19 +3,21 @@ A desktop Scavenger Hunt game based on lovely Macalester College campus map.
 
 ## Getting Started
 ### System Requirements
-- Java Development Kit 7+ (JDK): http://www.oracle.com/technetwork/java/javase/downloads/index.html
-- Intellij IDEA
+- [Java Development Kit 7+ (JDK)](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+- [Intellij IDEA](https://www.jetbrains.com/idea/)
 
 ### Build
+
+First, clone our project
 ```
 $ git clone https://github.com/QishengLi/game_gdx.git
 ```
 
-You will need to set configurations in Intellij IDEA in order to run our game. Please refer to this document for specifics.
+Then, open it in Intellij and set up configurations. Please refer to this document for specifics.
 
 ## How to play
 
-Once you finish buid the game, you can launch the game by runnning DeskLaunch class.
+Once you finish buid the game, you can launch the game by runnning DesktopLauncher class.
 
 ## Future Work
 This game can be improved in many many many ways. It currently has a foundational platform that could potentially incorporate more interesting game features! On top of our heads:
