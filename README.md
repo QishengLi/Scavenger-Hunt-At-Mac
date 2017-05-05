@@ -1,5 +1,12 @@
 # Scavenger Hunt @ Mac
-A desktop Scavenger Hunt game based on lovely Macalester College campus map. 
+This is a desktop Scavenger Hunt game based on our lovely Macalester College campus map. 
+
+We have amazing stories.
+
+We have fantastic graphics.
+
+And we need you, the awesome players!
+
 
 ## Getting Started
 ### System Requirements
@@ -13,11 +20,11 @@ First, clone our project
 $ git clone https://github.com/QishengLi/game_gdx.git
 ```
 
-Then, open it in Intellij and set up configurations. Please refer to this document for specifics.
+Then, open it in Intellij and set up configurations. Please refer to the 'Configuring IntelliJ' section in this [configuration tutorial](http://www.gamefromscratch.com/post/2014/03/26/Want-to-use-LibGDX-but-hate-Eclipse-Good-news-with-Gradle-IntelliJ-just-became-easier.aspx).
 
 ## How to play
 
-Once you finish buid the game, you can launch the game by runnning DesktopLauncher class.
+Once you finish buid the game, you can launch the game by runnning ```DesktopLauncher``` class.
 
 ## Future Work
 This game can be improved in many many many ways. It currently has a foundational platform that could potentially incorporate more interesting game features! On top of our heads:
