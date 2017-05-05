@@ -32,7 +32,7 @@ This game can be improved in many ways. It currently has a foundational platform
 - [BGM](https://opengameart.org/content/winds-of-stories ) used under [CC BY 3.0 License](https://creativecommons.org/licenses/by/3.0/).
 - [Hit enemy sound effect](http://soundbible.com/): free source
 - [Hit door sound effect](xxxxx): free source
-- [Story]: one question from Scavenger Hunt event held by MSCS Department at Macalester College in 2016. 
+- Story: one question from Scavenger Hunt event held by MSCS Department at Macalester College in 2016. 
 - Code and UI tutorials:
   - [Skin Composer Tutorial](https://www.youtube.com/watch?v=78amAV0_e24&list=LLij4FgNVkGdMLQ3HAXTznPQ&index=3)
   - [Code School Tutorial](https://www.youtube.com/watch?v=a8MPxzkwBwo&list=PLZm85UZQLd2SXQzsF-a0-pPF6IWDDdrXt)
