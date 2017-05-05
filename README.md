@@ -1,12 +1,5 @@
 # Scavenger Hunt @ Mac
-This is a desktop Scavenger Hunt game based on our lovely Macalester College campus map. 
-
-We have amazing stories.
-
-We have fantastic graphics.
-
-And we need you, the awesome players!
-
+This is a desktop Scavenger Hunt game based on Macalester College campus map with a lovely storyline. 
 
 ## Getting Started
 ### System Requirements
@@ -15,7 +8,7 @@ And we need you, the awesome players!
 
 ### Build
 
-First, clone our project
+First, clone the project
 ```
 $ git clone https://github.com/QishengLi/game_gdx.git
 ```
@@ -24,16 +17,14 @@ Then, open it in Intellij and set up configurations. Please refer to the 'Config
 
 ## How to play
 
-Once you finish buid the game, you can launch the game by runnning ```DesktopLauncher``` class.
+Once you finish buid the game, you can launch the game by running ```DesktopLauncher``` class. You can use arrowkeys to navigate around the map, and use mouse to click on the button. 
 
 ## Future Work
-This game can be improved in many many many ways. It currently has a foundational platform that could potentially incorporate more interesting game features! On top of our heads:
+This game can be improved in many ways. It currently has a foundational platform that could potentially incorporate more interesting game features. For example: 
 
-- Players can collecte food and drink sprite
-- Players can attack enemie
+- Players can collect food and drink while walking on the map
+- Players can attack enemies
 - Multi-chain of story lines
-
-And you name it!
 
 ## Credits
 - [Shade UI](https://github.com/czyzby/gdx-skins/tree/master/shade) used under [CC BY license](http://creativecommons.org/licenses/by/4.0/). We made some changes to the original UI. 
@@ -41,6 +32,7 @@ And you name it!
 - [BGM](https://opengameart.org/content/winds-of-stories ) used under [CC BY 3.0 License](https://creativecommons.org/licenses/by/3.0/).
 - [Hit enemy sound effect](http://soundbible.com/): free source
 - [Hit door sound effect](xxxxx): free source
+- [Story]: one question from Scavenger Hunt event held by MSCS Department at Macalester College in 2016. 
 - Code and UI tutorials:
   - [Skin Composer Tutorial](https://www.youtube.com/watch?v=78amAV0_e24&list=LLij4FgNVkGdMLQ3HAXTznPQ&index=3)
   - [Code School Tutorial](https://www.youtube.com/watch?v=a8MPxzkwBwo&list=PLZm85UZQLd2SXQzsF-a0-pPF6IWDDdrXt)
