@@ -408,6 +408,7 @@ public class Play implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
+        player.resetDirection();
         stage.getViewport().update(width, height, true);
     }
 
