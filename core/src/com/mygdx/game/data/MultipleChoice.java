@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 /**
- * An object of a multiple choice question. It has a question and a list of answers.
+ * An object of a multiple choice question. It has a question statement and a list of choices.
  */
 public final class MultipleChoice {
 

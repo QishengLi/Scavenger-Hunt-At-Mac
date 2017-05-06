@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
- * Created by Shuni on 3/19/17.
+ * Credit:
  * Tutorial from https://www.youtube.com/watch?v=CNjkPPveqG8
  * https://bitbucket.org/dermetfan/blackpoint2/downloads/
  */
@@ -30,11 +30,6 @@ public class Exit implements Screen{
     private int initialWidth;
     private int initialHeight;
     private boolean gameWon;
-
-    public Exit() {
-        initialWidth = 0;
-        initialHeight = 0;
-    }
 
     public Exit(int w, int h, boolean gameWon) {
         initialWidth = w;
@@ -108,14 +103,10 @@ public class Exit implements Screen{
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() { }
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() { }
 
     @Override
     public void dispose() {

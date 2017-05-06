@@ -31,11 +31,6 @@ public class Instruction implements Screen {
     private int initialWidth;
     private int initialHeight;
 
-    public Instruction() {
-        initialWidth = 0;
-        initialHeight = 0;
-    }
-
     public Instruction(int w, int h) {
         initialWidth = w;
         initialHeight = h;
@@ -46,7 +41,6 @@ public class Instruction implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        //stage.setDebugAll(true);
         stage.act(delta);
         stage.draw();
     }
@@ -145,7 +139,6 @@ public class Instruction implements Screen {
         table.add(buttonBack).spaceBottom(15);
         table.add(buttonPlay).spaceBottom(15);
 
-        //table.debug();
         stage.addActor(table);
     }
 
@@ -153,9 +146,7 @@ public class Instruction implements Screen {
     public void pause() { }
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() { }
 
     @Override
     public void hide() { }

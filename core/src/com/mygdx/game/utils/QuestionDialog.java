@@ -11,7 +11,9 @@ import com.mygdx.game.entities.Player;
 import com.mygdx.game.screens.Play;
 
 /**
- * Created by Shuni on 3/12/17.
+ * QuestionDialog shows two CONNECTED parts.
+ * 1)An array of messages
+ * 2)A multiple choice question with choices
  */
 public class QuestionDialog extends CustomDialog {
 
@@ -27,12 +29,10 @@ public class QuestionDialog extends CustomDialog {
         this.isCorrect = false;
     }
 
-    public boolean isAnswered() {
-        return this.isAnswered;
-    }
-
-    public boolean isCorrect() { return this.isCorrect; }
-
+    /**
+     * Show MultipleChoice (a question statement and a list of choices) in the dialog
+     * @param object
+     */
     public void renderContent(Object object) {
         content = object;
         if (object instanceof MultipleChoice) {
@@ -44,27 +44,30 @@ public class QuestionDialog extends CustomDialog {
         }
     }
 
+    public boolean isAnswered() {
+        return this.isAnswered;
+    }
+
+    public boolean isCorrect() { return this.isCorrect; }
+
     public Object getContent() {
         return this.content;
     }
-    // Called when clicking on button
+
     @Override
     protected void result(final Object object) {
         if (object instanceof Answer) {
             this.isAnswered = true;
             Answer answer = (Answer) object;
-
-            // Zhaoqi: This part is for setClues
             if (answer.isCorrect()) {
                 this.isCorrect = true;
                 Screen curScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
                 Play play = (Play) curScreen;
-                //MultipleChoice mc = (MultipleChoice) this.getContent();
-                play.setCurClue(play.textGenerator.getNextClue(play.getCurClue()));
+                play.setCurClue(play.textGenerator.getNextClue(play.getCurClue())); //update current clue
             }
             else {
                 Player.health--;
-                GameStats.remainingFlashingTime = 2.0f;
+                GameStats.remainingFlashingTime = 2.0f; //set flashing time
             }
             super.result(answer.getResponse());
         }
