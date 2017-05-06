@@ -154,7 +154,7 @@ public class Play implements Screen, InputProcessor {
 
         List<CustomDialog> bgs = dialogGenerator.generateTextDialog(skin, 8, "Background");
 
-        bgs.get(0).renderContent(new String[]{"Today is May 4th, 2037.",
+        bgs.get(0).renderContent(new String[]{"Today is May 5th, 2037.",
                 "1600 Grand Ave, Saint Paul. Macalester College Campus.",
                 "The robots... they revolted.",
                 "\"Zhaoqi! Zhaoqi!...\" Richard is severely injured.",

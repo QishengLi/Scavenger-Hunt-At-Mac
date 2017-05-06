@@ -276,7 +276,7 @@ public class TextGenerator {
         clues.add("Shelley's testing the robot. Go and find her.");
 
         //Last one
-        clues.add("You have go back to 1874 when Macalester was founded.");
+        clues.add("You have travelled back to 1874 when Macalester was founded.");
 
     }
 
